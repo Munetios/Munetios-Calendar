@@ -1,0 +1,3275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+  <title>Munetios Tasks</title>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="Munetios Tasks is a beautiful, fast, and offline-capable task manager. Organize, categorize, and track your tasks with ease.">
+  <meta name="theme-color" content="#6f15ac">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Munetios Tasks">
+  <meta name="application-name" content="Munetios Tasks">
+  <meta name="keywords" content="tasks, todo, productivity, offline, categories, favorites, archive, backup, responsive, web app">
+  <meta property="og:title" content="Munetios Tasks">
+  <meta property="og:description" content="Organize and track your tasks beautifully. Fast, offline, and easy to use.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="/apple-touch-icon.png">
+  <meta property="og:url" content="https://tasks.munetios.com">
+  <meta name="robots" content="index, follow">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+ 
+    <script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('[Munetios Tasks] SW registered', reg))
+      .catch(err => console.error('[Munetios Tasks] SW failed', err));
+  });
+}
+</script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Poppins, Arial, sans-serif;
+        }
+        body {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        body.dark {
+            background: linear-gradient(135deg, #1a0028 0%, #3c004e 100%);
+            color: #e0e0e0;
+            animation: darkBgMove 8s linear infinite;
+            background-size: 200% 200%;
+        }
+        @keyframes darkBgMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body.dark .modal-content {
+            background: #2c003e;
+            color: #ddd;
+        }
+        body.dark .topbar {
+          color: #ddd;
+        }
+        body.dark .topbar .logo-text {
+            color: #ddd;
+        }
+        body.dark .sidebar {
+            background-color: transparent;
+            color: #ddd;
+        }
+        body.dark .search-bar {
+            background-color: #2c003e;
+            color: #ddd;
+        }
+        body.dark #tasksList .taskItem {
+            background: #2c003e;
+            color: #ddd;
+        }
+        body.dark .createTaskContainer {
+            background: transparent;
+            color: #ddd;
+        }
+        body.dark .createTaskContainer input,
+        body.dark .createTaskContainer textarea,
+        body.dark .createTaskContainer select {
+            background: #3c004e;
+            color: #ddd;
+            border: 1px solid #444;
+        }
+        body.dark .taskOptionsContainer {
+            background: #3c004e;
+            color: #ddd;
+        }
+        body.dark .taskOption {
+            background: #4a006e;
+            color: #ddd;
+        }
+        body.dark .taskOption input {
+            background: #3c004e;
+            color: #ddd;
+            border: 1px solid #444;
+        }
+        body.dark .createCategoryContainer {
+            background: #2c003e;
+            color: #ddd;
+        }
+        body.dark .createCategoryContainer input,
+        body.dark .createCategoryContainer select {
+            background: #3c004e;
+            color: #ddd;
+            border: 1px solid #444;
+        }
+        body.dark #categorysList > div {
+            background: #3c004e !important;
+            color: #ddd !important;
+        }
+        body.dark #completedTasksList .taskItem,
+        body.dark #favoriteTasksList .taskItem,
+        body.dark #archivedTasksList .taskItem,
+        body.dark #inProgressTasksList .taskItem,
+        body.dark #trashTasksList .taskItem {
+            background: #2c003e;
+            color: #ddd;
+        }
+        body.dark .cat-below-more {
+            background: transparent !important;
+        }
+        body.dark .btn {
+            background-color: #6f15ac;
+            color: #fff;
+        }
+        body.dark .btn:hover {
+            background-color: #5a0e8c;
+        }
+        body.dark .modal-content {
+            background: #2c003e;
+            color: #ddd;
+        }
+        body.dark .taskCategoryLabel {
+            background: #3c004e !important;
+            color: #b48cff !important;
+        }
+        body.dark .cat-below-more {
+            background: transparent !important;
+        }
+        body.dark .content {
+            background: transparent;
+        }
+        body.dark .sidebar .item.active,
+        body.dark .sidebar .item:hover {
+            background: #2c003e !important;
+        }
+        body.dark .more-menu-wrapper {
+            background: #2c003e !important;
+            color: #ddd !important;
+            box-shadow: 0 2px 12px rgba(111, 21, 172, 0.18);
+        }
+        body.dark .more-menu-wrapper button,
+        body.dark .more-menu-wrapper div {
+            color: #ddd !important;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE 10+ */
+        }
+        body.dark .more-menu-wrapper div::-webkit-scrollbar {
+            display: none; /* Chrome, Safari */
+        }
+        .liquid-glass {
+            backdrop-filter: blur(4px) saturate(180%);
+            -webkit-backdrop-filter: blur(4px) saturate(180%);
+            background: rgba(255, 255, 255, 0.22);
+            border-radius: 198px;
+            border: 1.5px solid rgba(255, 255, 255, 0.28);
+            box-shadow: 0 8px 32px rgba(111, 21, 172, 0.18), 0 1.5px 8px rgba(0,0,0,0.08);
+            opacity: 0.95;
+        }
+        .btn {
+            border-radius: 50px;
+            border: none;
+            background-color: #6f15ac;
+            color: white;
+            padding: 10px 20px;
+            font-size: 17px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #490c72;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            top: 0;
+            left: 0;
+     
+            width: 100vw;
+            height: 100vh;
+            background: rgba(40, 16, 60, 0.18);
+            justify-content: center;
+            align-items: center;
+            transition: background 0.2s;
+        }
+.taskTitle {
+  white-space: nowrap;        /* no wrapping */
+  overflow: hidden;           /* hide overflow */
+  text-overflow: ellipsis;    /* add "..." */
+  max-width: 100%;            /* responsive */
+  display: block;
+}
+
+        .modal-content {
+            background: #fff;       
+            max-width: 640px;
+            width: 100%;
+            overflow-y: auto;
+            max-height: 800px;
+            padding: 32px 36px;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(111, 21, 172, 0.18), 0 1.5px 8px rgba(0,0,0,0.08);
+            min-width: 0;
+            animation: modalPopIn 0.22s cubic-bezier(.6,1.6,.4,1) both;
+            /* Center content horizontally and vertically */
+            margin: 0;
+        }
+
+        @media (max-width: 500px) {
+            .modal-content {
+            padding: 18px 8px;
+            min-width: 0;
+            }
+        }
+        @media (max-height: 990px) {
+            .modal-content {
+                max-height: 100vh !important;
+            }
+        }
+
+        @keyframes modalPopIn {
+            0% { transform: scale(0.92) translateY(30px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        .createTaskContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: transparent;
+            padding: 20px;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(111, 21, 172, 0.08);
+            margin-bottom: 24px;
+            max-width: 100%;
+        }
+
+        .createTaskContainer input,
+        .createTaskContainer textarea {
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            font-size: 16px;
+            background: #f9f9f9;
+            transition: border-color 0.2s;
+        }
+
+        .createTaskContainer textarea {
+            resize: vertical;
+        }
+
+        .createTaskContainer input:focus,
+        .createTaskContainer textarea:focus {
+            border-color: #6f15ac;
+            background: #fff;
+        }
+
+        .taskOptionsContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 18px;
+            max-width: 100%;
+        }
+
+        .taskOption {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f7f7fa;
+            padding: 10px 14px;
+            border-radius: 300px;
+            box-shadow: 0 1px 4px rgba(111, 21, 172, 0.04);
+        }
+
+        #appsModal a {
+            color: #6f15ac;
+            text-decoration: none !important;
+        }
+        #appsModal h3 {
+            color: #6f15ac;
+            margin-bottom: 8px;
+        }
+        #appsModal a:hover {
+            text-decoration: underline;
+        }
+        #appsModal ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 5px;
+            flex-direction: column;
+        }
+
+        .taskOption input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            font-size: 15px;
+            background: #fff;
+        }
+
+        .taskOption input:focus {
+            border-color: #6f15ac;
+        }
+
+        .taskOption .removeOption {
+            background: #f44336;
+            color: #fff;
+            padding: 7px 16px;
+            font-size: 14px;
+            border-radius: 50px;
+            box-shadow: none;
+        }
+
+        .taskOption .removeOption:hover {
+            background: #c62828;
+        }
+
+        #createTaskBtn {
+            margin-top: 10px;
+            width: 180px;
+        }
+
+        #tasksList {
+            margin-top: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            max-width: 100%;
+        }
+
+        .taskItem {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(111, 21, 172, 0.07);
+            padding: 18px 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            border-left: 5px solid #6f15ac;
+        }
+
+        .taskItem .taskTitle {
+            font-size: 20px;
+            font-weight: bold;
+            color: #6f15ac;
+        }
+
+        .taskItem .taskDescription {
+            font-size: 15px;
+            color: #555;
+        }
+
+        .taskItem .taskOptions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 6px;
+        }
+
+        .taskItem .taskOptionLabel {
+            background: #eee;
+            color: #333;
+            border-radius: 8px;
+            padding: 6px 14px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .createTaskContainer,
+            .taskOptionsContainer,
+            #tasksList {
+                max-width: 100%;
+                padding: 12px;
+            }
+            .taskItem {
+                padding: 12px 10px;
+            }
+        }
+
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 24px;
+            position: sticky;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: transparent;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1500;
+        }
+        .top-right {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        
+        }
+       .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #f5f5f5;
+            border-radius: 50px;
+            padding: 11px 18px;
+            gap: 8px;
+            margin-left: 40px;
+            margin-right: 40px;
+            max-width: 768px;
+            width: 100%;
+        }
+        .search-bar input {
+            border: none;
+            background: none;
+            outline: none;
+            width: 100%;
+            font-size: 16px;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: transparent;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 12px 16px;
+            border-right: 1px solid #eee;
+            position: fixed;
+            top: 80px;
+            bottom: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-bottom: 60px; /* Add padding to prevent content from being hidden behind the footer */
+            /* Hide scrollbars but allow scrolling */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE 10+ */
+        }
+        .sidebar::-webkit-scrollbar {
+            display: none; /* Chrome, Safari */
+        }
+        .sidebar .items {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .sidebar .items .item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+        .more-icon {
+            display: none;
+        }
+        .notifications-icon, .settings-icon, .help-icon, .app-icon {
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+            position: relative; /* Ensure badge and modal position correctly */
+        }
+        .notifications-icon:hover, .settings-icon:hover, .help-icon:hover, .app-icon:hover {
+            background-color: #e0e0e0;
+        }
+
+        
+
+         #searchIconMobile {
+            display: none;
+         
+            
+         }
+
+         select {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 14px;
+            background-color: #fff;
+            transition: border-color 0.2s;
+         }
+
+        svg {
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            min-height: 24px;
+            max-width: 24px;
+            max-height: 24px;
+        }
+
+        .logo svg {
+            width: 32px !important;
+            height: 32px !important;
+            min-width: 32px !important;
+            min-height: 32px !important;
+            max-width: 32px !important;
+            max-height: 32px !important;
+        }
+
+
+         .content {
+            margin-left: 240px; /* Adjusted to account for sidebar width */
+            padding: 20px;
+            min-height: calc(100vh - 72px); /* Full height minus topbar */
+         }
+
+        /* --- Beautiful Animations --- */
+
+        /* Fade-in for .content sections */
+        .content {
+            animation: fadeInContent 0.5s cubic-bezier(.6,1.6,.4,1) both;
+        }
+        @keyframes fadeInContent {
+            0% { opacity: 0; transform: translateY(24px) scale(0.98);}
+            100% { opacity: 1; transform: translateY(0) scale(1);}
+        }
+
+        /* Slide-in for sidebar */
+        .sidebar {
+            animation: slideInSidebar 0.6s cubic-bezier(.6,1.6,.4,1) both;
+        }
+        @keyframes slideInSidebar {
+            0% { opacity: 0; transform: translateX(-60px);}
+            100% { opacity: 1; transform: translateX(0);}
+        }
+
+        /* Pop-in for .btn */
+        .btn {
+            transition: transform 0.18s cubic-bezier(.6,1.6,.4,1), box-shadow 0.18s;
+        }
+        .btn:active {
+            transform: scale(0.96);
+            box-shadow: 0 2px 8px rgba(111,21,172,0.18);
+        }
+
+        /* Task item hover animation */
+        .taskItem {
+            transition: box-shadow 0.22s, transform 0.22s;
+        }
+        .taskItem:hover {
+            box-shadow: 0 8px 32px rgba(111,21,172,0.18), 0 1.5px 8px rgba(0,0,0,0.08);
+            transform: translateY(-2px) scale(1.01);
+        }
+
+        /* Modal fade-in animation */
+        .modal {
+            animation: fadeInModalBg 0.22s cubic-bezier(.6,1.6,.4,1) both;
+        }
+        @keyframes fadeInModalBg {
+            0% { background: rgba(40,16,60,0); }
+            100% { background: rgba(40,16,60,0.18);}
+        }
+
+        /* Liquid glass effect pulse */
+        .liquid-glass {
+            animation: glassPulse 2.8s infinite cubic-bezier(.6,1.6,.4,1);
+        }
+        @keyframes glassPulse {
+            0%,100% { box-shadow: 0 4px 30px rgba(0,0,0,0.1);}
+            50% { box-shadow: 0 8px 40px rgba(111,21,172,0.12);}
+        }
+
+        /* Sidebar item active/hover animation */
+        .sidebar .item {
+            transition: background 0.18s, transform 0.18s;
+        }
+        .sidebar .item.active,
+        .sidebar .item:hover {
+            transform: scale(1.04);
+            background: #f3eaff !important;
+        }
+
+        /* Animate .taskOption add/remove */
+        .taskOption {
+            animation: optionPopIn 0.22s cubic-bezier(.6,1.6,.4,1) both;
+            transition: box-shadow 0.18s, transform 0.18s;
+        }
+        @keyframes optionPopIn {
+            0% { opacity: 0; transform: scale(0.92) translateY(12px);}
+            100% { opacity: 1; transform: scale(1) translateY(0);}
+        }
+        .taskOption:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 8px rgba(111,21,172,0.08);
+        }
+
+        /* Animate .taskCategoryLabel pop */
+        .taskCategoryLabel {
+            transition: background 0.18s, color 0.18s, transform 0.18s;
+        }
+        .taskCategoryLabel:active {
+            transform: scale(1.08);
+            background: #e3d7ff !important;
+        }
+
+        /* Animate .modal-content pop-in (already present, but reinforce) */
+        .modal-content {
+            animation: modalPopIn 0.22s cubic-bezier(.6,1.6,.4,1) both;
+        }
+
+        /* Animate .changelogList li fade-in */
+        .changelogList li {
+            animation: fadeInChangelog 0.6s cubic-bezier(.6,1.6,.4,1) both;
+        }
+        @keyframes fadeInChangelog {
+            0% { opacity: 0; transform: translateY(18px);}
+            100% { opacity: 1; transform: translateY(0);}
+        }
+
+        /* Animate .taskOptions label check */
+        .taskOptions label input[type="checkbox"]:checked + .taskOptionLabel {
+            animation: checkStrike 0.22s cubic-bezier(.6,1.6,.4,1) both;
+        }
+        @keyframes checkStrike {
+            0% { color: #6f15ac; text-decoration: none;}
+            100% { color: #aaa; text-decoration: line-through;}
+        }
+
+        /* Animate toast pop-in (already present in JS, but reinforce) */
+        @keyframes toastPopIn {
+            0% { opacity: 0; transform: scale(0.92) translateY(24px);}
+            100% { opacity: 1; transform: scale(1) translateY(0);}
+        }
+
+         @media (max-width: 1190px) {
+            .sidebar {
+                width: 60px;
+            }
+            .sidebar svg {
+                width: 24px;
+                height: 24px;
+            }
+            .sidebar .items {
+                flex-direction: column;
+                align-items: center;
+            }
+            .menu-text {
+                display: none;
+            }
+
+            .content {
+                margin-left: 50px;
+            }
+         }
+
+
+         @media (max-width: 768px) {
+            #searchIconMobile {
+               display: block;
+            }
+            .search-bar {
+                display: none;
+            }
+            .sidebar {
+                top: 78px !important;
+            }
+         }
+
+         @media (max-width: 670px) {
+            .logo-text {
+                display: none;
+            }
+         }
+
+        @media (max-width: 992px) {
+            .search-bar {
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .app-icon {
+                display: none;
+            }
+
+            .trash-label {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .more-icon {
+                display: block !important;
+            }
+
+            .sidebar {
+                width: 40px;
+                top: 69px !important;
+            }
+
+            .sidebar svg {
+                width: 20px !important;
+                height: 20px !important;
+                min-width: 20px !important;
+                min-height: 20px !important;
+                max-width: 20px !important;
+                max-height: 20px !important;
+            }
+
+            .content {
+                margin-left: 25px; /* Adjusted to account for smaller sidebar */
+            }
+
+            .notifications-icon, .settings-icon, .help-icon {
+                display: none;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <header class="topbar liquid-glass">
+        <div class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="48" height="48">
+                <rect x="20" y="20" width="60" height="60" rx="10" fill="#f5f5f5" stroke="#333" stroke-width="3"/>
+                <line x1="30" y1="40" x2="70" y2="40" stroke="#333" stroke-width="3"/>
+                <line x1="30" y1="55" x2="70" y2="55" stroke="#333" stroke-width="3"/>
+                <line x1="30" y1="70" x2="55" y2="70" stroke="#333" stroke-width="3"/>
+                <circle cx="25" cy="40" r="4" fill="#4caf50"/>
+                <circle cx="25" cy="55" r="4" fill="#ff9800"/>
+                <circle cx="25" cy="70" r="4" fill="#f44336"/>
+            </svg>
+            <span class="logo-text">Munetios Tasks</span>
+        </div>
+        <div class="search-bar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="9" cy="9" r="7" />
+                <line x1="15" y1="15" x2="19" y2="19" />
+            </svg>
+            <input type="text" id="searchTasks" placeholder="Search tasks" aria-label="Search tasks">
+        </div>
+        <div class="top-right">
+            <div class="search-icon" id="searchIconMobile">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="9" cy="9" r="7" />
+                    <line x1="15" y1="15" x2="19" y2="19" />
+                </svg>
+             </div>
+             <div class="more-icon" id="moreIcon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="5" r="1.5" />
+                    <circle cx="12" cy="12" r="1.5" />
+                    <circle cx="12" cy="19" r="1.5" />
+                </svg>
+             </div>
+            <div class="notifications-icon" id="notifications" onclick="showNotificationsModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 28" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 16v-6a6 6 0 0 0-12 0v6l-1.5 1.5a1 1 0 0 0 .7 1.7h15.6a1 1 0 0 0 .7-1.7L18 16z"/>
+                    <circle cx="12" cy="22" r="2" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="settings-icon" id="settingsIcon">
+                <svg height="28" width="28" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.438.995s.145.755.438.995l1.003.827c.48.398.668 1.03.26 1.431l-1.296 2.247a1.125 1.125 0 01-1.37.49l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.063-.374-.313-.686-.645-.87a6.52 6.52 0 01-.22-.127c-.324-.196-.72-.257-1.075-.124l-1.217.456a1.125 1.125 0 01-1.37-.49l-1.296-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.437-.995s-.145-.755-.437-.995l-1.004-.827a1.125 1.125 0 01-.26-1.431l1.296-2.247a1.125 1.125 0 011.37-.49l1.217.456c.355.133.75.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            </div>
+            <div class="help-icon" id="helpIcon">
+              <svg width="28" height="28" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"></path></svg>
+            </div>
+            <div class="app-icon" id="appIcon">
+                <svg width="28" height="28" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"></path></svg>
+            </div>
+        </div>
+    </header>
+    <div class="sidebar liquid-glass" style="border-radius: 40px !important;">
+        <div class="items">
+           <div class="item" data-page="tasksContent">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="transparent" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="2" width="20" height="20" rx="4" fill="transparent" stroke="currentColor" stroke-width="2"/>
+                <line x1="6" y1="10" x2="18" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <line x1="6" y1="14" x2="18" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <line x1="6" y1="18" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+                <div class="menu-text">Tasks</div>
+           </div> 
+           <div class="item" data-page="completedContent">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+                <polyline points="8 12 11 15 16 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+                <div class="menu-text">Completed</div>
+           </div>
+           <div class="item" data-page="favoritesContent">
+           <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="none" stroke="currentColor" stroke-width="2"/>
+            </svg>
+                <div class="menu-text">Favorites</div>
+           </div>
+           <div class="item" data-page="archivedContent">
+             <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="7" width="18" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+                <path d="M3 7l1.5-4h15l1.5 4" fill="none" stroke="currentColor" stroke-width="2"/>
+                <line x1="9" y1="11" x2="15" y2="11" stroke="currentColor" stroke-width="2"/>
+            </svg>
+                <div class="menu-text">Archived</div>
+           </div>
+           <div class="item" data-page="categorysContent">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="7" width="18" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+                <path d="M3 7l1.5-4h15l1.5 4" fill="none" stroke="currentColor" stroke-width="2"/>
+            </svg>
+                <div class="menu-text">Categorys</div>
+           </div>
+           <div class="item" data-page="inProgressContent">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+                <path d="M8 12h4V8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="menu-text">In Progress</div>
+           </div>
+           <div class="item" data-page="trashContent">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="6" width="18" height="15" rx="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="2" fill="none"/>
+                <line x1="1" y1="6" x2="23" y2="6" stroke="currentColor" stroke-width="2"/>
+                <line x1="10" y1="11" x2="10" y2="17" stroke="currentColor" stroke-width="2"/>
+                <line x1="14" y1="11" x2="14" y2="17" stroke="currentColor" stroke-width="2"/>
+            </svg>
+                <div class="menu-text">Trash</div>
+           </div>
+              <div class="item" data-page="changelogContent">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                  <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                 <div class="menu-text">Changelog</div>
+              </div>
+        </div>
+        
+    </div>
+    <main>
+       <div class="content" id="tasksContent">
+        <noscript>
+            <div style="background: #ffdddd; color: #900; padding: 10px; border: 1px solid #900; border-radius: 8px; margin-bottom: 20px;">
+                <strong>JavaScript is disabled in your browser.</strong> This application requires JavaScript to function properly. Please enable JavaScript and refresh the page.
+            </div>
+        </noscript>
+        <h1>Tasks</h1>
+        <div class="createTaskContainer liquid-glass">
+            <input type="text" class="liquid-glass" name="title" id="titleInput" placeholder="Task Title" required>
+            <textarea class="liquid-glass" name="description" id="descriptionInput" placeholder="Task Description (optional)"></textarea>
+            <select class="liquid-glass" name="category" id="categoryDropdown">
+                <option value="" disabled selected>Select Category</option>
+              <!-- Rendered by JS -->
+            </select>
+            <button class="btn" id="addOption">Add Option</button>
+        </div>
+        <div class="taskOptionsContainer liquid-glass" style="border-radius: 30px !important;">
+            <div class="taskOption liquid-glass">
+                <input type="text" name="option" style="width: 100%;" placeholder="Option 1" required>
+                <button class="btn removeOption">
+                    <div class="trash-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="6" width="18" height="15" rx="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <line x1="1" y1="6" x2="23" y2="6" stroke="currentColor" stroke-width="2"/>
+                            <line x1="10" y1="11" x2="10" y2="17" stroke="currentColor" stroke-width="2"/>
+                            <line x1="14" y1="11" x2="14" y2="17" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="trash-label">Remove</div>
+                </button>
+            </div>
+        </div>
+        <button class="btn" id="createTaskBtn">Create Task</button>
+        <br>
+        <div id="tasksList"></div>
+        <br>
+       </div> 
+         <div class="content" id="completedContent" style="display: none;">
+                <h1>Completed Tasks</h1>
+                <!-- Completed tasks content goes here -->
+                <div id="completedTasksList"></div>
+            </div>
+         <div class="content" id="favoritesContent" style="display: none;">
+                <h1>Favorites</h1>
+                <div id="favoriteTasksList"></div>
+         </div>
+         <div class="content" id="archivedContent" style="display: none;">
+                <h1>Archived</h1>
+                <div id="archivedTasksList"></div>
+         </div>
+            <div class="content" id="categorysContent" style="display: none;">
+                    <h1>Categorys</h1>
+                    <div class="createCategoryContainer">
+                        <input type="text" name="category" id="categoryInput" placeholder="Category Name" required style="width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; background: #f9f9f9; transition: border-color 0.2s;">
+                        <button class="btn" id="addCategoryBtn">Add Category</button>
+                    </div>
+                    <div id="categorysList"></div>
+         </div>
+         <div class="content" id="inProgressContent" style="display: none;">
+                <h1>In Progress</h1>
+                <div id="inProgressTasksList"></div>
+         </div>
+         <div class="content" id="trashContent" style="display: none;">
+                <h1>Trash</h1>
+                <div id="trashTasksList"></div>
+         </div>
+         <div class="content" id="changelogContent" style="display: none;">
+            <h1>Changelog</h1>
+            <div class="changelogList">
+                <ul>
+                    <li><strong>1.00</strong> Released initial version</li>
+                    <li><strong>1.01</strong> Improvements and added a new app</li>
+                    <li><strong>1.02</strong> Added Offline support</li>
+                    <li><strong>1.10</strong> Added Print task, Added changelog, Added Due dates, Added backup, Improvements and made it more responsive and beautiful</li>
+                    <li><strong>1.11</strong> New apps menu, made it more beautiful, Improvements and bug fixes.</li>
+
+                </ul>
+              <p> <a href="https://www.munetios.com/policies/#/terms">Terms</a> | <a href="https://www.munetios.com/policies/#/privacy">Privacy</a> </p>
+            </div>
+         </div>
+
+    </main>
+    <div class="modal" id="appsModal">
+        <div class="modal-content liquid-glass">
+            <h2>Our Apps</h2>
+            <p>Check out our other apps:</p>
+            <iframe width="100%" height="400" src="https://www.munetios.com/apps" frameborder="0"></iframe>
+           
+        </div>
+    </div>
+    <div class="modal" id="notificationsModal">
+        <div class="modal-content liquid-glass">
+            <h2>Notifications</h2>
+            <p>No new notifications.</p>
+            <button class="btn" id="closeNotifications">Close</button>
+        </div>
+    </div>
+    <div class="modal" id="settingsModal">
+        <div class="modal-content liquid-glass">
+            <h2>Settings</h2>
+            <br>
+            <label for="themeSelect">Theme:</label>
+            <select style="width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; background: #f9f9f9; transition: border-color 0.2s;" id="themeSelect">
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+                <option value="system">System</option>
+            </select>
+            <br>
+            <br>
+            <br>
+            <input type="checkbox" name="Do not disturb" id="dndNotificationsToggle">
+            <label for="dndNotificationsToggle" style="margin-left: 8px;">Do Not Disturb Notifications</label>
+            <br>
+            <br>
+            <br>
+            <label for="languageSelect">Language:</label>
+            <select style="width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; background: #f9f9f9; transition: border-color 0.2s;" name="language" id="languageSelect">
+                <option value="en">English</option>
+                <option value="es">Spanish</option>
+                <option value="fr">French</option>
+                <option value="de">German</option>
+                <option value="zh">Chinese</option>
+                <option value="ru">Russian</option>
+                <option value="ja">Japanese</option>
+                <option value="ko">Korean</option>
+                <option value="pt">Portuguese</option>
+            </select>
+            <br>
+            <br>
+            <button class="btn" id="backupTasksBtn" style="width:100%;margin-bottom:12px;">Backup & Restore</button>
+
+            <br>
+            <br>
+
+            <button class="btn" id="closeSettings">Close</button>
+        </div>
+    </div>
+    <script>
+        document.getElementById('closeNotifications').onclick = () => {
+            document.getElementById('notificationsModal').style.display = 'none';
+        };
+    </script>
+            <div class="modal" id="backupModal">
+                <div class="modal-content">
+                    <h2>Backup & Restore</h2>
+                    <div style="margin-bottom:18px;">
+                        <button class="btn" id="exportBackupBtn" style="margin-bottom:8px;">Export Backup</button>
+                        <button class="btn" id="importBackupBtn">Import Backup</button>
+                        <input type="file" id="importBackupFile" accept=".json" style="display:none;">
+                    </div>
+                    <div id="backupDataPreview" style="max-height:220px;overflow:auto;font-size:13px;background:#f7f7fa;padding:10px;border-radius:8px;"></div>
+                    <br>
+                    <button class="btn" id="closeBackupModal">Close</button>
+                </div>
+            </div>
+            <script>
+            document.getElementById('backupTasksBtn').onclick = function() {
+                document.getElementById('backupModal').style.display = 'flex';
+                showBackupPreview();
+            };
+            document.getElementById('closeBackupModal').onclick = function() {
+                document.getElementById('backupModal').style.display = 'none';
+            };
+            document.getElementById('exportBackupBtn').onclick = function() {
+                const backup = getBackupData();
+                const blob = new Blob([JSON.stringify(backup, null, 2)], {type:'application/json'});
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'backup.json';
+                a.click();
+            };
+            document.getElementById('importBackupBtn').onclick = function() {
+                document.getElementById('importBackupFile').click();
+            };
+            document.getElementById('importBackupFile').onchange = function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    try {
+                        const data = JSON.parse(ev.target.result);
+                        restoreBackupData(data);
+                        showToast('Backup imported!', 'success');
+                        document.getElementById('backupModal').style.display = 'none';
+                    } catch {
+                        showToast('Invalid backup file.', 'error');
+                    }
+                };
+                reader.readAsText(file);
+            };
+            function getBackupData() {
+                return {
+                    tasks: JSON.parse(localStorage.getItem('tasks')||'[]'),
+                    categories: JSON.parse(localStorage.getItem('categories')||'[]'),
+                    notifications: JSON.parse(localStorage.getItem('notifications')||'[]'),
+                    userSettings: JSON.parse(localStorage.getItem('userSettings')||'{}')
+                };
+            }
+            function restoreBackupData(data) {
+                if (data.tasks) localStorage.setItem('tasks', JSON.stringify(data.tasks));
+                if (data.categories) localStorage.setItem('categories', JSON.stringify(data.categories));
+                if (data.notifications) localStorage.setItem('notifications', JSON.stringify(data.notifications));
+                if (data.userSettings) localStorage.setItem('userSettings', JSON.stringify(data.userSettings));
+                location.reload();
+            }
+            function showBackupPreview() {
+                const backup = getBackupData();
+                document.getElementById('backupDataPreview').textContent =
+                    'Tasks: ' + (backup.tasks?.length||0) +
+                    '\nCategories: ' + (backup.categories?.length||0) +
+                    '\nNotifications: ' + (backup.notifications?.length||0) +
+                    '\nFavorites: ' + (backup.tasks?.filter(t=>t.favorite).length||0) +
+                    '\nArchived: ' + (backup.tasks?.filter(t=>t.archived).length||0) +
+                    '\nCompleted: ' + (backup.tasks?.filter(t=>t.completed).length||0) +
+                    '\nTrashed: ' + (backup.tasks?.filter(t=>t.trashed).length||0);
+            }
+            </script>
+    <script>
+    // IE/old browser check FIRST before any other code runs
+    if (
+      !('querySelector' in document) ||
+      !('addEventListener' in window) ||
+      !('localStorage' in window) ||
+      !('classList' in document.createElement('div')) ||
+      /MSIE|Trident/.test(window.navigator.userAgent)
+    ) {
+      document.body.innerHTML = `
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background:#f0f0f0;">
+          <div style="background:#fff;padding:48px 32px;border-radius:18px;box-shadow:0 8px 32px rgba(111,21,172,0.18);max-width:420px;text-align:center;">
+            <h2 style="color:#6f15ac;margin-bottom:18px;">Munetios Tasks</h2>
+            <p style="font-size:18px;color:#f44336;margin-bottom:18px;">
+              Munetios Tasks is not supported in your browser.<br>
+              Please use a modern browser such as Chrome, Edge, Firefox, or Safari.
+            </p>
+            <p style="font-size:15px;color:#555;">
+              Example supported browsers:<br>
+              <strong>Google Chrome</strong>, <strong>Microsoft Edge</strong>, <strong>Mozilla Firefox</strong>, <strong>Apple Safari</strong>
+            </p>
+          </div>
+        </div>
+      `;
+      throw new Error('Unsupported browser');
+    }
+    /* --- Settings Modal Logic: Theme & DND --- */
+    const themeSelect = document.getElementById('themeSelect');
+    const dndToggle = document.getElementById('dndNotificationsToggle');
+
+    // Load settings from localStorage
+    let userSettings = JSON.parse(localStorage.getItem('userSettings') || '{}');
+    if (!userSettings.theme) userSettings.theme = 'system';
+    if (typeof userSettings.dnd === 'undefined') userSettings.dnd = false;
+
+    // Apply theme
+    function applyTheme(theme) {
+        let t = theme;
+        if (t === 'system') {
+            t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.body.classList.toggle('dark', t === 'dark');
+    }
+    applyTheme(userSettings.theme);
+
+    // Listen for system theme changes if system selected
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        if (themeSelect.value === 'system') applyTheme('system');
+    });
+
+    // Set theme select value
+    themeSelect.value = userSettings.theme;
+
+    // Set DND toggle
+    dndToggle.checked = !!userSettings.dnd;
+
+    // Save settings
+    function saveSettings() {
+        localStorage.setItem('userSettings', JSON.stringify(userSettings));
+    }
+
+    // Theme select change
+    themeSelect.onchange = function() {
+        userSettings.theme = themeSelect.value;
+        saveSettings();
+        applyTheme(userSettings.theme);
+    };
+
+    // DND toggle change
+    dndToggle.onchange = function() {
+        userSettings.dnd = dndToggle.checked;
+        saveSettings(); // Save DND to localStorage
+        renderNotifications();
+    };
+
+    // Patch addNotification to respect DND
+    const origAddNotification = addNotification;
+    addNotification = function(message) {
+        if (userSettings.dnd) return; // Do not send notifications if DND is on
+        origAddNotification(message);
+    };
+
+    // Patch renderNotifications to show DND message
+    const origRenderNotifications = renderNotifications;
+    renderNotifications = function() {
+        const modal = document.getElementById('notificationsModal');
+        const content = modal.querySelector('p');
+        if (userSettings.dnd) {
+            content.innerHTML = '<span style="color:#f44336;">Notifications are disabled (Do Not Disturb is ON).</span>';
+            return;
+        }
+        origRenderNotifications();
+    };
+
+    // Settings modal open/close
+    document.getElementById('settingsIcon').onclick = function() {
+        document.getElementById('settingsModal').style.display = 'flex';
+    };
+    document.getElementById('closeSettings').onclick = function() {
+        document.getElementById('settingsModal').style.display = 'none';
+    };
+
+    /* --- Language Logic --- */
+    const languageSelect = document.getElementById('languageSelect');
+
+    // Save language to userSettings and localStorage
+    languageSelect.value = userSettings.language || 'en';
+
+    languageSelect.onchange = function () {
+        userSettings.language = languageSelect.value;
+        saveSettings();
+        applyLanguage(userSettings.language);
+    };
+
+    // Simple language dictionary (expand as needed)
+    const translations = {
+        en: {
+            tasks: "Tasks",
+            completed: "Completed Tasks",
+            favorites: "Favorites",
+            archived: "Archived",
+            categorys: "Categories",
+            inProgress: "In Progress",
+            trash: "Trash",
+            addCategory: "Add Category",
+            createTask: "Create Task",
+            taskTitle: "Task Title",
+            taskDescription: "Task Description (optional)",
+            selectCategory: "Select Category",
+            addOption: "Add Option",
+            remove: "Remove",
+            share: "Share",
+            more: "More",
+            notifications: "Notifications",
+            settings: "Settings",
+            help: "Help",
+            close: "Close",
+            theme: "Theme:",
+            language: "Language:",
+            dnd: "Do Not Disturb Notifications",
+            unarchive: "Unarchive",
+            recover: "Recover",
+            permDelete: "Permanently Delete",
+            archive: "Archive",
+            markCompleted: "Mark as Completed",
+            markIncomplete: "Mark as Incomplete",
+            favorite: "Favorite",
+            unfavorite: "Unfavorite",
+            edit: "Edit",
+            moveToTrash: "Move to Trash",
+            toastTaskCreated: "Task created!",
+            toastTaskUpdated: "Task updated!",
+            toastTaskCompleted: "Task completed!",
+            toastTaskArchived: "Task archived.",
+            toastTaskUnarchived: "Task unarchived.",
+            toastTaskFavorited: "Added to favorites.",
+            toastTaskUnfavorited: "Removed from favorites.",
+            toastTaskTrashed: "Task moved to trash.",
+            toastTaskRecovered: "Task recovered.",
+            toastTaskDeleted: "Task permanently deleted.",
+            toastCategoryAdded: "Category added!",
+            toastCategoryRemoved: "Category removed.",
+            toastCategoryExists: "Category already exists.",
+            toastCategoryRequired: "At least one category required.",
+            toastFillFields: "Please fill in title, category, and at least one option.",
+            toastLinkCopied: "Link copied to clipboard!",
+            toastTaskFromLink: "Task created from link!",
+            toastOnly2Tasks: "Only 2 tasks left!",
+            toastOnly1Task: "Only 1 task left!",
+            toastEnterCategory: "Enter a category name.",
+            toastRemoveConfirm: "Move this task to trash?",
+            toastPermDeleteConfirm: "Permanently delete this task?",
+            searchPlaceholder: "Search tasks"
+        },
+        es: {
+            tasks: "Tareas",
+            completed: "Tareas completadas",
+            favorites: "Favoritos",
+            archived: "Archivado",
+            categorys: "Categorías",
+            inProgress: "En progreso",
+            trash: "Papelera",
+            addCategory: "Agregar categoría",
+            createTask: "Crear tarea",
+            taskTitle: "Título de la tarea",
+            taskDescription: "Descripción de la tarea (opcional)",
+            selectCategory: "Seleccionar categoría",
+            addOption: "Agregar opción",
+            remove: "Eliminar",
+            share: "Compartir",
+            more: "Más",
+            notifications: "Notificaciones",
+            settings: "Configuración",
+            help: "Ayuda",
+            close: "Cerrar",
+            theme: "Tema:",
+            language: "Idioma:",
+            dnd: "No molestar notificaciones",
+            unarchive: "Desarchivar",
+            recover: "Recuperar",
+            permDelete: "Eliminar permanentemente",
+            archive: "Archivar",
+            markCompleted: "Marcar como completada",
+            markIncomplete: "Marcar como incompleta",
+            favorite: "Favorito",
+            unfavorite: "Quitar de favoritos",
+            edit: "Editar",
+            moveToTrash: "Mover a la papelera",
+            toastTaskCreated: "¡Tarea creada!",
+            toastTaskUpdated: "¡Tarea actualizada!",
+            toastTaskCompleted: "¡Tarea completada!",
+            toastTaskArchived: "Tarea archivada.",
+            toastTaskUnarchived: "Tarea desarchivada.",
+            toastTaskFavorited: "Agregado a favoritos.",
+            toastTaskUnfavorited: "Eliminado de favoritos.",
+            toastTaskTrashed: "Tarea movida a la papelera.",
+            toastTaskRecovered: "Tarea recuperada.",
+            toastTaskDeleted: "Tarea eliminada permanentemente.",
+            toastCategoryAdded: "¡Categoría agregada!",
+            toastCategoryRemoved: "Categoría eliminada.",
+            toastCategoryExists: "La categoría ya existe.",
+            toastCategoryRequired: "Se requiere al menos una categoría.",
+            toastFillFields: "Por favor complete título, categoría y al menos una opción.",
+            toastLinkCopied: "¡Enlace copiado al portapapeles!",
+            toastTaskFromLink: "¡Tarea creada desde el enlace!",
+            toastOnly2Tasks: "¡Solo quedan 2 tareas!",
+            toastOnly1Task: "¡Solo queda 1 tarea!",
+            toastEnterCategory: "Ingrese un nombre de categoría.",
+            toastRemoveConfirm: "¿Mover esta tarea a la papelera?",
+            toastPermDeleteConfirm: "¿Eliminar permanentemente esta tarea?",
+            searchPlaceholder: "Buscar tareas"
+        },
+        fr: {
+            tasks: "Tâches",
+            completed: "Tâches terminées",
+            favorites: "Favoris",
+            archived: "Archivé",
+            categorys: "Catégories",
+            inProgress: "En cours",
+            trash: "Corbeille",
+            addCategory: "Ajouter une catégorie",
+            createTask: "Créer une tâche",
+            taskTitle: "Titre de la tâche",
+            taskDescription: "Description de la tâche (optionnel)",
+            selectCategory: "Sélectionner une catégorie",
+            addOption: "Ajouter une option",
+            remove: "Supprimer",
+            share: "Partager",
+            more: "Plus",
+            notifications: "Notifications",
+            settings: "Paramètres",
+            help: "Aide",
+            close: "Fermer",
+            theme: "Thème :",
+            language: "Langue :",
+            dnd: "Ne pas déranger les notifications",
+            unarchive: "Désarchiver",
+            recover: "Récupérer",
+            permDelete: "Supprimer définitivement",
+            archive: "Archiver",
+            markCompleted: "Marquer comme terminée",
+            markIncomplete: "Marquer comme incomplète",
+            favorite: "Favori",
+            unfavorite: "Retirer des favoris",
+            edit: "Éditer",
+            moveToTrash: "Mettre à la corbeille",
+            toastTaskCreated: "Tâche créée !",
+            toastTaskUpdated: "Tâche mise à jour !",
+            toastTaskCompleted: "Tâche terminée !",
+            toastTaskArchived: "Tâche archivée.",
+            toastTaskUnarchived: "Tâche désarchivée.",
+            toastTaskFavorited: "Ajouté aux favoris.",
+            toastTaskUnfavorited: "Retiré des favoris.",
+            toastTaskTrashed: "Tâche mise à la corbeille.",
+            toastTaskRecovered: "Tâche récupérée.",
+            toastTaskDeleted: "Tâche supprimée définitivement.",
+            toastCategoryAdded: "Catégorie ajoutée !",
+            toastCategoryRemoved: "Catégorie supprimée.",
+            toastCategoryExists: "La catégorie existe déjà.",
+            toastCategoryRequired: "Au moins une catégorie requise.",
+            toastFillFields: "Veuillez remplir le titre, la catégorie et au moins une option.",
+            toastLinkCopied: "Lien copié dans le presse-papiers !",
+            toastTaskFromLink: "Tâche créée à partir du lien !",
+            toastOnly2Tasks: "Il ne reste que 2 tâches !",
+            toastOnly1Task: "Il ne reste qu'1 tâche !",
+            toastEnterCategory: "Entrez un nom de catégorie.",
+            toastRemoveConfirm: "Mettre cette tâche à la corbeille ?",
+            toastPermDeleteConfirm: "Supprimer définitivement cette tâche ?",
+            searchPlaceholder: "Rechercher des tâches"
+        },
+        de: {
+            tasks: "Aufgaben",
+            completed: "Abgeschlossene Aufgaben",
+            favorites: "Favoriten",
+            archived: "Archiviert",
+            categorys: "Kategorien",
+            inProgress: "In Bearbeitung",
+            trash: "Papierkorb",
+            addCategory: "Kategorie hinzufügen",
+            createTask: "Aufgabe erstellen",
+            taskTitle: "Aufgabentitel",
+            taskDescription: "Aufgabenbeschreibung (optional)",
+            selectCategory: "Kategorie auswählen",
+            addOption: "Option hinzufügen",
+            remove: "Entfernen",
+            share: "Teilen",
+            more: "Mehr",
+            notifications: "Benachrichtigungen",
+            settings: "Einstellungen",
+            help: "Hilfe",
+            close: "Schließen",
+            theme: "Thema:",
+            language: "Sprache:",
+            dnd: "Nicht stören Benachrichtigungen",
+            unarchive: "Wiederherstellen",
+            recover: "Wiederherstellen",
+            permDelete: "Endgültig löschen",
+            archive: "Archivieren",
+            markCompleted: "Als erledigt markieren",
+            markIncomplete: "Als unerledigt markieren",
+            favorite: "Favorit",
+            unfavorite: "Aus Favoriten entfernen",
+            edit: "Bearbeiten",
+            moveToTrash: "In den Papierkorb",
+            toastTaskCreated: "Aufgabe erstellt!",
+            toastTaskUpdated: "Aufgabe aktualisiert!",
+            toastTaskCompleted: "Aufgabe erledigt!",
+            toastTaskArchived: "Aufgabe archiviert.",
+            toastTaskUnarchived: "Aufgabe wiederhergestellt.",
+            toastTaskFavorited: "Zu Favoriten hinzugefügt.",
+            toastTaskUnfavorited: "Aus Favoriten entfernt.",
+            toastTaskTrashed: "Aufgabe in den Papierkorb verschoben.",
+            toastTaskRecovered: "Aufgabe wiederhergestellt.",
+            toastTaskDeleted: "Aufgabe endgültig gelöscht.",
+            toastCategoryAdded: "Kategorie hinzugefügt!",
+            toastCategoryRemoved: "Kategorie entfernt.",
+            toastCategoryExists: "Kategorie existiert bereits.",
+            toastCategoryRequired: "Mindestens eine Kategorie erforderlich.",
+            toastFillFields: "Bitte Titel, Kategorie und mindestens eine Option ausfüllen.",
+            toastLinkCopied: "Link in die Zwischenablage kopiert!",
+            toastTaskFromLink: "Aufgabe aus Link erstellt!",
+            toastOnly2Tasks: "Nur noch 2 Aufgaben übrig!",
+            toastOnly1Task: "Nur noch 1 Aufgabe übrig!",
+            toastEnterCategory: "Geben Sie einen Kategorienamen ein.",
+            toastRemoveConfirm: "Diese Aufgabe in den Papierkorb verschieben?",
+            toastPermDeleteConfirm: "Diese Aufgabe endgültig löschen?",
+            searchPlaceholder: "Aufgaben suchen"
+        },
+        zh: {
+            tasks: "任务",
+            completed: "已完成任务",
+            favorites: "收藏夹",
+            archived: "已归档",
+            categorys: "分类",
+            inProgress: "进行中",
+            trash: "回收站",
+            addCategory: "添加分类",
+            createTask: "创建任务",
+            taskTitle: "任务标题",
+            taskDescription: "任务描述（可选）",
+            selectCategory: "选择分类",
+            addOption: "添加选项",
+            remove: "移除",
+            share: "分享",
+            more: "更多",
+            notifications: "通知",
+            settings: "设置",
+            help: "帮助",
+            close: "关闭",
+            theme: "主题：",
+            language: "语言：",
+            dnd: "请勿打扰通知",
+            unarchive: "取消归档",
+            recover: "恢复",
+            permDelete: "永久删除",
+            archive: "归档",
+            markCompleted: "标记为已完成",
+            markIncomplete: "标记为未完成",
+            favorite: "收藏",
+            unfavorite: "取消收藏",
+            edit: "编辑",
+            moveToTrash: "移至回收站",
+            toastTaskCreated: "任务已创建！",
+            toastTaskUpdated: "任务已更新！",
+            toastTaskCompleted: "任务已完成！",
+            toastTaskArchived: "任务已归档。",
+            toastTaskUnarchived: "任务已取消归档。",
+            toastTaskFavorited: "已添加到收藏夹。",
+            toastTaskUnfavorited: "已从收藏夹移除。",
+            toastTaskTrashed: "任务已移至回收站。",
+            toastTaskRecovered: "任务已恢复。",
+            toastTaskDeleted: "任务已永久删除。",
+            toastCategoryAdded: "分类已添加！",
+            toastCategoryRemoved: "分类已移除。",
+            toastCategoryExists: "分类已存在。",
+            toastCategoryRequired: "至少需要一个分类。",
+            toastFillFields: "请填写标题、分类和至少一个选项。",
+            toastLinkCopied: "链接已复制到剪贴板！",
+            toastTaskFromLink: "已通过链接创建任务！",
+            toastOnly2Tasks: "只剩下2个任务！",
+            toastOnly1Task: "只剩下1个任务！",
+            toastEnterCategory: "请输入分类名称。",
+            toastRemoveConfirm: "将此任务移至回收站？",
+            toastPermDeleteConfirm: "永久删除此任务？",
+            searchPlaceholder: "搜索任务"
+        },
+        ru: {
+            tasks: "Задачи",
+            completed: "Выполненные задачи",
+            favorites: "Избранное",
+            archived: "Архив",
+            categorys: "Категории",
+            inProgress: "В процессе",
+            trash: "Корзина",
+            addCategory: "Добавить категорию",
+            createTask: "Создать задачу",
+            taskTitle: "Название задачи",
+            taskDescription: "Описание задачи (необязательно)",
+            selectCategory: "Выбрать категорию",
+            addOption: "Добавить вариант",
+            remove: "Удалить",
+            share: "Поделиться",
+            more: "Еще",
+            notifications: "Уведомления",
+            settings: "Настройки",
+            help: "Помощь",
+            close: "Закрыть",
+            theme: "Тема:",
+            language: "Язык:",
+            dnd: "Не беспокоить уведомления",
+            unarchive: "Разархивировать",
+            recover: "Восстановить",
+            permDelete: "Удалить навсегда",
+            archive: "Архивировать",
+            markCompleted: "Отметить как выполнено",
+            markIncomplete: "Отметить как невыполнено",
+            favorite: "В избранное",
+            unfavorite: "Убрать из избранного",
+            edit: "Редактировать",
+            moveToTrash: "Переместить в корзину",
+            toastTaskCreated: "Задача создана!",
+            toastTaskUpdated: "Задача обновлена!",
+            toastTaskCompleted: "Задача выполнена!",
+            toastTaskArchived: "Задача архивирована.",
+            toastTaskUnarchived: "Задача разархивирована.",
+            toastTaskFavorited: "Добавлено в избранное.",
+            toastTaskUnfavorited: "Удалено из избранного.",
+            toastTaskTrashed: "Задача перемещена в корзину.",
+            toastTaskRecovered: "Задача восстановлена.",
+            toastTaskDeleted: "Задача удалена навсегда.",
+            toastCategoryAdded: "Категория добавлена!",
+            toastCategoryRemoved: "Категория удалена.",
+            toastCategoryExists: "Категория уже существует.",
+            toastCategoryRequired: "Требуется хотя бы одна категория.",
+            toastFillFields: "Пожалуйста, заполните название, категорию и хотя бы один вариант.",
+            toastLinkCopied: "Ссылка скопирована в буфер обмена!",
+            toastTaskFromLink: "Задача создана по ссылке!",
+            toastOnly2Tasks: "Осталось только 2 задачи!",
+            toastOnly1Task: "Осталась только 1 задача!",
+            toastEnterCategory: "Введите название категории.",
+            toastRemoveConfirm: "Переместить эту задачу в корзину?",
+            toastPermDeleteConfirm: "Удалить эту задачу навсегда?",
+            searchPlaceholder: "Поиск задач"
+        },
+        ja: {
+            tasks: "タスク",
+            completed: "完了したタスク",
+            favorites: "お気に入り",
+            archived: "アーカイブ",
+            categorys: "カテゴリ",
+            inProgress: "進行中",
+            trash: "ゴミ箱",
+            addCategory: "カテゴリを追加",
+            createTask: "タスクを作成",
+            taskTitle: "タスク名",
+            taskDescription: "タスクの説明（任意）",
+            selectCategory: "カテゴリを選択",
+            addOption: "オプションを追加",
+            remove: "削除",
+            share: "共有",
+            more: "もっと",
+            notifications: "通知",
+            settings: "設定",
+            help: "ヘルプ",
+            close: "閉じる",
+            theme: "テーマ：",
+            language: "言語：",
+            dnd: "通知をしない",
+            unarchive: "アーカイブ解除",
+            recover: "復元",
+            permDelete: "完全に削除",
+            archive: "アーカイブ",
+            markCompleted: "完了としてマーク",
+            markIncomplete: "未完了としてマーク",
+            favorite: "お気に入り",
+            unfavorite: "お気に入り解除",
+            edit: "編集",
+            moveToTrash: "ゴミ箱に移動",
+            toastTaskCreated: "タスクが作成されました！",
+            toastTaskUpdated: "タスクが更新されました！",
+            toastTaskCompleted: "タスクが完了しました！",
+            toastTaskArchived: "タスクがアーカイブされました。",
+            toastTaskUnarchived: "タスクのアーカイブを解除しました。",
+            toastTaskFavorited: "お気に入りに追加しました。",
+            toastTaskUnfavorited: "お気に入りから削除しました。",
+            toastTaskTrashed: "タスクがゴミ箱に移動されました。",
+            toastTaskRecovered: "タスクが復元されました。",
+            toastTaskDeleted: "タスクが完全に削除されました。",
+            toastCategoryAdded: "カテゴリが追加されました！",
+            toastCategoryRemoved: "カテゴリが削除されました。",
+            toastCategoryExists: "カテゴリはすでに存在します。",
+            toastCategoryRequired: "少なくとも1つのカテゴリが必要です。",
+            toastFillFields: "タイトル、カテゴリ、少なくとも1つのオプションを入力してください。",
+            toastLinkCopied: "リンクをクリップボードにコピーしました！",
+            toastTaskFromLink: "リンクからタスクが作成されました！",
+            toastOnly2Tasks: "残り2つのタスクのみ！",
+            toastOnly1Task: "残り1つのタスクのみ！",
+            toastEnterCategory: "カテゴリ名を入力してください。",
+            toastRemoveConfirm: "このタスクをゴミ箱に移動しますか？",
+            toastPermDeleteConfirm: "このタスクを完全に削除しますか？",
+            searchPlaceholder: "タスクを検索"
+        },
+        ko: {
+            tasks: "작업",
+            completed: "완료된 작업",
+            favorites: "즐겨찾기",
+            archived: "보관됨",
+            categorys: "카테고리",
+            inProgress: "진행 중",
+            trash: "휴지통",
+            addCategory: "카테고리 추가",
+            createTask: "작업 생성",
+            taskTitle: "작업 제목",
+            taskDescription: "작업 설명(선택 사항)",
+            selectCategory: "카테고리 선택",
+            addOption: "옵션 추가",
+            remove: "제거",
+            share: "공유",
+            more: "더보기",
+            notifications: "알림",
+            settings: "설정",
+            help: "도움말",
+            close: "닫기",
+            theme: "테마:",
+            language: "언어:",
+            dnd: "방해 금지 알림",
+            unarchive: "보관 해제",
+            recover: "복구",
+            permDelete: "영구 삭제",
+            archive: "보관",
+            markCompleted: "완료로 표시",
+            markIncomplete: "미완료로 표시",
+            favorite: "즐겨찾기",
+            unfavorite: "즐겨찾기 해제",
+            edit: "편집",
+            moveToTrash: "휴지통으로 이동",
+            toastTaskCreated: "작업이 생성되었습니다!",
+            toastTaskUpdated: "작업이 업데이트되었습니다!",
+            toastTaskCompleted: "작업이 완료되었습니다!",
+            toastTaskArchived: "작업이 보관되었습니다.",
+            toastTaskUnarchived: "작업이 보관 해제되었습니다.",
+            toastTaskFavorited: "즐겨찾기에 추가되었습니다.",
+            toastTaskUnfavorited: "즐겨찾기에서 제거되었습니다.",
+            toastTaskTrashed: "작업이 휴지통으로 이동되었습니다.",
+            toastTaskRecovered: "작업이 복구되었습니다.",
+            toastTaskDeleted: "작업이 영구적으로 삭제되었습니다.",
+            toastCategoryAdded: "카테고리가 추가되었습니다!",
+            toastCategoryRemoved: "카테고리가 제거되었습니다.",
+            toastCategoryExists: "카테고리가 이미 존재합니다.",
+            toastCategoryRequired: "최소한 하나의 카테고리가 필요합니다.",
+            toastFillFields: "제목, 카테고리, 최소 하나의 옵션을 입력하세요.",
+            toastLinkCopied: "링크가 클립보드에 복사되었습니다!",
+            toastTaskFromLink: "링크에서 작업이 생성되었습니다!",
+            toastOnly2Tasks: "작업이 2개만 남았습니다!",
+            toastOnly1Task: "작업이 1개만 남았습니다!",
+            toastEnterCategory: "카테고리 이름을 입력하세요.",
+            toastRemoveConfirm: "이 작업을 휴지통으로 이동하시겠습니까?",
+            toastPermDeleteConfirm: "이 작업을 영구적으로 삭제하시겠습니까?",
+            searchPlaceholder: "작업 검색"
+        },
+        pt: {
+            tasks: "Tarefas",
+            completed: "Tarefas concluídas",
+            favorites: "Favoritos",
+            archived: "Arquivado",
+            categorys: "Categorias",
+            inProgress: "Em andamento",
+            trash: "Lixeira",
+            addCategory: "Adicionar categoria",
+            createTask: "Criar tarefa",
+            taskTitle: "Título da tarefa",
+            taskDescription: "Descrição da tarefa (opcional)",
+            selectCategory: "Selecionar categoria",
+            addOption: "Adicionar opção",
+            remove: "Remover",
+            share: "Compartilhar",
+            more: "Mais",
+            notifications: "Notificações",
+            settings: "Configurações",
+            help: "Ajuda",
+            close: "Fechar",
+            theme: "Tema:",
+            language: "Idioma:",
+            dnd: "Não perturbe notificações",
+            unarchive: "Desarquivar",
+            recover: "Recuperar",
+            permDelete: "Excluir permanentemente",
+            archive: "Arquivar",
+            markCompleted: "Marcar como concluída",
+            markIncomplete: "Marcar como incompleta",
+            favorite: "Favorito",
+            unfavorite: "Remover dos favoritos",
+            edit: "Editar",
+            moveToTrash: "Mover para lixeira",
+            toastTaskCreated: "Tarefa criada!",
+            toastTaskUpdated: "Tarefa atualizada!",
+            toastTaskCompleted: "Tarefa concluída!",
+            toastTaskArchived: "Tarefa arquivada.",
+            toastTaskUnarchived: "Tarefa desarquivada.",
+            toastTaskFavorited: "Adicionado aos favoritos.",
+            toastTaskUnfavorited: "Removido dos favoritos.",
+            toastTaskTrashed: "Tarefa movida para lixeira.",
+            toastTaskRecovered: "Tarefa recuperada.",
+            toastTaskDeleted: "Tarefa excluída permanentemente.",
+            toastCategoryAdded: "Categoria adicionada!",
+            toastCategoryRemoved: "Categoria removida.",
+            toastCategoryExists: "Categoria já existe.",
+            toastCategoryRequired: "Pelo menos uma categoria é necessária.",
+            toastFillFields: "Por favor, preencha o título, categoria e pelo menos uma opção.",
+            toastLinkCopied: "Link copiado para a área de transferência!",
+            toastTaskFromLink: "Tarefa criada a partir do link!",
+            toastOnly2Tasks: "Apenas 2 tarefas restantes!",
+            toastOnly1Task: "Apenas 1 tarefa restante!",
+            toastEnterCategory: "Digite um nome de categoria.",
+            toastRemoveConfirm: "Mover esta tarefa para a lixeira?",
+            toastPermDeleteConfirm: "Excluir permanentemente esta tarefa?",
+            searchPlaceholder: "Pesquisar tarefas"
+        }
+    };
+
+    // Helper to get current translation object
+    function getCurrentTranslation() {
+        const lang = (userSettings && userSettings.language) || 'en';
+        return translations[lang] || translations.en;
+    }
+
+    // Update search placeholders on language change
+    function updateSearchPlaceholders() {
+        const t = getCurrentTranslation();
+        const searchInput = document.getElementById('searchTasks');
+        if (searchInput) searchInput.placeholder = t.searchPlaceholder || t.tasks;
+        // Update mobile search placeholder if open
+        const mobileInput = document.getElementById('mobileSearchInput');
+        if (mobileInput) mobileInput.placeholder = t.searchPlaceholder || t.tasks;
+    }
+
+    // Patch applyLanguage to update search placeholders
+    const origApplyLanguage = applyLanguage;
+    applyLanguage = function(lang) {
+        origApplyLanguage(lang);
+        updateSearchPlaceholders();
+    };
+    // Initial call
+    updateSearchPlaceholders();
+
+    // Patch showToast to use translations
+    function showToast(msg, type = 'info', key = null) {
+        let t = getCurrentTranslation();
+        let text = msg;
+        if (key && t[key]) text = t[key];
+        let toast = document.createElement('div');
+        toast.style.position = 'fixed';
+        toast.style.bottom = '32px';
+        toast.style.left = '50%';
+        toast.style.transform = 'translateX(-50%)';
+        toast.style.background = type === 'error' ? '#f44336' : (type === 'success' ? '#4caf50' : '#6f15ac');
+        toast.style.color = '#fff';
+        toast.style.padding = '14px 32px';
+        toast.style.borderRadius = '32px';
+        toast.style.fontSize = '16px';
+        toast.style.boxShadow = '0 2px 12px rgba(0,0,0,0.18)';
+        toast.style.zIndex = 9999;
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.2s';
+        toast.textContent = text;
+        document.body.appendChild(toast);
+        setTimeout(() => { toast.style.opacity = '1'; }, 10);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+        }, 2000);
+    }
+
+    function applyLanguage(lang) {
+        const t = translations[lang] || translations.en;
+        // Example: update static text content
+        document.querySelector('#tasksContent h1').textContent = t.tasks;
+        document.querySelector('#completedContent h1').textContent = t.completed;
+        document.querySelector('#favoritesContent h1').textContent = t.favorites;
+        document.querySelector('#archivedContent h1').textContent = t.archived;
+        document.querySelector('#categorysContent h1').textContent = t.categorys;
+        document.querySelector('#inProgressContent h1').textContent = t.inProgress;
+        document.querySelector('#trashContent h1').textContent = t.trash;
+        document.getElementById('addCategoryBtn').textContent = t.addCategory;
+        document.getElementById('createTaskBtn').textContent = t.createTask;
+        document.getElementById('titleInput').placeholder = t.taskTitle;
+        document.getElementById('descriptionInput').placeholder = t.taskDescription;
+        document.getElementById('categoryDropdown').options[0].textContent = t.selectCategory;
+        document.getElementById('addOption').textContent = t.addOption;
+        // Modal and settings
+        document.querySelector('#notificationsModal h2').textContent = t.notifications;
+        document.querySelector('#settingsModal h2').textContent = t.settings;
+        document.querySelector('label[for="themeSelect"]').textContent = t.theme;
+        document.querySelector('label[for="languageSelect"]').textContent = t.language;
+        document.querySelector('label[for="dndNotificationsToggle"]').textContent = t.dnd;
+        document.getElementById('closeNotifications').textContent = t.close;
+        document.getElementById('closeSettings').textContent = t.close;
+        // Help icon tooltip (if needed)
+        document.getElementById('helpIcon').title = t.help;
+        // Sidebar
+        document.querySelectorAll('.sidebar .item').forEach((item, i) => {
+            const page = item.getAttribute('data-page');
+            let key = page.replace('Content', '');
+            // Use correct key for "inProgress"
+            if (key === 'inProgress') {
+                item.querySelector('.menu-text').textContent = t.inProgress;
+            } else if (t[key.toLowerCase()]) {
+                item.querySelector('.menu-text').textContent = t[key.toLowerCase()];
+            }
+        });
+        // Option remove/trash label
+        document.querySelectorAll('.trash-label').forEach(el => el.textContent = t.remove);
+        // Share label
+        setTimeout(() => {
+            document.querySelectorAll('.share-label').forEach(el => el.textContent = t.share);
+        }, 0);
+        // More icon tooltip
+        document.getElementById('moreIcon').title = t.more;
+    }
+
+    applyLanguage(languageSelect.value);
+
+
+
+        /* --- Help Icon Toast --- */
+        document.getElementById('helpIcon').onclick = function () {
+            showToast('Click a task to expand and see its details. Use the "More" button for actions like edit, archive, favorite, or move to trash. Add new tasks with a title, category, and options. You can also create and manage categories. Use the sidebar to switch between Tasks, Completed, Favorites, Archived, Categories, In Progress, and Trash views. For help, click the help icon. Enjoy organizing your tasks!', 'info');
+        };
+
+
+        /* --- App Icon Modal Logic --- */
+        document.getElementById('appIcon').onclick = function () {
+            document.getElementById('appsModal').style.display = 'flex';
+        };
+        document.getElementById('appsModal').addEventListener('click', function (e) {
+            if (e.target === this) this.style.display = 'none';
+        });
+
+
+
+        /* --- Add More Notifications --- */
+        // Notify when a task is archived
+        function notifyIfTaskArchived() {
+            let lastArchived = Number(localStorage.getItem('lastArchived') || '0');
+            const archivedTasks = tasks.filter(t => t.archived && !t.trashed);
+            if (archivedTasks.length > lastArchived) {
+                addNotification('A task was archived.');
+                localStorage.setItem('lastArchived', archivedTasks.length);
+            } else if (archivedTasks.length < lastArchived) {
+                localStorage.setItem('lastArchived', archivedTasks.length);
+            }
+        }
+
+        // Notify when a task is favorited
+        function notifyIfTaskFavorited() {
+            let lastFav = Number(localStorage.getItem('lastFav') || '0');
+            const favTasks = tasks.filter(t => t.favorite && !t.trashed);
+            if (favTasks.length > lastFav) {
+                addNotification('A task was added to favorites.');
+                localStorage.setItem('lastFav', favTasks.length);
+            } else if (favTasks.length < lastFav) {
+                localStorage.setItem('lastFav', favTasks.length);
+            }
+        }
+
+        // Notify when a task is moved to trash
+        function notifyIfTaskTrashed() {
+            let lastTrashed = Number(localStorage.getItem('lastTrashed') || '0');
+            const trashedTasks = tasks.filter(t => t.trashed);
+            if (trashedTasks.length > lastTrashed) {
+                addNotification('A task was moved to trash.');
+                localStorage.setItem('lastTrashed', trashedTasks.length);
+            } else if (trashedTasks.length < lastTrashed) {
+                localStorage.setItem('lastTrashed', trashedTasks.length);
+            }
+        }
+
+        // Notify when a new category is added
+        function notifyIfCategoryAdded() {
+            let lastCatCount = Number(localStorage.getItem('lastCatCount') || '0');
+            if (categories.length > lastCatCount) {
+                addNotification('A new category was added.');
+                localStorage.setItem('lastCatCount', categories.length);
+            } else if (categories.length < lastCatCount) {
+                localStorage.setItem('lastCatCount', categories.length);
+            }
+        }
+
+        // Call notification checks after every renderTasks and category change
+        const origRenderTasksNotifyMore = renderTasks;
+        renderTasks = function() {
+            origRenderTasksNotifyMore.apply(this, arguments);
+            notifyIfFewTasksLeft();
+            notifyIfTaskArchived();
+            notifyIfTaskFavorited();
+            notifyIfTaskTrashed();
+            notifyIfCategoryAdded();
+        };
+
+
+
+
+
+        /* --- Notify when only 2 or 1 task left --- */
+        function notifyIfFewTasksLeft() {
+            // Only count tasks that are not trashed, not archived, not completed
+            const activeTasks = tasks.filter(
+                t => !t.trashed && !t.archived && !t.completed
+            );
+            if (activeTasks.length === 2) {
+                // Only notify once per session for 2 left
+                if (!sessionStorage.getItem('notified2Tasks')) {
+                    addNotification('Only 2 tasks left!');
+                    sessionStorage.setItem('notified2Tasks', '1');
+                }
+            } else {
+                sessionStorage.removeItem('notified2Tasks');
+            }
+            if (activeTasks.length === 1) {
+                if (!sessionStorage.getItem('notified1Task')) {
+                    addNotification('Only 1 task left!');
+                    sessionStorage.setItem('notified1Task', '1');
+                }
+            } else {
+                sessionStorage.removeItem('notified1Task');
+            }
+        }
+
+        // Call after every renderTasks and after task changes
+        const origRenderTasksNotify = renderTasks;
+        renderTasks = function() {
+            origRenderTasksNotify.apply(this, arguments);
+            notifyIfFewTasksLeft();
+        };
+
+
+
+
+        /* --- More Icon (Mobile/Small Screen) Dropdown --- */
+        let moreMenuWrapper = null;
+        const moreIcon = document.getElementById('moreIcon');
+        moreIcon.onclick = function (e) {
+            e.stopPropagation();
+            if (moreMenuWrapper) {
+                moreMenuWrapper.remove();
+                moreMenuWrapper = null;
+                return;
+            }
+            moreMenuWrapper = document.createElement('div');
+            moreMenuWrapper.style.position = 'fixed';
+            moreMenuWrapper.style.top = '60px';
+            moreMenuWrapper.style.right = '24px';
+            moreMenuWrapper.style.background = '#fff';
+            moreMenuWrapper.style.boxShadow = '0 2px 12px rgba(0,0,0,0.18)';
+            moreMenuWrapper.style.borderRadius = '12px';
+            moreMenuWrapper.style.zIndex = 3000;
+            moreMenuWrapper.style.minWidth = '180px';
+            moreMenuWrapper.innerHTML = `
+                <div class="liquid-glass" style="padding:16px 0;display:flex;flex-direction:column;gap:2px;">
+                    <button class="btn" id="moreNotifBtn" style="justify-content:flex-start;gap:10px;background:none;color:#333;box-shadow:none;">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 28" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;">
+                            <path d="M18 16v-6a6 6 0 0 0-12 0v6l-1.5 1.5a1 1 0 0 0 .7 1.7h15.6a1 1 0 0 0 .7-1.7L18 16z"/>
+                            <circle cx="12" cy="22" r="2" fill="currentColor"/>
+                        </svg>
+                        Notifications
+                    </button>
+                    <button class="btn" id="moreSettingsBtn" style="justify-content:flex-start;gap:10px;background:none;color:#333;box-shadow:none;">
+                        <svg height="22" width="22" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="margin-right:6px;"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.438.995s.145.755.438.995l1.003.827c.48.398.668 1.03.26 1.431l-1.296 2.247a1.125 1.125 0 01-1.37.49l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.063-.374-.313-.686-.645-.87a6.52 6.52 0 01-.22-.127c-.324-.196-.72-.257-1.075-.124l-1.217.456a1.125 1.125 0 01-1.37-.49l-1.296-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.437-.995s-.145-.755-.437-.995l-1.004-.827a1.125 1.125 0 01-.26-1.431l1.296-2.247a1.125 1.125 0 011.37-.49l1.217.456c.355.133.75.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        Settings
+                    </button>
+                    <button class="btn" id="moreHelpBtn" style="justify-content:flex-start;gap:10px;background:none;color:#333;box-shadow:none;">
+                        <svg width="22" height="22" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="margin-right:6px;"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"></path></svg>
+                        Help
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(moreMenuWrapper);
+
+            // Button actions
+            moreMenuWrapper.querySelector('#moreNotifBtn').onclick = function () {
+                showNotificationsModal();
+                moreMenuWrapper.remove();
+                moreMenuWrapper = null;
+            };
+            moreMenuWrapper.querySelector('#moreSettingsBtn').onclick = function () {
+                document.getElementById('settingsIcon').click();
+                moreMenuWrapper.remove();
+                moreMenuWrapper = null;
+            };
+            moreMenuWrapper.querySelector('#moreHelpBtn').onclick = function () {
+                document.getElementById('helpIcon').click();
+                moreMenuWrapper.remove();
+                moreMenuWrapper = null;
+            };
+
+            // Close on outside click
+            setTimeout(() => {
+                document.addEventListener('click', closeMoreMenuWrapper, { once: true });
+            }, 0);
+            function closeMoreMenuWrapper(ev) {
+                if (moreMenuWrapper && !moreMenuWrapper.contains(ev.target) && ev.target !== moreIcon) {
+                    moreMenuWrapper.remove();
+                    moreMenuWrapper = null;
+                }
+            }
+        };
+
+
+
+
+        /* --- Notifications Logic --- */
+        let notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
+
+        function saveNotifications() {
+            localStorage.setItem('notifications', JSON.stringify(notifications));
+        }
+
+        function addNotification(message) {
+            notifications.push({
+                message,
+                timestamp: Date.now(),
+                id: Math.random().toString(36).substr(2, 9)
+            });
+            saveNotifications();
+            renderNotifications();
+        }
+
+        function deleteNotification(id) {
+            notifications = notifications.filter(n => n.id !== id);
+            saveNotifications();
+            renderNotifications();
+        }
+
+        function renderNotifications() {
+            const modal = document.getElementById('notificationsModal');
+            const content = modal.querySelector('p');
+            if (notifications.length === 0) {
+                content.innerHTML = 'No new notifications.';
+            } else {
+                content.innerHTML = notifications.map(n => `
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;">
+                        <span>${n.message}</span>
+                        <button class="btn" style="background:#f44336;padding:4px 10px;font-size:13px;" onclick="deleteNotification('${n.id}')">Delete</button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Initial render
+        renderNotifications();
+
+        
+        // Show notifications modal if there are new notifications
+        function showNotificationsModal() {
+            document.getElementById('notificationsModal').style.display = 'flex';
+        }
+
+        /* --- Task Data & Storage (moved up to fix initialization error) --- */
+        let defaultCategories = ["General", "Work", "Personal"];
+        let categories = JSON.parse(localStorage.getItem('categories') || JSON.stringify(defaultCategories));
+        let tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+
+        /* --- Categorys Logic --- */
+        function saveCategories() {
+            localStorage.setItem('categories', JSON.stringify(categories));
+            renderCategories();
+            renderCategorysList();
+        }
+        function renderCategorysList() {
+            const list = document.getElementById('categorysList');
+            if (!list) return;
+            list.innerHTML = '';
+            categories.forEach((cat, idx) => {
+                const div = document.createElement('div');
+                div.style.display = 'flex';
+                div.style.alignItems = 'center';
+                div.style.justifyContent = 'space-between';
+                div.style.background = '#f7f7fa';
+                div.style.padding = '10px 16px';
+                div.style.borderRadius = '8px';
+                div.style.marginBottom = '8px';
+                div.innerHTML = `
+                    <span style="font-size:16px;color:#6f15ac;">${cat}</span>
+                    <button class="btn removeCatBtn" style="background:#f44336;padding:6px 16px;">Remove</button>
+                `;
+                div.querySelector('.removeCatBtn').onclick = () => {
+                    if (categories.length === 1) {
+                        showToast('At least one category required.', 'error');
+                        return;
+                    }
+                    // Remove all tasks with this category or set to "General"
+                    tasks.forEach(t => {
+                        if (t.category === cat) t.category = categories[0] === cat ? categories[1] : categories[0];
+                    });
+                    categories.splice(idx, 1);
+                    saveCategories();
+                    saveTasks();
+                    renderTasks();
+                    showToast('Category removed.', 'success');
+                };
+                list.appendChild(div);
+            });
+        }
+        document.getElementById('addCategoryBtn').onclick = () => {
+            const input = document.getElementById('categoryInput');
+            const val = input.value.trim();
+            if (!val) {
+                showToast('Enter a category name.', 'error');
+                return;
+            }
+            if (categories.includes(val)) {
+                showToast('Category already exists.', 'error');
+                return;
+            }
+            categories.push(val);
+            saveCategories();
+            input.value = '';
+            showToast('Category added!', 'success');
+        };
+
+        /* --- Search Bar Logic --- */
+        function filterTasks(query) {
+            query = query.trim().toLowerCase();
+            const list = document.getElementById('tasksList');
+            list.innerHTML = '';
+            tasks.forEach((task, idx) => {
+                ensureTaskFields(task);
+                if (task.trashed || task.archived || task.completed) return;
+                if (
+                    task.title.toLowerCase().includes(query) ||
+                    (task.description && task.description.toLowerCase().includes(query)) ||
+                    (task.category && task.category.toLowerCase().includes(query)) ||
+                    (task.options && task.options.some(opt => opt.toLowerCase().includes(query)))
+                ) {
+                    list.appendChild(renderTaskItem(task, idx));
+                }
+            });
+            moveCategoryLabel();
+        }
+        const searchInput = document.getElementById('searchTasks');
+        searchInput.addEventListener('input', e => {
+            if (searchInput.value.trim() === '') {
+                renderTasks();
+            } else {
+                filterTasks(searchInput.value);
+            }
+        });
+
+        /* --- Mobile Search --- */
+        let mobileSearchDiv = null;
+        document.getElementById('searchIconMobile').onclick = function(e) {
+            e.stopPropagation();
+            if (mobileSearchDiv) {
+                mobileSearchDiv.remove();
+                mobileSearchDiv = null;
+                return;
+            }
+            mobileSearchDiv = document.createElement('div');
+            mobileSearchDiv.style.position = 'fixed';
+            mobileSearchDiv.style.top = '0';
+            mobileSearchDiv.style.left = '0';
+            mobileSearchDiv.style.width = '100vw';
+            mobileSearchDiv.style.height = '100vh';
+            mobileSearchDiv.style.background = 'rgba(0,0,0,0.18)';
+            mobileSearchDiv.style.zIndex = 9999;
+            mobileSearchDiv.style.display = 'flex';
+            mobileSearchDiv.style.alignItems = 'flex-start';
+            mobileSearchDiv.style.justifyContent = 'center';
+            mobileSearchDiv.innerHTML = `
+                <div style="background:#fff;border-radius:32px;margin-top:32px;display:flex;align-items:center;padding:10px 18px;gap:8px;width:90vw;max-width:500px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="9" r="7" />
+                        <line x1="15" y1="15" x2="19" y2="19" />
+                    </svg>
+                    <input type="text" id="mobileSearchInput" placeholder="Search tasks" style="border:none;outline:none;width:100%;font-size:16px;">
+                    <button id="closeMobileSearch" style="background:none;border:none;font-size:22px;cursor:pointer;">&times;</button>
+                </div>
+            `;
+            document.body.appendChild(mobileSearchDiv);
+            const mobileInput = mobileSearchDiv.querySelector('#mobileSearchInput');
+            mobileInput.focus();
+            mobileInput.addEventListener('input', () => {
+                if (mobileInput.value.trim() === '') {
+                    renderTasks();
+                } else {
+                    filterTasks(mobileInput.value);
+                }
+            });
+            mobileSearchDiv.querySelector('#closeMobileSearch').onclick = () => {
+                mobileSearchDiv.remove();
+                mobileSearchDiv = null;
+                renderTasks();
+            };
+            // Close on outside click
+            mobileSearchDiv.onclick = function(ev) {
+                if (ev.target === mobileSearchDiv) {
+                    mobileSearchDiv.remove();
+                    mobileSearchDiv = null;
+                    renderTasks();
+                }
+            };
+        };
+
+
+
+        const sidebarItems = document.querySelectorAll('.sidebar .item');
+
+        // Map all content sections by their IDs
+        const contentSections = {
+            tasksContent: document.getElementById('tasksContent'),
+            completedContent: document.getElementById('completedContent'),
+            favoritesContent: document.getElementById('favoritesContent'),
+            categorysContent: document.getElementById('categorysContent'),
+            archivedContent: document.getElementById('archivedContent'),
+            inProgressContent: document.getElementById('inProgressContent'),
+            trashContent: document.getElementById('trashContent'),
+            changelogContent: document.getElementById('changelogContent')
+        };
+
+        // Hide all content sections except the first (Tasks) or saved section
+        let activeSection = sessionStorage.getItem('activeSection') || 'tasksContent';
+        for (const key in contentSections) {
+            contentSections[key].style.display = (key === activeSection) ? '' : 'none';
+        }
+        // Set active class on sidebar
+        sidebarItems.forEach(item => {
+            if (item.getAttribute('data-page') === activeSection) {
+            item.classList.add('active');
+            } else {
+            item.classList.remove('active');
+            }
+        });
+
+        // Sidebar switching logic
+        sidebarItems.forEach(item => {
+            item.addEventListener('click', () => {
+            // Remove active class from all
+            sidebarItems.forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+
+            // Hide all content sections
+            for (const key in contentSections) {
+                contentSections[key].style.display = 'none';
+            }
+
+            // Show the selected section
+            const page = item.getAttribute('data-page');
+            if (contentSections[page]) {
+                contentSections[page].style.display = '';
+                sessionStorage.setItem('activeSection', page);
+            }
+            // Only render category list if switching to categorysContent
+            if (page === 'categorysContent') {
+                renderCategorysList();
+            }
+            });
+        });
+        /* --- Task Option Check/Progress/Completed/Trash/Favorites/Archive Logic --- */
+        // Add new fields to tasks: optionChecks (array of bool), trashed (bool), deletedAt (timestamp), subtasks (array)
+        function ensureTaskFields(task) {
+            if (!Array.isArray(task.optionChecks) || task.optionChecks.length !== task.options.length) {
+            task.optionChecks = Array(task.options.length).fill(false);
+            }
+            if (typeof task.trashed !== 'boolean') task.trashed = false;
+            if (typeof task.deletedAt !== 'number') task.deletedAt = 0;
+            if (typeof task.favorite !== 'boolean') task.favorite = false;
+            if (typeof task.archived !== 'boolean') task.archived = false;
+            if (typeof task.completed !== 'boolean') task.completed = false;
+            if (typeof task.expanded !== 'boolean') task.expanded = false;
+            if (!Array.isArray(task.subtasks)) task.subtasks = Array(task.options.length).fill([]).map(() => []);
+            // Add subtaskChecks for each subtask option
+            if (!Array.isArray(task.subtaskChecks) || task.subtaskChecks.length !== task.options.length) {
+            task.subtaskChecks = Array(task.options.length).fill([]).map(() => []);
+            }
+            // Ensure subtaskChecks matches subtasks
+            for (let i = 0; i < task.options.length; ++i) {
+            if (!Array.isArray(task.subtasks[i])) task.subtasks[i] = [];
+            if (!Array.isArray(task.subtaskChecks[i]) || task.subtaskChecks[i].length !== task.subtasks[i].length) {
+                task.subtaskChecks[i] = Array(task.subtasks[i].length).fill(false);
+            }
+            }
+        }
+        // Ensure all tasks have new fields
+        tasks.forEach(ensureTaskFields);
+
+        // Helper: move task to trash
+        function moveToTrash(idx) {
+            tasks[idx].trashed = true;
+            tasks[idx].deletedAt = Date.now();
+            saveTasks();
+            renderTasks();
+            renderTrash();
+            showToast('Task moved to trash.', 'success');
+        }
+        // Helper: recover from trash
+        function recoverFromTrash(idx) {
+            tasks[idx].trashed = false;
+            tasks[idx].deletedAt = 0;
+            saveTasks();
+            renderTasks();
+            renderTrash();
+            showToast('Task recovered.', 'success');
+        }
+        // Helper: permanently delete
+        function permDelete(idx) {
+            tasks.splice(idx, 1);
+            saveTasks();
+            renderTasks();
+            renderTrash();
+            showToast('Task permanently deleted.', 'success');
+        }
+        // Helper: unarchive
+        function unarchive(idx) {
+            tasks[idx].archived = false;
+            saveTasks();
+            renderTasks();
+            renderArchive();
+            showToast('Task unarchived.', 'success');
+        }
+
+        // Render tasks for main list, in progress, completed, favorites, archived
+        function renderTasks() {
+            const list = document.getElementById('tasksList');
+            list.innerHTML = '';
+            // Only show tasks not trashed, not archived, not completed
+            tasks.forEach((task, idx) => {
+            ensureTaskFields(task);
+            if (task.trashed || task.archived || task.completed) return;
+            list.appendChild(renderTaskItem(task, idx));
+            });
+            renderInProgress();
+            renderCompleted();
+            renderFavorites();
+            renderArchive();
+        }
+
+        // --- Subtasks Modal ---
+        let subtaskModalDiv = null;
+        function showSubtaskModal(taskIdx, optIdx) {
+            if (subtaskModalDiv) subtaskModalDiv.remove();
+            const task = tasks[taskIdx];
+            ensureTaskFields(task);
+            // Ensure subtasks array exists for this option
+            if (!Array.isArray(task.subtasks)) task.subtasks = Array(task.options.length).fill([]).map(() => []);
+            if (!Array.isArray(task.subtasks[optIdx])) task.subtasks[optIdx] = [];
+            if (!Array.isArray(task.subtaskChecks)) task.subtaskChecks = Array(task.options.length).fill([]).map(() => []);
+            if (!Array.isArray(task.subtaskChecks[optIdx]) || task.subtaskChecks[optIdx].length !== task.subtasks[optIdx].length) {
+            task.subtaskChecks[optIdx] = Array(task.subtasks[optIdx].length).fill(false);
+            }
+            subtaskModalDiv = document.createElement('div');
+            subtaskModalDiv.className = 'modal';
+            subtaskModalDiv.style.display = 'flex';
+            subtaskModalDiv.innerHTML = `
+            <div class="modal-content liquid-glass" style="max-width:400px;">
+            <h3 style="color:#6f15ac;margin-bottom:10px;">Subtasks for "${task.options[optIdx]}"</h3>
+            <div id="subtasksList" style="margin-bottom:12px;"></div>
+            <div style="display:flex;gap:8px;">
+            <input type="text" id="newSubtaskInput" maxlength="80" placeholder="Add subtask..." style="flex:1;padding:8px 12px;border-radius:8px;border:1px solid #ddd;">
+            <button class="btn" id="addSubtaskBtn">Add</button>
+            </div>
+            <br>
+            <button class="btn" id="closeSubtaskModal">Close</button>
+            </div>
+            `;
+            document.body.appendChild(subtaskModalDiv);
+
+            function renderSubtasks() {
+            const list = subtaskModalDiv.querySelector('#subtasksList');
+            list.innerHTML = '';
+            task.subtasks[optIdx].forEach((sub, i) => {
+                const div = document.createElement('div');
+                div.style.display = 'flex';
+                div.style.alignItems = 'center';
+                div.style.justifyContent = 'space-between';
+                div.style.gap = '8px';
+                div.style.marginBottom = '6px';
+                div.innerHTML = `
+                <input type="checkbox" class="subtaskCheck" style="margin-right:8px;" ${task.subtaskChecks[optIdx][i] ? 'checked' : ''}>
+                <span style="flex:1;word-break:break-all;font-size:14px;max-width:220px;white-space:pre-wrap;${task.subtaskChecks[optIdx][i] ? 'text-decoration:line-through;color:#aaa;' : ''}">${sub}</span>
+                <button class="btn" style="background:#f44336;padding:4px 10px;font-size:13px;">Remove</button>
+                `;
+                // Checkmark logic
+                div.querySelector('.subtaskCheck').onchange = function() {
+                task.subtaskChecks[optIdx][i] = this.checked;
+                saveTasks();
+                renderSubtasks();
+                };
+                // Remove logic
+                div.querySelector('button').onclick = () => {
+                task.subtasks[optIdx].splice(i, 1);
+                task.subtaskChecks[optIdx].splice(i, 1);
+                saveTasks();
+                renderSubtasks();
+                };
+                list.appendChild(div);
+            });
+            }
+            renderSubtasks();
+
+            subtaskModalDiv.querySelector('#addSubtaskBtn').onclick = () => {
+            const input = subtaskModalDiv.querySelector('#newSubtaskInput');
+            const val = input.value.trim();
+            if (!val) return;
+            if (val.length > 80) {
+                showToast('Subtask too long (max 80 chars).', 'error');
+                return;
+            }
+            task.subtasks[optIdx].push(val);
+            task.subtaskChecks[optIdx].push(false);
+            input.value = '';
+            saveTasks();
+            renderSubtasks();
+            };
+            subtaskModalDiv.querySelector('#closeSubtaskModal').onclick = () => {
+            subtaskModalDiv.remove();
+            subtaskModalDiv = null;
+            };
+            // Close on outside click
+            subtaskModalDiv.onclick = function(ev) {
+            if (ev.target === subtaskModalDiv) {
+                subtaskModalDiv.remove();
+                subtaskModalDiv = null;
+            }
+            };
+        }
+
+        function renderTaskItem(task, idx) {
+            const taskDiv = document.createElement('div');
+            taskDiv.className = 'taskItem liquid-glass';
+            taskDiv.innerHTML = `
+            <div class="" style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+            <span class="taskTitle" style="cursor:pointer;">${task.title}</span>
+            <div style="display:flex;align-items:center;gap:8px;">
+            <span class="taskCategoryLabel" style="background:#eee;color:#6f15ac;border-radius:6px;padding:3px 10px;font-size:13px;">${task.category}</span>
+            <button class="btn shareBtn" title="Share" style="padding:6px 10px;display:flex;align-items:center;gap:6px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            <span class="share-label">Share</span>
+            </button>
+            <button class="btn moreBtn" title="More" style="padding:6px 10px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+            </button>
+            </div>
+            </div>
+            <div class="taskDescription" style="display:${task.expanded ? 'block':'none'};">${task.description || ''}</div>
+            <div class="taskOptions" style="display:${task.expanded ? 'flex':'none'};flex-direction:column;gap:6px;">
+            ${task.options.map((opt, i) => `
+            <div class="optionRow" data-opt="${i}" style="display:flex;align-items:center;gap:8px;">
+            <input type="checkbox" class="optionCheck" data-task="${idx}" data-opt="${i}" ${task.optionChecks[i] ? 'checked' : ''}>
+            <input type="text" class="optionRename" value="${opt.replace(/"/g, '&quot;')}" style="flex:1;border:none;background:transparent;font-size:15px;padding:4px 0;border-bottom:1px dashed #ccc;">
+            <button class="btn subtaskBtn" title="Add Subtasks" style="padding:4px 10px;font-size:13px;">Subtasks</button>
+            </div>
+            <div class="subtasksList" style="margin-left:38px;margin-bottom:4px;display:flex;flex-direction:column;gap:2px;">
+            ${Array.isArray(task.subtasks) && Array.isArray(task.subtasks[i]) && task.subtasks[i].length > 0
+            ? task.subtasks[i].map((st, j) => `
+                <div style="display:flex;align-items:center;gap:6px;">
+                <input type="checkbox" class="subtaskCheckInline" data-task="${idx}" data-opt="${i}" data-sub="${j}" ${task.subtaskChecks && task.subtaskChecks[i] && task.subtaskChecks[i][j] ? 'checked' : ''}>
+                <span style="font-size:13px;color:#6f15ac;max-width:320px;white-space:pre-wrap;word-break:break-word;background:#f7f7fa;border-radius:8px;padding:4px 10px;display:inline-block;margin-bottom:2px;${task.subtaskChecks && task.subtaskChecks[i] && task.subtaskChecks[i][j] ? 'text-decoration:line-through;color:#aaa;' : ''}">${st}</span>
+                </div>
+            `).join('')
+            : ''}
+            </div>
+            `).join('')}
+            </div>
+            `;
+            // Expand/collapse on title click
+            taskDiv.querySelector('.taskTitle').onclick = (e) => {
+            e.stopPropagation();
+            task.expanded = !task.expanded;
+            saveTasks();
+            renderTasks();
+            };
+            // Also expand/collapse on taskItem click (but not on buttons)
+            taskDiv.onclick = function(e) {
+            if (
+                e.target.classList.contains('taskTitle') ||
+                e.target.closest('.shareBtn') ||
+                e.target.closest('.moreBtn') ||
+                e.target.classList.contains('optionCheck') ||
+                e.target.classList.contains('optionRename') ||
+                e.target.classList.contains('subtaskBtn') ||
+                e.target.classList.contains('subtaskCheckInline')
+            ) return;
+            task.expanded = !task.expanded;
+            saveTasks();
+            renderTasks();
+            };
+            // Share
+            taskDiv.querySelector('.shareBtn').onclick = (e) => {
+            e.stopPropagation();
+            const url = `${location.origin}${location.pathname}?createTask=Name="${encodeURIComponent(task.title)}"=desc="${encodeURIComponent(task.description)}"=option"${task.options.map(o=>encodeURIComponent(o)).join(',')}"=completed="${task.completed}"`;
+            if (navigator.share) {
+                navigator.share({title: task.title, text: task.description, url});
+            } else {
+                navigator.clipboard.writeText(url);
+                showToast('Link copied to clipboard!', 'success');
+            }
+            };
+            // More menu
+            taskDiv.querySelector('.moreBtn').onclick = e => {
+            e.stopPropagation();
+            showMoreMenu(taskDiv, idx);
+            };
+            // Option checkboxes
+            taskDiv.querySelectorAll('.optionCheck').forEach(cb => {
+            cb.onchange = function() {
+                const optIdx = Number(cb.getAttribute('data-opt'));
+                task.optionChecks[optIdx] = cb.checked;
+                // If all checked, mark completed
+                if (task.optionChecks.every(Boolean)) {
+                task.completed = true;
+                showToast('Task completed!', 'success');
+                addNotification(`Task "${task.title}" completed.`);
+                } else if (task.optionChecks.some(Boolean)) {
+                // If some checked, move to in progress
+                task.completed = false;
+                } else {
+                // None checked, not in progress or completed
+                task.completed = false;
+                }
+                saveTasks();
+                renderTasks();
+            };
+            });
+            // Option rename logic
+            taskDiv.querySelectorAll('.optionRename').forEach((input, i) => {
+            input.onchange = function() {
+                const newVal = input.value.trim();
+                if (!newVal) {
+                showToast('Option cannot be empty.', 'error');
+                input.value = task.options[i];
+                return;
+                }
+                // Rename option and keep subtasks and checks
+                task.options[i] = newVal;
+                saveTasks();
+                renderTasks();
+            };
+            // Optional: Enter key to blur
+            input.onkeydown = function(e) {
+                if (e.key === 'Enter') input.blur();
+            };
+            });
+            // Subtask button logic
+            taskDiv.querySelectorAll('.subtaskBtn').forEach((btn, i) => {
+            btn.onclick = (e) => {
+                e.stopPropagation();
+                showSubtaskModal(idx, i);
+            };
+            });
+            // Subtask inline checkboxes
+            taskDiv.querySelectorAll('.subtaskCheckInline').forEach(cb => {
+            cb.onchange = function() {
+                const optIdx = Number(cb.getAttribute('data-opt'));
+                const subIdx = Number(cb.getAttribute('data-sub'));
+                if (!Array.isArray(task.subtaskChecks[optIdx])) task.subtaskChecks[optIdx] = [];
+                task.subtaskChecks[optIdx][subIdx] = cb.checked;
+                saveTasks();
+                renderTasks();
+            };
+            });
+            // Responsive: hide share-label at <=768px
+            const styleId = 'share-label-hide-style';
+            if (!document.getElementById(styleId)) {
+            const style = document.createElement('style');
+            style.id = styleId;
+            style.textContent = `
+            @media (max-width: 768px) {
+                .share-label { display: none !important; }
+            }
+            `;
+            document.head.appendChild(style);
+            }
+            return taskDiv;
+        }
+
+        // Render In Progress
+        function renderInProgress() {
+            const list = document.getElementById('inProgressTasksList');
+            if (!list) return;
+            list.innerHTML = '';
+            tasks.forEach((task, idx) => {
+            ensureTaskFields(task);
+            if (task.trashed || task.archived) return;
+            if (!task.completed && task.optionChecks.some(Boolean)) {
+                list.appendChild(renderTaskItem(task, idx));
+            }
+            });
+        }
+        // Render Completed
+        function renderCompleted() {
+            const list = document.getElementById('completedTasksList');
+            if (!list) return;
+            list.innerHTML = '';
+            tasks.forEach((task, idx) => {
+            ensureTaskFields(task);
+            if (task.trashed || task.archived) return;
+            if (task.completed) {
+                list.appendChild(renderTaskItem(task, idx));
+            }
+            });
+        }
+        // Render Favorites
+        function renderFavorites() {
+            const list = document.getElementById('favoriteTasksList');
+            if (!list) return;
+            list.innerHTML = '';
+            tasks.forEach((task, idx) => {
+            ensureTaskFields(task);
+            if (task.trashed || task.archived) return;
+            if (task.favorite) {
+                list.appendChild(renderTaskItem(task, idx));
+            }
+            });
+        }
+        // Render Archive
+        function renderArchive() {
+            const list = document.getElementById('archivedTasksList');
+            if (!list) return;
+            list.innerHTML = '';
+            tasks.forEach((task, idx) => {
+            ensureTaskFields(task);
+            if (task.trashed || !task.archived) return;
+            const div = renderTaskItem(task, idx);
+            // Add Unarchive button
+            const unarchiveBtn = document.createElement('button');
+            unarchiveBtn.className = 'btn';
+            unarchiveBtn.textContent = 'Unarchive';
+            unarchiveBtn.onclick = () => unarchive(idx);
+            div.appendChild(unarchiveBtn);
+            list.appendChild(div);
+            });
+        }
+        // Render Trash
+        function renderTrash() {
+            const list = document.getElementById('trashTasksList');
+            if (!list) return;
+            list.innerHTML = '';
+            tasks.forEach((task, idx) => {
+            ensureTaskFields(task);
+            if (!task.trashed) return;
+            const div = renderTaskItem(task, idx);
+            // Add Recover and Perm Delete buttons
+            const btns = document.createElement('div');
+            btns.style.display = 'flex';
+            btns.style.gap = '10px';
+            btns.style.marginTop = '8px';
+            const recoverBtn = document.createElement('button');
+            recoverBtn.className = 'btn';
+            recoverBtn.textContent = 'Recover';
+            recoverBtn.onclick = () => recoverFromTrash(idx);
+            const permBtn = document.createElement('button');
+            permBtn.className = 'btn';
+            permBtn.style.background = '#f44336';
+            permBtn.textContent = 'Permanently Delete';
+            permBtn.onclick = () => showConfirmModal('Permanently delete this task?', () => permDelete(idx));
+            btns.appendChild(recoverBtn);
+            btns.appendChild(permBtn);
+            div.appendChild(btns);
+            list.appendChild(div);
+            });
+        }
+
+        /* --- Responsive: Move category label under More at <=670px --- */
+        function moveCategoryLabel() {
+            document.querySelectorAll('.taskItem').forEach(taskDiv => {
+            const catLabel = taskDiv.querySelector('.taskCategoryLabel');
+            const moreBtn = taskDiv.querySelector('.moreBtn');
+            if (!catLabel || !moreBtn) return;
+            if (window.innerWidth <= 670) {
+                // Move category label below More button if not already moved
+                if (!catLabel.classList.contains('moved-below')) {
+                catLabel.classList.add('moved-below');
+                // Create a wrapper below More button if not exists
+                let belowDiv = taskDiv.querySelector('.cat-below-more');
+                if (!belowDiv) {
+                    belowDiv = document.createElement('div');
+                    belowDiv.className = 'cat-below-more';
+                    belowDiv.style.marginTop = '6px';
+                    belowDiv.style.display = 'flex';
+                    belowDiv.style.justifyContent = 'flex-end';
+                    belowDiv.style.width = '100%';
+                    belowDiv.style.alignItems = 'flex-end';
+                    // Place at the very end of the flex row (bottom right)
+                    taskDiv.appendChild(belowDiv);
+                }
+                belowDiv.appendChild(catLabel);
+                }
+            } else {
+                // Move category label back to original position if needed
+                if (catLabel.classList.contains('moved-below')) {
+                catLabel.classList.remove('moved-below');
+                // Move back to the flex row with More/Share
+                const flexRow = taskDiv.querySelector('div[style*="display:flex"][style*="justify-content:space-between"]');
+                if (flexRow) {
+                    flexRow.querySelector('div[style*="display:flex"][style*="align-items:center"]').insertBefore(catLabel, flexRow.querySelector('.shareBtn'));
+                }
+                // Remove the wrapper if empty
+                const belowDiv = taskDiv.querySelector('.cat-below-more');
+                if (belowDiv && belowDiv.children.length === 0) belowDiv.remove();
+                }
+            }
+            });
+        }
+        window.addEventListener('resize', moveCategoryLabel);
+        document.addEventListener('DOMContentLoaded', moveCategoryLabel);
+        // Also call after rendering tasks
+        const origRenderTasks = renderTasks;
+        renderTasks = function() {
+            origRenderTasks.apply(this, arguments);
+            moveCategoryLabel();
+        };
+
+        // Declare moreMenuDiv at the top level so it is accessible
+        let moreMenuDiv = null;
+        // Patch More Menu to use trash instead of delete, and add Print option
+        function showMoreMenu(parent, idx) {
+            if (moreMenuDiv) moreMenuDiv.remove();
+            moreMenuDiv = document.createElement('div');
+            moreMenuDiv.className = 'liquid-glass'; // ensure glass effect
+            moreMenuDiv.style.position = 'fixed';
+            moreMenuDiv.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)';
+            moreMenuDiv.style.borderRadius = '18px'; // match glass style
+            moreMenuDiv.style.zIndex = 3000;
+            moreMenuDiv.style.minWidth = '180px';
+            moreMenuDiv.style.background = 'rgba(255,255,255,0.22)'; // glass background
+            moreMenuDiv.style.backdropFilter = 'blur(4px) saturate(180%)';
+            moreMenuDiv.style.webkitBackdropFilter = 'blur(4px) saturate(180%)';
+            moreMenuDiv.style.border = '1.5px solid rgba(255,255,255,0.28)';
+            moreMenuDiv.innerHTML = `
+            <div style="padding:10px 18px;cursor:pointer;" class="archiveBtn">${tasks[idx].archived ? 'Unarchive':'Archive'}</div>
+            <div style="padding:10px 18px;cursor:pointer;" class="completeBtn">${tasks[idx].completed ? 'Mark as Incomplete':'Mark as Completed'}</div>
+            <div style="padding:10px 18px;cursor:pointer;" class="favoriteBtn">${tasks[idx].favorite ? 'Unfavorite':'Favorite'}</div>
+            <div style="padding:10px 18px;cursor:pointer;" class="editBtn">Edit</div>
+            <div style="padding:10px 18px;cursor:pointer;" class="printBtn">Print</div>
+            <div style="padding:10px 18px;color:#f44336;cursor:pointer;" class="deleteBtn">Move to Trash</div>
+            `;
+            document.body.appendChild(moreMenuDiv);
+
+            // Position the menu near the More button
+            const moreBtn = parent.querySelector('.moreBtn');
+            if (moreBtn) {
+            const rect = moreBtn.getBoundingClientRect();
+            let top = rect.bottom + 8;
+            let left = rect.left;
+            // Prevent overflow on right
+            if (left + 220 > window.innerWidth) left = window.innerWidth - 220;
+            // Prevent overflow on bottom
+            if (top + 220 > window.innerHeight) top = window.innerHeight - 220;
+            moreMenuDiv.style.top = `${top}px`;
+            moreMenuDiv.style.left = `${left}px`;
+            } else {
+            // fallback to center
+            moreMenuDiv.style.top = '50%';
+            moreMenuDiv.style.left = '50%';
+            moreMenuDiv.style.transform = 'translate(-50%,-50%)';
+            }
+
+            moreMenuDiv.querySelector('.archiveBtn').onclick = () => {
+            tasks[idx].archived = !tasks[idx].archived;
+            saveTasks(); renderTasks(); moreMenuDiv.remove();
+            renderArchive();
+            showToast(tasks[idx].archived ? 'Task archived.' : 'Task unarchived.', 'success');
+            };
+            moreMenuDiv.querySelector('.completeBtn').onclick = () => {
+            tasks[idx].completed = !tasks[idx].completed;
+            // If marking as completed, check all options
+            if (tasks[idx].completed) {
+                tasks[idx].optionChecks = Array(tasks[idx].options.length).fill(true);
+            }
+            saveTasks(); renderTasks(); moreMenuDiv.remove();
+            renderCompleted();
+            showToast(tasks[idx].completed ? 'Marked as completed.' : 'Marked as incomplete.', 'success');
+            };
+            moreMenuDiv.querySelector('.favoriteBtn').onclick = () => {
+            tasks[idx].favorite = !tasks[idx].favorite;
+            saveTasks(); renderTasks(); moreMenuDiv.remove();
+            renderFavorites();
+            showToast(tasks[idx].favorite ? 'Added to favorites.' : 'Removed from favorites.', 'success');
+            };
+            moreMenuDiv.querySelector('.editBtn').onclick = () => {
+            editTask(idx); moreMenuDiv.remove();
+            };
+            moreMenuDiv.querySelector('.printBtn').onclick = () => {
+            printTask(idx);
+            moreMenuDiv.remove();
+            };
+            moreMenuDiv.querySelector('.deleteBtn').onclick = () => {
+            showConfirmModal('Move this task to trash?', () => {
+                moveToTrash(idx);
+            });
+            moreMenuDiv.remove();
+            };
+            setTimeout(() => {
+            document.addEventListener('click', closeMoreMenu, {once:true});
+            }, 0);
+            function closeMoreMenu(e) {
+            if (!moreMenuDiv.contains(e.target)) moreMenuDiv.remove();
+            }
+        }
+
+        // Print single task
+        function printTask(idx) {
+            const t = tasks[idx];
+            let html = `
+            <html>
+            <head>
+            <title>Print Task</title>
+            <style>
+            body { font-family: Arial, sans-serif; padding: 32px; color: #333; }
+            h2 { color: #6f15ac; }
+            .category { color: #6f15ac; font-weight: bold; }
+            .options { margin-top: 18px; }
+            .option { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+            .circle { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #6f15ac; display: inline-block; background: #fff; }
+            .checked { background: #6f15ac; }
+            .desc { margin-top: 12px; color: #555; }
+            </style>
+            </head>
+            <body>
+            <h2>${t.title}</h2>
+            <div class="category">Category: ${t.category}</div>
+            <div class="desc">${t.description || ''}</div>
+            <div class="options">
+            <h3>Options:</h3>
+            ${t.options.map((opt, i) => `
+            <div class="option">
+            <span class="circle${t.optionChecks[i] ? ' checked' : ''}"></span>
+            <span>${opt}</span>
+            </div>
+            ${Array.isArray(t.subtasks) && Array.isArray(t.subtasks[i]) && t.subtasks[i].length > 0
+            ? t.subtasks[i].map((st, j) => `<div style="font-size:13px;color:#6f15ac;margin-left:24px;">
+            <span style="display:inline-block;width:14px;height:14px;border:1px solid #6f15ac;border-radius:3px;margin-right:6px;vertical-align:middle;background:${t.subtaskChecks && t.subtaskChecks[i] && t.subtaskChecks[i][j] ? '#6f15ac' : '#fff'}"></span>
+            - ${st}
+            </div>`).join('')
+            : ''}
+            `).join('')}
+            </div>
+            </body>
+            </html>
+            `;
+            let win = window.open('', '_blank');
+            win.document.write(html);
+            win.document.close();
+            win.focus();
+            win.print();
+        }
+
+        // Patch editTask to keep optionChecks and subtasks
+        function editTask(idx) {
+            const t = tasks[idx];
+            document.getElementById('titleInput').value = t.title;
+            document.getElementById('descriptionInput').value = t.description;
+            categoryDropdown.value = t.category;
+            document.getElementById('dueDateInput').value = t.dueDate || '';
+            taskOptionsContainer.innerHTML = '';
+            t.options.forEach(opt => addOptionField(opt));
+            document.getElementById('createTaskBtn').textContent = 'Save Changes';
+            document.getElementById('createTaskBtn').onclick = () => {
+            const title = document.getElementById('titleInput').value.trim();
+            const description = document.getElementById('descriptionInput').value.trim();
+            const category = categoryDropdown.value;
+            const options = getOptions();
+            const dueDate = document.getElementById('dueDateInput').value;
+            if (!title || !category || options.length === 0) {
+                showToast('Please fill in title, category, and at least one option.', 'error');
+                return;
+            }
+            // Keep checked options and subtasks if possible
+            let optionChecks = [];
+            let subtasks = [];
+            let subtaskChecks = [];
+            for (let i = 0; i < options.length; ++i) {
+                const oldIdx = t.options.indexOf(options[i]);
+                optionChecks[i] = oldIdx >= 0 ? (t.optionChecks[oldIdx] || false) : false;
+                subtasks[i] = oldIdx >= 0 && Array.isArray(t.subtasks) && Array.isArray(t.subtasks[oldIdx]) ? [...t.subtasks[oldIdx]] : [];
+                subtaskChecks[i] = oldIdx >= 0 && Array.isArray(t.subtaskChecks) && Array.isArray(t.subtaskChecks[oldIdx]) ? [...t.subtaskChecks[oldIdx]] : Array(subtasks[i].length).fill(false);
+            }
+            tasks[idx] = {...t, title, description, category, options, optionChecks, dueDate: dueDate || null, subtasks, subtaskChecks};
+            saveTasks();
+            renderTasks();
+            resetTaskForm();
+            document.getElementById('createTaskBtn').textContent = 'Create Task';
+            document.getElementById('createTaskBtn').onclick = createTaskHandler;
+            showToast('Task updated!', 'success');
+            };
+        }
+        // Save original createTaskBtn handler for restore after edit
+        const createTaskHandler = () => {
+            const title = document.getElementById('titleInput').value.trim();
+            const description = document.getElementById('descriptionInput').value.trim();
+            const category = categoryDropdown.value;
+            const options = getOptions();
+            const dueDate = document.getElementById('dueDateInput').value; // ISO string or empty
+            if (!title || !category || options.length === 0) {
+            showToast('Please fill in title, category, and at least one option.', 'error');
+            return;
+            }
+            tasks.push({
+            title, description, category, options,
+            optionChecks: Array(options.length).fill(false),
+            completed: false, favorite: false, archived: false, expanded: false,
+            trashed: false, deletedAt: 0,
+            dueDate: dueDate || null,
+            subtasks: Array(options.length).fill([]).map(() => []),
+            subtaskChecks: Array(options.length).fill([]).map(() => [])
+            });
+            saveTasks();
+            renderTasks();
+            resetTaskForm();
+            showToast('Task created!', 'success');
+        };
+        document.getElementById('createTaskBtn').onclick = createTaskHandler;
+
+        // Print all tasks (add a button above the tasks list)
+        function insertPrintAllBtn() {
+            if (document.getElementById('printAllBtn')) return;
+            const printBtn = document.createElement('button');
+            printBtn.className = 'btn';
+            printBtn.id = 'printAllBtn';
+            printBtn.style.marginBottom = '18px';
+            printBtn.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-right:6px;">
+            <rect x="4" y="8" width="16" height="10" rx="2"/>
+            <rect x="6" y="2" width="12" height="6" rx="1"/>
+            <line x1="8" y1="16" x2="16" y2="16"/>
+            </svg>
+            Print All
+            `;
+            // Insert above tasks list
+            const tasksContent = document.getElementById('tasksContent');
+            const tasksList = document.getElementById('tasksList');
+            tasksContent.insertBefore(printBtn, tasksList);
+            printBtn.onclick = function() {
+            printAllTasks();
+            };
+        }
+        insertPrintAllBtn();
+
+        // --- Patch addOptionField to support subtasks array in new tasks ---
+        const origAddOptionField = typeof addOptionField === 'function' ? addOptionField : null;
+        function addOptionField(value = '') {
+            const div = document.createElement('div');
+            div.className = 'taskOption';
+            div.innerHTML = `
+            <input type="text" name="option" style="width: 100%;" placeholder="Option" required value="${value}">
+            <button class="btn removeOption" type="button">
+            <div class="trash-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="6" width="18" height="15" rx="2" stroke="currentColor" stroke-width="2" fill="none"/>
+            <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="2" fill="none"/>
+            <line x1="1" y1="6" x2="23" y2="6" stroke="currentColor" stroke-width="2"/>
+            <line x1="10" y1="11" x2="10" y2="17" stroke="currentColor" stroke-width="2"/>
+            <line x1="14" y1="11" x2="14" y2="17" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            </div>
+            <div class="trash-label">Remove</div>
+            </button>
+            `;
+            div.querySelector('.removeOption').onclick = () => {
+            if (taskOptionsContainer.children.length > 1) div.remove();
+            };
+            taskOptionsContainer.appendChild(div);
+        }
+
+        function printAllTasks() {
+            let html = `
+            <html>
+            <head>
+            <title>Print All Tasks</title>
+            <style>
+            body { font-family: Arial, sans-serif; padding: 32px; color: #333; }
+            h2 { color: #6f15ac; margin-bottom: 18px; }
+            .task { margin-bottom: 32px; border-bottom: 1px solid #eee; padding-bottom: 18px; }
+            .category { color: #6f15ac; font-weight: bold; }
+            .options { margin-top: 12px; }
+            .option { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+            .circle { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #6f15ac; display: inline-block; background: #fff; }
+            .checked { background: #6f15ac; }
+            .desc { margin-top: 8px; color: #555; }
+            </style>
+            </head>
+            <body>
+            <h2>Tasks List</h2>
+            ${tasks.filter(t => !t.trashed && !t.archived).map(t => `
+            <div class="task">
+                <div style="font-size:20px;font-weight:bold;">${t.title}</div>
+                <div class="category">Category: ${t.category}</div>
+                <div class="desc">${t.description || ''}</div>
+                <div class="options">
+                <strong>Options:</strong>
+                ${t.options.map((opt, i) => `
+                <div class="option">
+                <span class="circle${t.optionChecks[i] ? ' checked' : ''}"></span>
+                <span>${opt}</span>
+                </div>
+                `).join('')}
+                </div>
+            </div>
+            `).join('')}
+            </body>
+            </html>
+            `;
+            let win = window.open('', '_blank');
+            win.document.write(html);
+            win.document.close();
+            win.focus();
+            win.print();
+        }
+
+        // Patch parseCreateTaskFromURL to add optionChecks
+        (function parseCreateTaskFromURL() {
+            const params = new URLSearchParams(location.search);
+            const ct = params.get('createTask');
+            if (ct) {
+            // Example: Name="Task1"=desc="Desc"=option"Option1,Option2"=completed="false"
+            const match = ct.match(/Name="([^"]+)"=desc="([^"]*)"?=option"([^"]*)"?=completed="(true|false)"/);
+            if (match) {
+                const [_, title, description, options, completed] = match;
+                const opts = options.split(',').map(decodeURIComponent);
+                tasks.push({
+                title: decodeURIComponent(title),
+                description: decodeURIComponent(description),
+                category: 'General',
+                options: opts,
+                optionChecks: Array(opts.length).fill(completed === 'true'),
+                completed: completed === 'true',
+                favorite: false,
+                archived: false,
+                expanded: false,
+                trashed: false,
+                deletedAt: 0
+                });
+                saveTasks();
+                renderTasks();
+                showToast('Task created from link!', 'success');
+                history.replaceState({}, '', location.pathname); // Remove param
+            }
+            }
+        })();
+
+        // Initial render for trash, in progress, completed, favorites, archive
+        renderTasks();
+        renderTrash();
+        renderInProgress();
+        renderCompleted();
+        renderFavorites();
+        renderArchive();
+        function showToast(msg, type = 'info') {
+            let toast = document.createElement('div');
+            toast.style.position = 'fixed';
+            toast.style.bottom = '32px';
+            toast.style.left = '50%';
+            toast.style.transform = 'translateX(-50%)';
+            toast.style.background = type === 'error' ? '#f44336' : (type === 'success' ? '#4caf50' : '#6f15ac');
+            toast.style.color = '#fff';
+            toast.style.padding = '14px 32px';
+            toast.style.borderRadius = '32px';
+            toast.style.fontSize = '16px';
+            toast.style.boxShadow = '0 2px 12px rgba(0,0,0,0.18)';
+            toast.style.zIndex = 9999;
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity 0.2s';
+            toast.textContent = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.style.opacity = '1'; }, 10);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+
+        /* --- Category Dropdown Render --- */
+        const categoryDropdown = document.getElementById('categoryDropdown');
+        function renderCategories() {
+            categoryDropdown.innerHTML = `<option value="" disabled selected>Select Category</option>`;
+            categories.forEach(cat => {
+                categoryDropdown.innerHTML += `<option value="${cat}">${cat}</option>`;
+            });
+        }
+        renderCategories();
+        /* --- Task Option Add/Remove --- */
+        const taskOptionsContainer = document.querySelector('.taskOptionsContainer');
+        function addOptionField(value = '') {
+            const div = document.createElement('div');
+            div.className = 'taskOption';
+            div.innerHTML = `
+            <input type="text" name="option" style="width: 100%;" placeholder="Option" required value="${value}">
+            <button class="btn removeOption" type="button">
+            <div class="trash-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="6" width="18" height="15" rx="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="2" fill="none"/>
+                <line x1="1" y1="6" x2="23" y2="6" stroke="currentColor" stroke-width="2"/>
+                <line x1="10" y1="11" x2="10" y2="17" stroke="currentColor" stroke-width="2"/>
+                <line x1="14" y1="11" x2="14" y2="17" stroke="currentColor" stroke-width="2"/>
+                </svg>
+            </div>
+            <div class="trash-label">Remove</div>
+            </button>
+            `;
+            div.querySelector('.removeOption').onclick = () => {
+            if (taskOptionsContainer.children.length > 1) div.remove();
+            };
+            taskOptionsContainer.appendChild(div);
+        }
+        document.getElementById('addOption').onclick = e => {
+            e.preventDefault();
+            addOptionField();
+        };
+        taskOptionsContainer.querySelector('.removeOption').onclick = function() {
+            if (taskOptionsContainer.children.length > 1) this.closest('.taskOption').remove();
+        };
+
+        /* --- Due Date Field --- */
+        // Add Due Date input to the createTaskContainer
+        (function addDueDateField() {
+            const createTaskContainer = document.querySelector('.createTaskContainer');
+            if (!document.getElementById('dueDateInput')) {
+            const dueDiv = document.createElement('div');
+            dueDiv.style.display = 'flex';
+            dueDiv.style.flexDirection = 'column';
+            dueDiv.style.gap = '4px';
+            dueDiv.innerHTML = `
+                <label for="dueDateInput" style="font-size:15px;color:#6f15ac;">Due Date (optional)</label>
+                <input type="date" id="dueDateInput" class="liquid-glass" style="padding:10px 14px;border-radius:30px;border:1px solid #ddd;font-size:16px;">
+            `;
+            // Insert before Add Option button
+            const addOptionBtn = document.getElementById('addOption');
+            createTaskContainer.insertBefore(dueDiv, addOptionBtn);
+            }
+        })();
+
+        /* --- Create Task --- */
+        function getOptions() {
+            return Array.from(taskOptionsContainer.querySelectorAll('input[name="option"]'))
+            .map(i => i.value.trim()).filter(Boolean);
+        }
+
+        // Patch createTaskBtn to save due date
+        document.getElementById('createTaskBtn').onclick = () => {
+            const title = document.getElementById('titleInput').value.trim();
+            const description = document.getElementById('descriptionInput').value.trim();
+            const category = categoryDropdown.value;
+            const options = getOptions();
+            const dueDate = document.getElementById('dueDateInput').value; // ISO string or empty
+            if (!title || !category || options.length === 0) {
+            showToast('Please fill in title, category, and at least one option.', 'error');
+            return;
+            }
+            tasks.push({
+            title, description, category, options,
+            optionChecks: Array(options.length).fill(false),
+            completed: false, favorite: false, archived: false, expanded: false,
+            trashed: false, deletedAt: 0,
+            dueDate: dueDate || null
+            });
+            saveTasks();
+            renderTasks();
+            resetTaskForm();
+            showToast('Task created!', 'success');
+        };
+
+        // Patch editTask to handle due date
+        function editTask(idx) {
+            const t = tasks[idx];
+            document.getElementById('titleInput').value = t.title;
+            document.getElementById('descriptionInput').value = t.description;
+            categoryDropdown.value = t.category;
+            document.getElementById('dueDateInput').value = t.dueDate || '';
+            taskOptionsContainer.innerHTML = '';
+            t.options.forEach(opt => addOptionField(opt));
+            document.getElementById('createTaskBtn').textContent = 'Save Changes';
+            document.getElementById('createTaskBtn').onclick = () => {
+            const title = document.getElementById('titleInput').value.trim();
+            const description = document.getElementById('descriptionInput').value.trim();
+            const category = categoryDropdown.value;
+            const options = getOptions();
+            const dueDate = document.getElementById('dueDateInput').value;
+            if (!title || !category || options.length === 0) {
+                showToast('Please fill in title, category, and at least one option.', 'error');
+                return;
+            }
+            // Keep checked options if possible
+            let optionChecks = [];
+            for (let i = 0; i < options.length; ++i) {
+                const oldIdx = t.options.indexOf(options[i]);
+                optionChecks[i] = oldIdx >= 0 ? (t.optionChecks[oldIdx] || false) : false;
+            }
+            tasks[idx] = {...t, title, description, category, options, optionChecks, dueDate: dueDate || null};
+            saveTasks();
+            renderTasks();
+            resetTaskForm();
+            document.getElementById('createTaskBtn').textContent = 'Create Task';
+            document.getElementById('createTaskBtn').onclick = createTaskHandler;
+            showToast('Task updated!', 'success');
+            };
+        }
+
+        // Show due date in task details (right side), mark as red if past
+        const origRenderTaskItem = renderTaskItem;
+        renderTaskItem = function(task, idx) {
+            const taskDiv = origRenderTaskItem(task, idx);
+            // Show due date if present
+            if (task.dueDate) {
+            let dueDiv = document.createElement('div');
+            dueDiv.style.display = 'flex';
+            dueDiv.style.justifyContent = 'flex-end';
+            dueDiv.style.fontSize = '14px';
+            dueDiv.style.marginTop = '4px';
+            // Check if due date is past
+            let isPast = false;
+            try {
+                const today = new Date();
+                today.setHours(0,0,0,0);
+                const due = new Date(task.dueDate);
+                due.setHours(0,0,0,0);
+                isPast = due < today;
+            } catch {}
+            dueDiv.style.color = isPast ? '#f44336' : '#6f15ac';
+            dueDiv.innerHTML = `<span>Due Date: ${task.dueDate}</span>`;
+            taskDiv.appendChild(dueDiv);
+            }
+            return taskDiv;
+        };
+        function resetTaskForm() {
+            document.getElementById('titleInput').value = '';
+            document.getElementById('descriptionInput').value = '';
+            categoryDropdown.selectedIndex = 0;
+            taskOptionsContainer.innerHTML = '';
+            addOptionField();
+        }
+        function saveTasks() {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+        // (Removed duplicate renderTasks and createTaskBtn logic to avoid script breakage)
+
+        // (IE/old browser check moved to top of script for immediate effect)
+
+        if (
+          !('querySelector' in document) ||
+          !('addEventListener' in window) ||
+          !('localStorage' in window) ||
+          !('classList' in document.createElement('div')) ||
+          /MSIE|Trident/.test(window.navigator.userAgent)
+        ) {
+          document.body.innerHTML = `
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background:#f0f0f0;">
+              <div style="background:#fff;padding:48px 32px;border-radius:18px;box-shadow:0 8px 32px rgba(111,21,172,0.18);max-width:420px;text-align:center;">
+                <h2 style="color:#6f15ac;margin-bottom:18px;">Munetios Tasks</h2>
+                <p style="font-size:18px;color:#f44336;margin-bottom:18px;">
+                  Munetios Tasks is not supported in your browser.<br>
+                  Please use a modern browser such as Chrome, Edge, Firefox, or Safari.
+                </p>
+                <p style="font-size:15px;color:#555;">
+                  Example supported browsers:<br>
+                  <strong>Google Chrome</strong>, <strong>Microsoft Edge</strong>, <strong>Mozilla Firefox</strong>, <strong>Apple Safari</strong>
+                </p>
+              </div>
+            </div>
+          `;
+          throw new Error('Unsupported browser');
+        }
+    </script>
+</body>
+</html>
