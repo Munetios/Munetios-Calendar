@@ -2,17 +2,17 @@
   "name": "Munetios Calendar",
   "short_name": "Calendar",
   "description": "A calendar app for Munetios Redesigned Apps.",
-  "start_url": "/",
+  "start_url": "/new",
   "scope": "/",
   "icons": [
     {
-      "src": "/android-chrome-192x192.png",
+      "src": "/new/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/android-chrome-512x512.png",
+      "src": "/new/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
@@ -24,5 +24,6 @@
   "display_override": ["standalone", "browser", "window-controls-overlay"],
   "prefer_related_applications": false
 }
+
 
 
