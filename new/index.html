@@ -1035,7 +1035,62 @@
     </div>
     <div class="search__wrapper liquid-glass" _ng-random ></div>
     <script nonce="IijhdEUFuhf43UF43hF">
-       
+    (function() {
+        const moreBtn = document.getElementById('moreBtn');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        // Build menu items
+        function showMoreMenu() {
+            dropdownMenu.innerHTML = '';
+            const items = [
+                { label: 'Settings', icon: 'settings', id: 'moreSettings' },
+                { label: 'Help', icon: 'help', id: 'moreHelp' },
+                { label: 'Apps', icon: 'apps', id: 'moreApps' }
+            ];
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'dropdown-item';
+                div.innerHTML = `<span class="icon" style="margin-right:8px;">${item.icon}</span>${item.label}`;
+                div.id = item.id;
+                dropdownMenu.appendChild(div);
+            });
+            // Position dropdown under the More button
+            const rect = moreBtn.getBoundingClientRect();
+            dropdownMenu.style.top = (rect.bottom + window.scrollY) + 'px';
+            dropdownMenu.style.left = (rect.left + window.scrollX - 170) + 'px';
+            dropdownMenu.style.display = 'flex';
+            // Hide on click outside
+            setTimeout(() => {
+                function hide(ev) {
+                    if (!dropdownMenu.contains(ev.target) && ev.target !== moreBtn) {
+                        dropdownMenu.style.display = 'none';
+                        document.removeEventListener('mousedown', hide);
+                    }
+                }
+                document.addEventListener('mousedown', hide);
+            }, 0);
+        }
+        moreBtn.onclick = function(e) {
+            e.stopPropagation();
+            if (dropdownMenu.style.display === 'flex') {
+                dropdownMenu.style.display = 'none';
+            } else {
+                showMoreMenu();
+            }
+        };
+        // Menu actions
+        dropdownMenu.addEventListener('click', function(e) {
+            const t = e.target.closest('.dropdown-item');
+            if (!t) return;
+            dropdownMenu.style.display = 'none';
+            if (t.id === 'moreSettings') {
+                document.getElementById('settingsBtn').click();
+            } else if (t.id === 'moreHelp') {
+                document.getElementById('helpBtn').click();
+            } else if (t.id === 'moreApps') {
+                document.getElementById('appsBtn').click();
+            }
+        });
+    })();
         (function() {
             // --- Settings Modal ---
             const settingsBtn = document.getElementById('settingsBtn');
