@@ -872,6 +872,55 @@
             box-sizing: border-box;
            }
             }
+            /* Animations */
+            @keyframes fade-in {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes fade-out {
+                from { opacity: 1; }
+                to { opacity: 0; }
+            }
+            @keyframes slide-down {
+                from { transform: translateY(-24px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+            @keyframes slide-up {
+                from { transform: translateY(24px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+            @keyframes pop-in {
+                0% { transform: scale(0.96); opacity: 0; }
+                100% { transform: scale(1); opacity: 1; }
+            }
+            @keyframes pop-out {
+                0% { transform: scale(1); opacity: 1; }
+                100% { transform: scale(0.96); opacity: 0; }
+            }
+            .munetios-toast {
+                animation: fade-in 0.3s cubic-bezier(.4,2,.6,1);
+            }
+            .modal__content {
+                animation: pop-in 0.18s cubic-bezier(.4,2,.6,1);
+            }
+            .dropdown-item {
+                transition: background 0.18s, color 0.18s;
+            }
+            .dropdown-item:active {
+                animation: fade-in 0.12s;
+            }
+            .calendar__dates_button, .calendar__dates__today, .mini__calendar__day, .mini__calendar__today {
+                transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+            }
+            .selected-date {
+                animation: fade-in 0.18s;
+            }
+            .sidebar, .content {
+                transition: margin-left 0.3s, width 0.3s, left 0.3s;
+            }
+            liquid-glass, .liquid-glass {
+                transition: box-shadow 0.18s, background 0.18s;
+            }
         
     </style>
 </head>
@@ -2069,7 +2118,7 @@
                     helpModal.className = 'modal';
                     helpModal.style.zIndex = 4000;
                     helpModal.innerHTML = `
-                        <div class="modal__content liquid-glass">
+                        <div class="modal__content liquid-glass" style="max-width:800px !important;">
                             <div class="modal__header">
                                 <h2>Help & Info</h2>
                                 <div class="icon" id="closeHelpModal" title="Close" aria-label="Close">close</div>
@@ -2091,12 +2140,18 @@
                                 </ul>
                                 <h3>Changelog</h3>
                                 <ul>
+                                    <li><b>v1.2</b> - Improvements and added Archive Versions links.</li>
                                     <li><b>v1.0</b> – Initial release with multi-calendar, events, birthdays, holidays, and advanced sharing/printing.</li>
                                     <li>Added week/day/year/agenda/timeline views.</li>
                                     <li>Improved mobile support and accessibility.</li>
                                 </ul>
                                 <h3>About</h3>
                                 <p>Go to <a href="/new/overview.html">Overview</a> for more information.</p>
+                                <h3>Archive Versions</h3>
+                                <div style="display:flex;flex-direction:column;gap:8px;">
+                                <a href="https://calendar.munetios.com/archive/">Munetios Calendar Beta v1</a>
+                                <a href="https://calendar.munetios.com/archive/classic.html">Munetios Calendar Classic</a>
+                                </div>
                             </div>
                         </div>
                     `;
