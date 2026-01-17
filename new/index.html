@@ -3490,7 +3490,7 @@
                             // Create a new Google Docs document with the date as the title
                             let docTitle = encodeURIComponent(dateStr);
                             let docsUrl = `https://docs.google.com/document/create?title=${docTitle}`;
-                            window.open(docsUrl, '_self');
+                            window.open(docsUrl, '_blank');
                         } },
                 
             
@@ -3532,8 +3532,8 @@
                             idx++;
                         });
                     });
-                    // All links open in same tab
-                    shareModal.querySelectorAll('a').forEach(a => a.target = '');
+                    // All links open in new tab
+                    shareModal.querySelectorAll('a').forEach(a => a.target = '_blank');
                     shareModal.style.display = 'block';
                 }
 
