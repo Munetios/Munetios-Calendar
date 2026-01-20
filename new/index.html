@@ -6154,6 +6154,46 @@
           setTimeout(() => toast.remove(), 300);
         };
       }
+      window.confirm = function (msg) {
+        return new Promise((resolve) => {
+          // Remove any existing confirm modal
+          document
+            .querySelectorAll(".munetios-confirm-modal")
+            .forEach((m) => m.remove());
+          const modal = document.createElement("div");
+          modal.className = "modal munetios-confirm-modal";
+          modal.style.zIndex = 999999;
+          modal.innerHTML = `
+                <div class="modal__content liquid-glass" style="max-width:340px;">
+                    <div class="modal__header">
+                        <h2>Confirm</h2>
+                        <div class="icon" id="closeConfirmModal" title="Close" aria-label="Close">close</div>
+                    </div>
+                    <div class="modal__body" style="padding-bottom:10px;">
+                        ${msg ? String(msg) : ""}
+                    </div>
+                    <div class="modal__footer">
+                        <munetios-button class="btn-primary" id="confirmYesBtn">OK</munetios-button>
+                        <munetios-button id="confirmNoBtn">Cancel</munetios-button>
+                    </div>
+                </div>
+            `;
+          document.body.appendChild(modal);
+          modal.style.display = "flex";
+          function close(val) {
+            modal.style.display = "none";
+            setTimeout(() => modal.remove(), 300);
+            resolve(val);
+          }
+          modal.querySelector("#confirmYesBtn").onclick = () => close(true);
+          modal.querySelector("#confirmNoBtn").onclick = () => close(false);
+          modal.querySelector("#closeConfirmModal").onclick = () =>
+            close(false);
+          modal.onclick = (e) => {
+            if (e.target === modal) close(false);
+          };
+        });
+      };
     </script>
   </body>
 </html>
