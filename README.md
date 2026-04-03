@@ -82,7 +82,7 @@ You can deploy this on:
 
 ## 📜 License
 
-MIT License © 2025 Munetios
+Munetios License v1.5 © 2026 Munetios
 
 You are free to use, modify, and distribute this project.
 
