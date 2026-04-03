@@ -33,8 +33,7 @@
       rel="stylesheet"
       href="https://api.munetios.com/beautiful-css/beautiful.css"
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
     <link
       href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght,ROND@6..144,1..1000,90&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap"
       rel="stylesheet"
@@ -537,6 +536,8 @@
         position: fixed;
         top: 60px;
         right: 10px;
+        max-height: 600px;
+        overflow-y: auto;
         width: 200px;
         background: linear-gradient(
           to bottom,
@@ -871,8 +872,7 @@
         border: 1px solid rgba(255, 255, 255, 0.18);
         padding: 32px 28px 24px 28px;
         min-width: 320px;
-        max-width: 95vw;
-        width: 400px;
+        width: auto;
         color: #fff;
         position: relative;
         animation: modal-pop-in 0.18s cubic-bezier(0.4, 2, 0.6, 1) 1;
@@ -1063,9 +1063,246 @@
           box-shadow 0.18s,
           background 0.18s;
       }
+      /* ---- Custom Date & Time Pickers ---- */
+      .custom-date-picker,
+      .custom-time-picker {
+        position: relative;
+        width: 100%;
+        margin-bottom: 8px;
+      }
+      .cdp-trigger,
+      .ctp-trigger {
+        width: 100%;
+        padding: 9px 12px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: rgba(255, 255, 255, 0.09);
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 1em;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+        font-family: inherit;
+        text-align: left;
+        box-sizing: border-box;
+        outline: none;
+      }
+      .cdp-trigger:focus,
+      .ctp-trigger:focus {
+        border-color: #a47cff;
+        background: rgba(99, 0, 238, 0.13);
+      }
+      .cdp-trigger.has-value,
+      .ctp-trigger.has-value {
+        color: #fff;
+      }
+      .cdp-trigger .icon,
+      .ctp-trigger .icon {
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+      .cdp-display,
+      .ctp-display {
+        flex: 1;
+      }
+      .cdp-popup,
+      .ctp-popup {
+        position: fixed;
+        z-index: 9999;
+        background: rgba(22, 0, 51, 0.233);
+        border: 1px solid rgba(164, 124, 255, 0.35);
+        border-radius: 14px;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.45);
+        backdrop-filter: blur(2px) saturate(180%);
+        -webkit-backdrop-filter: blur(2px) saturate(180%);
+        padding: 12px;
+        min-width: 260px;
+      }
+      .cdp-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
+      }
+      .cdp-month-year-display {
+        color: #ffe066;
+        font-size: 1em;
+        font-weight: 600;
+      }
+      .cdp-prev,
+      .cdp-next {
+        background: none;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        font-family: "Material Symbols Rounded";
+        font-size: 22px;
+        padding: 2px 6px;
+        border-radius: 8px;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+      }
+      .cdp-prev:hover,
+      .cdp-next:hover {
+        background: rgba(164, 124, 255, 0.2);
+      }
+      .cdp-day-names {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        text-align: center;
+        margin-bottom: 4px;
+      }
+      .cdp-day-names span {
+        color: rgba(255, 255, 255, 0.45);
+        font-size: 0.75em;
+        padding: 4px 0;
+      }
+      .cdp-days-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 2px;
+      }
+      .cdp-day {
+        text-align: center;
+        padding: 7px 2px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.9em;
+        color: #fff;
+        transition: background 0.15s;
+        background: none;
+        border: none;
+        font-family: inherit;
+        line-height: 1;
+      }
+      .cdp-day:hover:not(.cdp-other-month) {
+        background: rgba(164, 124, 255, 0.25);
+      }
+      .cdp-day.cdp-today {
+        border: 1px solid rgba(164, 124, 255, 0.6);
+        color: #c9a8ff;
+      }
+      .cdp-day.cdp-selected {
+        background: #6300ee !important;
+        color: #fff;
+        font-weight: 700;
+      }
+      .cdp-day.cdp-other-month {
+        color: rgba(255, 255, 255, 0.22);
+        cursor: default;
+      }
+      .ctp-popup {
+        min-width: 160px;
+        padding: 10px;
+      }
+      .ctp-columns {
+        display: flex;
+        align-items: stretch;
+        gap: 6px;
+      }
+      .ctp-col {
+        flex: 1;
+        max-height: 180px;
+        overflow-y: auto;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        scrollbar-width: thin;
+        scrollbar-color: rgba(99, 0, 238, 0.4) transparent;
+      }
+      .ctp-col::-webkit-scrollbar {
+        width: 4px;
+      }
+      .ctp-col::-webkit-scrollbar-thumb {
+        background: rgba(99, 0, 238, 0.4);
+        border-radius: 4px;
+      }
+      .ctp-item {
+        padding: 7px 10px;
+        text-align: center;
+        cursor: pointer;
+        border-radius: 6px;
+        color: #fff;
+        font-size: 0.96em;
+        transition: background 0.13s;
+      }
+      .ctp-item:hover {
+        background: rgba(164, 124, 255, 0.22);
+      }
+      .ctp-item.ctp-selected {
+        background: #6300ee;
+        font-weight: 700;
+        color: #fff;
+      }
+      .ctp-sep {
+        color: #ffe066;
+        font-size: 1.4em;
+        font-weight: 700;
+        flex: 0;
+        display: flex;
+        align-items: center;
+        padding: 0 2px;
+      }
+      .ctp-col.ctp-ampm {
+        flex: 0;
+        min-width: 44px;
+      }
+      .ctp-col.ctp-ampm .ctp-item {
+        padding: 7px 6px;
+        font-size: 0.9em;
+        font-weight: 600;
+      }
+      /* ─── Accessibility: Skip Link ───────────────────────────────────── */
+      .skip-to-content {
+        position: absolute;
+        left: -9999px;
+        top: 8px;
+        z-index: 99999;
+        background: #6300ee;
+        color: #fff;
+        padding: 8px 18px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .skip-to-content:focus {
+        left: 8px;
+        outline: 3px solid #fff;
+        outline-offset: 2px;
+      }
+      /* ─── Accessibility: Visible Focus Rings ─────────────────────────── */
+      .icon[role="button"]:focus-visible,
+      .tab[role="tab"]:focus-visible,
+      .calendar__button__my__calendar[tabindex="0"]:focus-visible,
+      #addBirthdayBtn:focus-visible {
+        outline: 2px solid #a47cff;
+        outline-offset: 2px;
+        border-radius: 4px;
+      }
+      .cdp-day:focus-visible {
+        outline: 2px solid #a47cff;
+        outline-offset: 1px;
+      }
+      .ctp-item[tabindex="0"]:focus-visible {
+        outline: 2px solid #a47cff;
+        outline-offset: 1px;
+        border-radius: 3px;
+      }
+      .search-result-item:focus-visible {
+        outline: 2px solid #a47cff;
+        outline-offset: 2px;
+        border-radius: 6px;
+      }
     </style>
   </head>
   <body>
+    <a class="skip-to-content" href="#calendarContent">Skip to main content</a>
     <munetios-dropdown-menu
       id="dropdownMenu"
       _ng-random
@@ -1230,13 +1467,42 @@
         </div>
       </div>
       <div class="content" _ng-random>
-        <div id="calendarContent" class="page" _ng-random>
+        <div id="calendarContent" class="page" tabindex="-1" _ng-random>
           <h1 id="contentTitle">Calendar</h1>
           <div class="tabs__bar" id="tabsBar" _ng-random>
-            <div class="tabs__left liquid-glass" _ng-random>
-              <div class="tab" id="calendarTab">Calendar</div>
-              <div class="tab" id="tasksTab">Tasks</div>
-              <div class="tab" id="mealsTab">Meals</div>
+            <div
+              class="tabs__left liquid-glass"
+              role="tablist"
+              aria-label="Main tabs"
+              _ng-random
+            >
+              <div
+                class="tab"
+                id="calendarTab"
+                role="tab"
+                tabindex="0"
+                aria-selected="true"
+              >
+                Calendar
+              </div>
+              <div
+                class="tab"
+                id="tasksTab"
+                role="tab"
+                tabindex="-1"
+                aria-selected="false"
+              >
+                Tasks
+              </div>
+              <div
+                class="tab"
+                id="mealsTab"
+                role="tab"
+                tabindex="-1"
+                aria-selected="false"
+              >
+                Meals
+              </div>
             </div>
             <div class="tabs__right" _ng-random>
               <munetios-button id="viewBtn" title="View" aria-label="View">
@@ -1312,10 +1578,17 @@
         </div>
       </div>
     </munetios>
-    <div class="modal" id="createEventModal" _ng-random>
+    <div
+      class="modal"
+      id="createEventModal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="createEventModalTitle"
+      _ng-random
+    >
       <div class="modal__content liquid-glass" _ng-random>
         <div class="modal__header" _ng-random>
-          <h2 _ng-random>Create Event</h2>
+          <h2 id="createEventModalTitle" _ng-random>Create Event</h2>
           <div
             class="icon"
             id="closeCreateEventModal"
@@ -1331,11 +1604,41 @@
           <input type="text" id="eventTitle" required _ng-random />
           <br />
           <label for="eventDate" _ng-random>Event Date:</label>
-          <input type="date" id="eventDate" required _ng-random />
-          <br />
+          <div class="custom-date-picker" id="eventDate-picker">
+            <input type="hidden" id="eventDate" required _ng-random />
+            <button type="button" class="cdp-trigger">
+              <span class="icon">calendar_today</span>
+              <span class="cdp-display">Select date</span>
+            </button>
+            <div class="cdp-popup" hidden>
+              <div class="cdp-nav">
+                <button type="button" class="cdp-prev">chevron_left</button>
+                <span class="cdp-month-year-display"></span>
+                <button type="button" class="cdp-next">chevron_right</button>
+              </div>
+              <div class="cdp-day-names">
+                <span>Su</span><span>Mo</span><span>Tu</span><span>We</span
+                ><span>Th</span><span>Fr</span><span>Sa</span>
+              </div>
+              <div class="cdp-days-grid"></div>
+            </div>
+          </div>
           <label for="eventTime" _ng-random>Event Time:</label>
-          <input type="time" id="eventTime" required _ng-random />
-          <br />
+          <div class="custom-time-picker" id="eventTime-picker">
+            <input type="hidden" id="eventTime" required _ng-random />
+            <button type="button" class="ctp-trigger">
+              <span class="icon">schedule</span>
+              <span class="ctp-display">Select time</span>
+            </button>
+            <div class="ctp-popup" hidden>
+              <div class="ctp-columns">
+                <div class="ctp-col ctp-hours"></div>
+                <div class="ctp-sep">:</div>
+                <div class="ctp-col ctp-minutes"></div>
+                <div class="ctp-col ctp-ampm"></div>
+              </div>
+            </div>
+          </div>
           <label for="eventDescription" _ng-random
             >Event Description (Optional):</label
           >
@@ -1363,10 +1666,17 @@
         </div>
       </div>
     </div>
-    <div class="modal" id="addBirthdayModal" _ng-random>
+    <div
+      class="modal"
+      id="addBirthdayModal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="addBirthdayModalTitle"
+      _ng-random
+    >
       <div class="modal__content liquid-glass" _ng-random>
         <div class="modal__header" _ng-random>
-          <h2 _ng-random>Add Birthday</h2>
+          <h2 id="addBirthdayModalTitle" _ng-random>Add Birthday</h2>
           <div
             class="icon"
             id="closeAddBirthdayModal"
@@ -1382,8 +1692,25 @@
           <input type="text" id="birthdayName" required _ng-random />
           <br />
           <label for="birthdayDate" _ng-random>Birthday Date:</label>
-          <input type="date" id="birthdayDate" required _ng-random />
-          <br />
+          <div class="custom-date-picker" id="birthdayDate-picker">
+            <input type="hidden" id="birthdayDate" required _ng-random />
+            <button type="button" class="cdp-trigger">
+              <span class="icon">calendar_today</span>
+              <span class="cdp-display">Select date</span>
+            </button>
+            <div class="cdp-popup" hidden>
+              <div class="cdp-nav">
+                <button type="button" class="cdp-prev">chevron_left</button>
+                <span class="cdp-month-year-display"></span>
+                <button type="button" class="cdp-next">chevron_right</button>
+              </div>
+              <div class="cdp-day-names">
+                <span>Su</span><span>Mo</span><span>Tu</span><span>We</span
+                ><span>Th</span><span>Fr</span><span>Sa</span>
+              </div>
+              <div class="cdp-days-grid"></div>
+            </div>
+          </div>
           <label for="birthdayColor" _ng-random>Birthday Color</label>
           <input type="color" id="birthdayColor" value="#ff69b4" _ng-random />
         </div>
@@ -1438,7 +1765,10 @@
         return MUNETIOS_LOCALE_MAP[lang] || "en-US";
       }
       function formatDate(date, opts) {
-        return new Intl.DateTimeFormat(getCalendarLocale(), opts).format(date);
+        const s = new Intl.DateTimeFormat(getCalendarLocale(), opts).format(
+          date,
+        );
+        return s.charAt(0).toUpperCase() + s.slice(1);
       }
       function getLocalizedWeekdaysNarrow() {
         const locale = getCalendarLocale();
@@ -1454,9 +1784,10 @@
         return result;
       }
       function getLocalizedMonthName(month, year) {
-        return new Intl.DateTimeFormat(getCalendarLocale(), {
+        const name = new Intl.DateTimeFormat(getCalendarLocale(), {
           month: "long",
         }).format(new Date(year, month));
+        return name.charAt(0).toUpperCase() + name.slice(1);
       }
 
       (function () {
@@ -1520,7 +1851,7 @@
         const settingsBtn = document.getElementById("settingsBtn");
         let settingsModal = null;
         // Supported languages and translations
-        const translations = {
+        const translations = (window.translations = {
           en: {
             locale: "en-US",
             langName: "English",
@@ -1586,6 +1917,26 @@
             myCalendars: "My Calendars:",
             otherCalendars: "Other Calendars:",
             next: "Next",
+            dateFormat: "Date Format",
+            timeFormat: "Time Format",
+            hour12: "12-hour",
+            hour24: "24-hour",
+            dateFmtMDY: "MM/DD/YY",
+            dateFmtDMY: "DD/MM/YY",
+            dateFmtISO: "YYYY-MM-DD",
+            selectDate: "Select date",
+            selectTime: "Select time",
+            filterSearch: "Filter Search",
+            filterType: "Type:",
+            filterHas: "Has (text):",
+            filterHasPlaceholder: "Must contain...",
+            filterNotHas: "Doesn't have (text):",
+            filterNotHasPlaceholder: "Must not contain...",
+            filterDateLabel: "Date:",
+            apply: "Apply",
+            clear: "Clear",
+            allEventsTitle: "All Events & Birthdays",
+            helpInfo: "Help & Info",
           },
           es: {
             locale: "es-ES",
@@ -1653,6 +2004,26 @@
             myCalendars: "Mis calendarios:",
             otherCalendars: "Otros calendarios:",
             next: "Siguiente",
+            dateFormat: "Formato de fecha",
+            timeFormat: "Formato de hora",
+            hour12: "12 horas",
+            hour24: "24 horas",
+            dateFmtMDY: "MM/DD/AA",
+            dateFmtDMY: "DD/MM/AA",
+            dateFmtISO: "AAAA-MM-DD",
+            selectDate: "Seleccionar fecha",
+            selectTime: "Seleccionar hora",
+            filterSearch: "Filtrar búsqueda",
+            filterType: "Tipo:",
+            filterHas: "Tiene (texto):",
+            filterHasPlaceholder: "Debe contener...",
+            filterNotHas: "No tiene (texto):",
+            filterNotHasPlaceholder: "No debe contener...",
+            filterDateLabel: "Fecha:",
+            apply: "Aplicar",
+            clear: "Limpiar",
+            allEventsTitle: "Todos los eventos y cumpleaños",
+            helpInfo: "Ayuda e información",
           },
           fr: {
             locale: "fr-FR",
@@ -1720,6 +2091,26 @@
             myCalendars: "Mes calendriers :",
             otherCalendars: "Autres calendriers :",
             next: "Suivant",
+            dateFormat: "Format de date",
+            timeFormat: "Format de l'heure",
+            hour12: "12 heures",
+            hour24: "24 heures",
+            dateFmtMDY: "MM/JJ/AA",
+            dateFmtDMY: "JJ/MM/AA",
+            dateFmtISO: "AAAA-MM-JJ",
+            selectDate: "Sélectionner une date",
+            selectTime: "Sélectionner une heure",
+            filterSearch: "Filtrer la recherche",
+            filterType: "Type :",
+            filterHas: "Contient (texte) :",
+            filterHasPlaceholder: "Doit contenir...",
+            filterNotHas: "Ne contient pas (texte) :",
+            filterNotHasPlaceholder: "Ne doit pas contenir...",
+            filterDateLabel: "Date :",
+            apply: "Appliquer",
+            clear: "Effacer",
+            allEventsTitle: "Tous les événements et anniversaires",
+            helpInfo: "Aide et informations",
           },
           de: {
             locale: "de-DE",
@@ -1787,6 +2178,26 @@
             myCalendars: "Meine Kalender:",
             otherCalendars: "Andere Kalender:",
             next: "Weiter",
+            dateFormat: "Datumsformat",
+            timeFormat: "Zeitformat",
+            hour12: "12-Stunden",
+            hour24: "24-Stunden",
+            dateFmtMDY: "MM/TT/JJ",
+            dateFmtDMY: "TT/MM/JJ",
+            dateFmtISO: "JJJJ-MM-TT",
+            selectDate: "Datum auswählen",
+            selectTime: "Zeit auswählen",
+            filterSearch: "Suche filtern",
+            filterType: "Typ:",
+            filterHas: "Hat (Text):",
+            filterHasPlaceholder: "Muss enthalten...",
+            filterNotHas: "Hat nicht (Text):",
+            filterNotHasPlaceholder: "Darf nicht enthalten...",
+            filterDateLabel: "Datum:",
+            apply: "Anwenden",
+            clear: "Löschen",
+            allEventsTitle: "Alle Ereignisse & Geburtstage",
+            helpInfo: "Hilfe & Info",
           },
           it: {
             locale: "it-IT",
@@ -1854,6 +2265,26 @@
             myCalendars: "I miei calendari:",
             otherCalendars: "Altri calendari:",
             next: "Avanti",
+            dateFormat: "Formato data",
+            timeFormat: "Formato ora",
+            hour12: "12 ore",
+            hour24: "24 ore",
+            dateFmtMDY: "MM/GG/AA",
+            dateFmtDMY: "GG/MM/AA",
+            dateFmtISO: "AAAA-MM-GG",
+            selectDate: "Seleziona data",
+            selectTime: "Seleziona ora",
+            filterSearch: "Filtra ricerca",
+            filterType: "Tipo:",
+            filterHas: "Ha (testo):",
+            filterHasPlaceholder: "Deve contenere...",
+            filterNotHas: "Non ha (testo):",
+            filterNotHasPlaceholder: "Non deve contenere...",
+            filterDateLabel: "Data:",
+            apply: "Applica",
+            clear: "Cancella",
+            allEventsTitle: "Tutti gli eventi e i compleanni",
+            helpInfo: "Aiuto e informazioni",
           },
           pt: {
             locale: "pt-PT",
@@ -1921,6 +2352,26 @@
             myCalendars: "Meus calendários:",
             otherCalendars: "Outros calendários:",
             next: "Próximo",
+            dateFormat: "Formato de data",
+            timeFormat: "Formato de hora",
+            hour12: "12 horas",
+            hour24: "24 horas",
+            dateFmtMDY: "MM/DD/AA",
+            dateFmtDMY: "DD/MM/AA",
+            dateFmtISO: "AAAA-MM-DD",
+            selectDate: "Selecionar data",
+            selectTime: "Selecionar hora",
+            filterSearch: "Filtrar pesquisa",
+            filterType: "Tipo:",
+            filterHas: "Tem (texto):",
+            filterHasPlaceholder: "Deve conter...",
+            filterNotHas: "Não tem (texto):",
+            filterNotHasPlaceholder: "Não deve conter...",
+            filterDateLabel: "Data:",
+            apply: "Aplicar",
+            clear: "Limpar",
+            allEventsTitle: "Todos os eventos e aniversários",
+            helpInfo: "Ajuda e informações",
           },
           ru: {
             locale: "ru-RU",
@@ -1987,6 +2438,26 @@
             myCalendars: "Мои календари:",
             otherCalendars: "Другие календари:",
             next: "Далее",
+            dateFormat: "Формат даты",
+            timeFormat: "Формат времени",
+            hour12: "12-часовой",
+            hour24: "24-часовой",
+            dateFmtMDY: "MM/DD/YY",
+            dateFmtDMY: "DD/MM/YY",
+            dateFmtISO: "YYYY-MM-DD",
+            selectDate: "Выбрать дату",
+            selectTime: "Выбрать время",
+            filterSearch: "Фильтр поиска",
+            filterType: "Тип:",
+            filterHas: "Содержит (текст):",
+            filterHasPlaceholder: "Должно содержать...",
+            filterNotHas: "Не содержит (текст):",
+            filterNotHasPlaceholder: "Не должно содержать...",
+            filterDateLabel: "Дата:",
+            apply: "Применить",
+            clear: "Очистить",
+            allEventsTitle: "Все события и дни рождения",
+            helpInfo: "Помощь и сведения",
           },
           zh: {
             locale: "zh-CN",
@@ -2053,6 +2524,26 @@
             myCalendars: "我的日历：",
             otherCalendars: "其他日历：",
             next: "下一步",
+            dateFormat: "日期格式",
+            timeFormat: "时间格式",
+            hour12: "12小时",
+            hour24: "24小时",
+            dateFmtMDY: "MM/DD/YY",
+            dateFmtDMY: "DD/MM/YY",
+            dateFmtISO: "YYYY-MM-DD",
+            selectDate: "选择日期",
+            selectTime: "选择时间",
+            filterSearch: "过滤搜索",
+            filterType: "类型：",
+            filterHas: "包含（文本）：",
+            filterHasPlaceholder: "必须包含...",
+            filterNotHas: "不包含（文本）：",
+            filterNotHasPlaceholder: "不得包含...",
+            filterDateLabel: "日期：",
+            apply: "应用",
+            clear: "清除",
+            allEventsTitle: "所有活动和生日",
+            helpInfo: "帮助与信息",
           },
           ja: {
             locale: "ja-JP",
@@ -2119,6 +2610,26 @@
             myCalendars: "マイカレンダー：",
             otherCalendars: "他のカレンダー：",
             next: "次へ",
+            dateFormat: "日付フォーマット",
+            timeFormat: "時刻フォーマット",
+            hour12: "12時間",
+            hour24: "24時間",
+            dateFmtMDY: "MM/DD/YY",
+            dateFmtDMY: "DD/MM/YY",
+            dateFmtISO: "YYYY-MM-DD",
+            selectDate: "日付を選択",
+            selectTime: "時刻を選択",
+            filterSearch: "検索フィルター",
+            filterType: "タイプ：",
+            filterHas: "含む（テキスト）：",
+            filterHasPlaceholder: "含む必要があります...",
+            filterNotHas: "含まない（テキスト）：",
+            filterNotHasPlaceholder: "含んではいけません...",
+            filterDateLabel: "日付：",
+            apply: "適用",
+            clear: "クリア",
+            allEventsTitle: "すべてのイベントと誕生日",
+            helpInfo: "ヘルプと情報",
           },
           ko: {
             locale: "ko-KR",
@@ -2185,6 +2696,26 @@
             myCalendars: "내 캘린더:",
             otherCalendars: "다른 캘린더:",
             next: "다음",
+            dateFormat: "날짜 형식",
+            timeFormat: "시간 형식",
+            hour12: "12시간",
+            hour24: "24시간",
+            dateFmtMDY: "MM/DD/YY",
+            dateFmtDMY: "DD/MM/YY",
+            dateFmtISO: "YYYY-MM-DD",
+            selectDate: "날짜 선택",
+            selectTime: "시간 선택",
+            filterSearch: "검색 필터",
+            filterType: "유형:",
+            filterHas: "포함 (텍스트):",
+            filterHasPlaceholder: "포함해야 합니다...",
+            filterNotHas: "제외 (텍스트):",
+            filterNotHasPlaceholder: "포함하면 안 됩니다...",
+            filterDateLabel: "날짜:",
+            apply: "적용",
+            clear: "지우기",
+            allEventsTitle: "모든 이벤트 및 생일",
+            helpInfo: "도움말 및 정보",
           },
           tr: {
             locale: "tr-TR",
@@ -2252,6 +2783,26 @@
             myCalendars: "Takvimlerim:",
             otherCalendars: "Diğer takvimler:",
             next: "İleri",
+            dateFormat: "Tarih formatı",
+            timeFormat: "Saat formatı",
+            hour12: "12 saat",
+            hour24: "24 saat",
+            dateFmtMDY: "AA/GG/YY",
+            dateFmtDMY: "GG/AA/YY",
+            dateFmtISO: "YYYY-AA-GG",
+            selectDate: "Tarih seç",
+            selectTime: "Saat seç",
+            filterSearch: "Arama filtresi",
+            filterType: "Tür:",
+            filterHas: "İçeriyor (metin):",
+            filterHasPlaceholder: "İçermeli...",
+            filterNotHas: "İçermiyor (metin):",
+            filterNotHasPlaceholder: "İçermemeli...",
+            filterDateLabel: "Tarih:",
+            apply: "Uygula",
+            clear: "Temizle",
+            allEventsTitle: "Tüm etkinlikler ve doğum günleri",
+            helpInfo: "Yardım ve Bilgi",
           },
           ar: {
             locale: "ar-SA",
@@ -2318,6 +2869,26 @@
             myCalendars: "تقاويمي:",
             otherCalendars: "تقاويم أخرى:",
             next: "التالي",
+            dateFormat: "تنسيق التاريخ",
+            timeFormat: "تنسيق الوقت",
+            hour12: "12 ساعة",
+            hour24: "24 ساعة",
+            dateFmtMDY: "MM/DD/YY",
+            dateFmtDMY: "DD/MM/YY",
+            dateFmtISO: "YYYY-MM-DD",
+            selectDate: "اختر تاريخًا",
+            selectTime: "اختر وقتًا",
+            filterSearch: "تصفية البحث",
+            filterType: "النوع:",
+            filterHas: "يحتوي على (نص):",
+            filterHasPlaceholder: "يجب أن يحتوي...",
+            filterNotHas: "لا يحتوي على (نص):",
+            filterNotHasPlaceholder: "يجب ألا يحتوي...",
+            filterDateLabel: "التاريخ:",
+            apply: "تطبيق",
+            clear: "مسح",
+            allEventsTitle: "جميع الأحداث وأعياد الميلاد",
+            helpInfo: "مساعدة ومعلومات",
           },
           hi: {
             locale: "hi-IN",
@@ -2384,6 +2955,26 @@
             myCalendars: "मेरे कैलेंडर:",
             otherCalendars: "अन्य कैलेंडर:",
             next: "अगला",
+            dateFormat: "तारीख फ़ॉर्मेट",
+            timeFormat: "समय फ़ॉर्मेट",
+            hour12: "12 घंटे",
+            hour24: "24 घंटे",
+            dateFmtMDY: "MM/DD/YY",
+            dateFmtDMY: "DD/MM/YY",
+            dateFmtISO: "YYYY-MM-DD",
+            selectDate: "तारीख चुनें",
+            selectTime: "समय चुनें",
+            filterSearch: "खोज फ़िल्टर",
+            filterType: "प्रकार:",
+            filterHas: "है (टेक्स्ट):",
+            filterHasPlaceholder: "होना चाहिए...",
+            filterNotHas: "नहीं है (टेक्स्ट):",
+            filterNotHasPlaceholder: "नहीं होना चाहिए...",
+            filterDateLabel: "तारीख:",
+            apply: "लागू करें",
+            clear: "साफ़ करें",
+            allEventsTitle: "सभी घटनाएं और जन्मदिन",
+            helpInfo: "सहायता और जानकारी",
           },
           bn: {
             locale: "bn-BD",
@@ -2450,6 +3041,26 @@
             myCalendars: "আমার ক্যালেন্ডার:",
             otherCalendars: "অন্যান্য ক্যালেন্ডার:",
             next: "পরবর্তী",
+            dateFormat: "তারিখ ফর্ম্যাট",
+            timeFormat: "সময় ফর্ম্যাট",
+            hour12: "12 ঘন্টা",
+            hour24: "24 ঘন্টা",
+            dateFmtMDY: "MM/DD/YY",
+            dateFmtDMY: "DD/MM/YY",
+            dateFmtISO: "YYYY-MM-DD",
+            selectDate: "তারিখ নির্বাচন করুন",
+            selectTime: "সময় নির্বাচন করুন",
+            filterSearch: "ফিল্টার অনুসন্ধান",
+            filterType: "ধরন:",
+            filterHas: "আছে (লেখা):",
+            filterHasPlaceholder: "অবশ্যই থাকতে হবে...",
+            filterNotHas: "নেই (লেখা):",
+            filterNotHasPlaceholder: "থাকা চলবে না...",
+            filterDateLabel: "তারিখ:",
+            apply: "প্রয়োগ করুন",
+            clear: "মুছুন",
+            allEventsTitle: "সব ইভেন্ট ও জন্মদিন",
+            helpInfo: "সাহায্য ও তথ্য",
           },
           nl: {
             locale: "nl-NL",
@@ -2516,6 +3127,26 @@
             myCalendars: "Mijn kalenders:",
             otherCalendars: "Andere kalenders:",
             next: "Volgende",
+            dateFormat: "Datumnotatie",
+            timeFormat: "Tijdnotatie",
+            hour12: "12 uur",
+            hour24: "24 uur",
+            dateFmtMDY: "MM/DD/JJ",
+            dateFmtDMY: "DD/MM/JJ",
+            dateFmtISO: "JJJJ-MM-DD",
+            selectDate: "Datum selecteren",
+            selectTime: "Tijd selecteren",
+            filterSearch: "Zoekopdracht filteren",
+            filterType: "Type:",
+            filterHas: "Heeft (tekst):",
+            filterHasPlaceholder: "Moet bevatten...",
+            filterNotHas: "Heeft niet (tekst):",
+            filterNotHasPlaceholder: "Mag niet bevatten...",
+            filterDateLabel: "Datum:",
+            apply: "Toepassen",
+            clear: "Wissen",
+            allEventsTitle: "Alle evenementen en verjaardagen",
+            helpInfo: "Help & Info",
           },
           pl: {
             locale: "pl-PL",
@@ -2582,6 +3213,26 @@
             myCalendars: "Moje kalendarze:",
             otherCalendars: "Inne kalendarze:",
             next: "Dalej",
+            dateFormat: "Format daty",
+            timeFormat: "Format czasu",
+            hour12: "12-godzinny",
+            hour24: "24-godzinny",
+            dateFmtMDY: "MM/DD/RR",
+            dateFmtDMY: "DD/MM/RR",
+            dateFmtISO: "RRRR-MM-DD",
+            selectDate: "Wybierz datę",
+            selectTime: "Wybierz godzinę",
+            filterSearch: "Filtruj wyniki",
+            filterType: "Typ:",
+            filterHas: "Zawiera (tekst):",
+            filterHasPlaceholder: "Musi zawierać...",
+            filterNotHas: "Nie zawiera (tekst):",
+            filterNotHasPlaceholder: "Nie może zawierać...",
+            filterDateLabel: "Data:",
+            apply: "Zastosuj",
+            clear: "Wyczyść",
+            allEventsTitle: "Wszystkie zdarzenia i urodziny",
+            helpInfo: "Pomoc i informacje",
           },
           sv: {
             locale: "sv-SE",
@@ -2650,6 +3301,26 @@
             myCalendars: "Mina kalendrar:",
             otherCalendars: "Andra kalendrar:",
             next: "Nästa",
+            dateFormat: "Datumformat",
+            timeFormat: "Tidsformat",
+            hour12: "12-timme",
+            hour24: "24-timme",
+            dateFmtMDY: "MM/DD/ÅÅ",
+            dateFmtDMY: "DD/MM/ÅÅ",
+            dateFmtISO: "ÅÅÅÅ-MM-DD",
+            selectDate: "Välj datum",
+            selectTime: "Välj tid",
+            filterSearch: "Filtrera sökning",
+            filterType: "Typ:",
+            filterHas: "Innehåller (text):",
+            filterHasPlaceholder: "Måste innehålla...",
+            filterNotHas: "Innehåller inte (text):",
+            filterNotHasPlaceholder: "Får inte innehålla...",
+            filterDateLabel: "Datum:",
+            apply: "Verkställ",
+            clear: "Rensa",
+            allEventsTitle: "Alla händelser och födelsedagar",
+            helpInfo: "Hjälp & information",
           },
           no: {
             locale: "nb-NO",
@@ -2717,6 +3388,26 @@
             myCalendars: "Mine kalendere:",
             otherCalendars: "Andre kalendere:",
             next: "Neste",
+            dateFormat: "Datoformat",
+            timeFormat: "Tidsformat",
+            hour12: "12-timers",
+            hour24: "24-timers",
+            dateFmtMDY: "MM/DD/ÅÅ",
+            dateFmtDMY: "DD/MM/ÅÅ",
+            dateFmtISO: "ÅÅÅÅ-MM-DD",
+            selectDate: "Velg dato",
+            selectTime: "Velg tid",
+            filterSearch: "Filtrer søk",
+            filterType: "Type:",
+            filterHas: "Inneholder (tekst):",
+            filterHasPlaceholder: "Må inneholde...",
+            filterNotHas: "Inneholder ikke (tekst):",
+            filterNotHasPlaceholder: "Må ikke inneholde...",
+            filterDateLabel: "Dato:",
+            apply: "Bruk",
+            clear: "Tøm",
+            allEventsTitle: "Alle hendelser og bursdager",
+            helpInfo: "Hjelp og informasjon",
           },
           da: {
             locale: "da-DK",
@@ -2784,6 +3475,26 @@
             myCalendars: "Mine kalendere:",
             otherCalendars: "Andre kalendere:",
             next: "Næste",
+            dateFormat: "Datoformat",
+            timeFormat: "Tidsformat",
+            hour12: "12-timers",
+            hour24: "24-timers",
+            dateFmtMDY: "MM/DD/ÅÅ",
+            dateFmtDMY: "DD/MM/ÅÅ",
+            dateFmtISO: "ÅÅÅÅ-MM-DD",
+            selectDate: "Vælg dato",
+            selectTime: "Vælg tid",
+            filterSearch: "Filtrer søgning",
+            filterType: "Type:",
+            filterHas: "Indeholder (tekst):",
+            filterHasPlaceholder: "Skal indeholde...",
+            filterNotHas: "Indeholder ikke (tekst):",
+            filterNotHasPlaceholder: "Må ikke indeholde...",
+            filterDateLabel: "Dato:",
+            apply: "Anvend",
+            clear: "Ryd",
+            allEventsTitle: "Alle begivenheder og fødselsdage",
+            helpInfo: "Hjælp og oplysninger",
           },
           fi: {
             locale: "fi-FI",
@@ -2850,6 +3561,26 @@
             myCalendars: "Omat kalenterit:",
             otherCalendars: "Muut kalenterit:",
             next: "Seuraava",
+            dateFormat: "Päivämäärämuoto",
+            timeFormat: "Aikamuoto",
+            hour12: "12 tuntia",
+            hour24: "24 tuntia",
+            dateFmtMDY: "KK/PP/VV",
+            dateFmtDMY: "PP/KK/VV",
+            dateFmtISO: "VVVV-KK-PP",
+            selectDate: "Valitse päivämäärä",
+            selectTime: "Valitse aika",
+            filterSearch: "Suodata hakua",
+            filterType: "Tyyppi:",
+            filterHas: "Sisältää (teksti):",
+            filterHasPlaceholder: "Täytyy sisältää...",
+            filterNotHas: "Ei sisällä (teksti):",
+            filterNotHasPlaceholder: "Ei saa sisältää...",
+            filterDateLabel: "Päivämäärä:",
+            apply: "Käytä",
+            clear: "Tyhjennä",
+            allEventsTitle: "Kaikki tapahtumat ja syntymäpäivät",
+            helpInfo: "Ohje ja tiedot",
           },
           hu: {
             locale: "hu-HU",
@@ -2917,6 +3648,26 @@
             myCalendars: "Naptáraim:",
             otherCalendars: "Más naptárak:",
             next: "Következő",
+            dateFormat: "Dátumformátum",
+            timeFormat: "Időformátum",
+            hour12: "12 órás",
+            hour24: "24 órás",
+            dateFmtMDY: "HH/NN/ÉÉ",
+            dateFmtDMY: "NN/HH/ÉÉ",
+            dateFmtISO: "ÉÉÉÉ-HH-NN",
+            selectDate: "Válasszon dátumot",
+            selectTime: "Válasszon időt",
+            filterSearch: "Keresés szűrése",
+            filterType: "Típus:",
+            filterHas: "Tartalmaz (szöveg):",
+            filterHasPlaceholder: "Tartalmaznia kell...",
+            filterNotHas: "Nem tartalmaz (szöveg):",
+            filterNotHasPlaceholder: "Nem tartalmazhatja...",
+            filterDateLabel: "Dátum:",
+            apply: "Alkalmaz",
+            clear: "Töröl",
+            allEventsTitle: "Minden esemény és születésnap",
+            helpInfo: "Súgó és információk",
           },
           cs: {
             locale: "cs-CZ",
@@ -2983,8 +3734,28 @@
             myCalendars: "Moje kalendáře:",
             otherCalendars: "Jiné kalendáře:",
             next: "Další",
+            dateFormat: "Formát data",
+            timeFormat: "Formát času",
+            hour12: "12hodinový",
+            hour24: "24hodinový",
+            dateFmtMDY: "MM/DD/RR",
+            dateFmtDMY: "DD/MM/RR",
+            dateFmtISO: "RRRR-MM-DD",
+            selectDate: "Vybrat datum",
+            selectTime: "Vybrat čas",
+            filterSearch: "Filtrovat hledání",
+            filterType: "Typ:",
+            filterHas: "Obsahuje (text):",
+            filterHasPlaceholder: "Musí obsahovat...",
+            filterNotHas: "Neobsahuje (text):",
+            filterNotHasPlaceholder: "Nesmí obsahovat...",
+            filterDateLabel: "Datum:",
+            apply: "Použít",
+            clear: "Vymazat",
+            allEventsTitle: "Všechny události a narozeniny",
+            helpInfo: "Nápověda a informace",
           },
-        };
+        });
         let currentLang = localStorage.getItem("munetiosLang") || "en";
         let currentTheme = localStorage.getItem("munetiosTheme") || "system";
         let notificationsEnabled =
@@ -3105,6 +3876,72 @@
           const cancelBirthdayBtn =
             document.getElementById("cancelBirthdayBtn");
           if (cancelBirthdayBtn) cancelBirthdayBtn.textContent = t("cancel");
+          // Settings modal — date/time format labels
+          if (settingsModal) {
+            const datefmtLabel = settingsModal.querySelector(".datefmt-label");
+            if (datefmtLabel) datefmtLabel.textContent = t("dateFormat");
+            const timefmtLabel = settingsModal.querySelector(".timefmt-label");
+            if (timefmtLabel) timefmtLabel.textContent = t("timeFormat");
+          }
+          // Close button aria-labels / titles on static modals
+          const closeCreateEvt = document.getElementById(
+            "closeCreateEventModal",
+          );
+          if (closeCreateEvt) {
+            closeCreateEvt.setAttribute("title", t("close"));
+            closeCreateEvt.setAttribute("aria-label", t("close"));
+          }
+          const closeAddBd = document.getElementById("closeAddBirthdayModal");
+          if (closeAddBd) {
+            closeAddBd.setAttribute("title", t("close"));
+            closeAddBd.setAttribute("aria-label", t("close"));
+          }
+          // All Events & Birthdays modal title (if open)
+          const allEvModal = document.getElementById("allEventsModal");
+          if (allEvModal) {
+            const h2 = allEvModal.querySelector(".modal__header h2");
+            if (h2) h2.textContent = t("allEventsTitle");
+          }
+          // Picker display placeholders — update all un-selected pickers
+          document.querySelectorAll(".cdp-display").forEach(function (el) {
+            const trigger =
+              el.closest(".cdp-trigger") || el.closest("button.cdp-trigger");
+            const picker = el.closest(".custom-date-picker");
+            const hiddenInput =
+              picker && picker.querySelector("input[type=hidden]");
+            if (!hiddenInput || !hiddenInput.value)
+              el.textContent = t("selectDate");
+          });
+          document.querySelectorAll(".ctp-display").forEach(function (el) {
+            const picker = el.closest(".custom-time-picker");
+            const hiddenInput =
+              picker && picker.querySelector("input[type=hidden]");
+            if (!hiddenInput || !hiddenInput.value)
+              el.textContent = t("selectTime");
+          });
+          // Content title h1 (Calendar / Tasks / Meals)
+          const contentTitleEl = document.getElementById("contentTitle");
+          if (contentTitleEl) {
+            const activeTab = window._activeTab || "calendar";
+            contentTitleEl.textContent = t(
+              activeTab === "tasks"
+                ? "tasks"
+                : activeTab === "meals"
+                  ? "meals"
+                  : "calendar",
+            );
+          }
+          // Help modal title (if open)
+          const helpModal = document.getElementById("helpModal");
+          if (helpModal) {
+            const h2 = helpModal.querySelector(".modal__header h2");
+            if (h2) h2.textContent = t("helpInfo");
+            const closeBtn = helpModal.querySelector("#closeHelpModal");
+            if (closeBtn) {
+              closeBtn.setAttribute("title", t("close"));
+              closeBtn.setAttribute("aria-label", t("close"));
+            }
+          }
         }
         // Helper: apply theme (system, light, dark)
         function applyTheme(theme) {
@@ -3413,7 +4250,7 @@
             settingsModal.className = "modal";
             settingsModal.style.zIndex = 4100;
             settingsModal.innerHTML = `
-                                <div class="modal__content liquid-glass" style="max-width:420px;">
+                                <div class="modal__content liquid-glass" >
                                     <div class="modal__header">
                                         <h2>${translations[currentLang].settings}</h2>
                                         <div class="icon" id="closeSettingsModal" title="${translations[currentLang].close}" aria-label="${translations[currentLang].close}">close</div>
@@ -3441,6 +4278,24 @@
                                         <div>
                                             <input type="checkbox" id="notifCheckbox" ${notificationsEnabled ? "checked" : ""} style="vertical-align:middle;margin-right:8px;">
                                             <span style="font-size:15px;vertical-align:middle;">${translations[currentLang].notifications}</span>
+                                        </div>
+                                        <label class="datefmt-label">${translations[currentLang].dateFormat || "Date Format"}</label>
+                                        <div>
+                                            <munetios-button id="dateFmtDropdownBtn" style="width:100%;justify-content:space-between;">
+                                                <span class="icon">calendar_today</span>
+                                                <span id="dateFmtDropdownText">MM/DD/YY</span>
+                                                <span class="icon">expand_more</span>
+                                            </munetios-button>
+                                            <munetios-dropdown-menu id="dateFmtDropdownMenu"></munetios-dropdown-menu>
+                                        </div>
+                                        <label class="timefmt-label">${translations[currentLang].timeFormat || "Time Format"}</label>
+                                        <div>
+                                            <munetios-button id="timeFmtDropdownBtn" style="width:100%;justify-content:space-between;">
+                                                <span class="icon">schedule</span>
+                                                <span id="timeFmtDropdownText">12-hour</span>
+                                                <span class="icon">expand_more</span>
+                                            </munetios-button>
+                                            <munetios-dropdown-menu id="timeFmtDropdownMenu"></munetios-dropdown-menu>
                                         </div>
                                         <div style="display:flex;gap:10px;justify-content:space-between;">
                                             <munetios-button id="backupDataBtn" title="Backup Data" aria-label="Backup Data">${translations[currentLang].backup}</munetios-button>
@@ -3538,6 +4393,120 @@
                   localStorage.setItem("munetiosNotifications", "off");
                 }
               };
+            // Date format dropdown
+            const dateFmtBtn = settingsModal.querySelector(
+              "#dateFmtDropdownBtn",
+            );
+            const dateFmtMenu = settingsModal.querySelector(
+              "#dateFmtDropdownMenu",
+            );
+            dateFmtBtn.onclick = function (e) {
+              e.stopPropagation();
+              dateFmtMenu.innerHTML = "";
+              const fmts = [
+                {
+                  val: "MM/DD/YY",
+                  label: translations[currentLang].dateFmtMDY || "MM/DD/YY",
+                },
+                {
+                  val: "DD/MM/YY",
+                  label: translations[currentLang].dateFmtDMY || "DD/MM/YY",
+                },
+                {
+                  val: "YYYY-MM-DD",
+                  label: translations[currentLang].dateFmtISO || "YYYY-MM-DD",
+                },
+              ];
+              const cur =
+                dateFmtBtn.getAttribute("data-selected") ||
+                localStorage.getItem("munetiosDateFormat") ||
+                "MM/DD/YY";
+              fmts.forEach(({ val, label }) => {
+                const item = document.createElement("div");
+                item.className = "dropdown-item";
+                item.textContent = label;
+                if (val === cur) item.style.fontWeight = "bold";
+                item.onclick = () => {
+                  settingsModal.querySelector(
+                    "#dateFmtDropdownText",
+                  ).textContent = label;
+                  dateFmtMenu.style.display = "none";
+                  dateFmtBtn.setAttribute("data-selected", val);
+                };
+                dateFmtMenu.appendChild(item);
+              });
+              const rect = dateFmtBtn.getBoundingClientRect();
+              dateFmtMenu.style.top = rect.bottom + window.scrollY + "px";
+              dateFmtMenu.style.left = rect.left + window.scrollX + "px";
+              dateFmtMenu.style.display = "flex";
+              setTimeout(() => {
+                function hide(ev) {
+                  if (
+                    !dateFmtMenu.contains(ev.target) &&
+                    ev.target !== dateFmtBtn
+                  ) {
+                    dateFmtMenu.style.display = "none";
+                    document.removeEventListener("mousedown", hide);
+                  }
+                }
+                document.addEventListener("mousedown", hide);
+              }, 0);
+            };
+            // Time format dropdown
+            const timeFmtBtn = settingsModal.querySelector(
+              "#timeFmtDropdownBtn",
+            );
+            const timeFmtMenu = settingsModal.querySelector(
+              "#timeFmtDropdownMenu",
+            );
+            timeFmtBtn.onclick = function (e) {
+              e.stopPropagation();
+              timeFmtMenu.innerHTML = "";
+              const fmts = [
+                {
+                  val: "12h",
+                  label: translations[currentLang].hour12 || "12-hour",
+                },
+                {
+                  val: "24h",
+                  label: translations[currentLang].hour24 || "24-hour",
+                },
+              ];
+              const cur =
+                timeFmtBtn.getAttribute("data-selected") ||
+                localStorage.getItem("munetiosTimeFormat") ||
+                "12h";
+              fmts.forEach(({ val, label }) => {
+                const item = document.createElement("div");
+                item.className = "dropdown-item";
+                item.textContent = label;
+                if (val === cur) item.style.fontWeight = "bold";
+                item.onclick = () => {
+                  settingsModal.querySelector(
+                    "#timeFmtDropdownText",
+                  ).textContent = label;
+                  timeFmtMenu.style.display = "none";
+                  timeFmtBtn.setAttribute("data-selected", val);
+                };
+                timeFmtMenu.appendChild(item);
+              });
+              const rect = timeFmtBtn.getBoundingClientRect();
+              timeFmtMenu.style.top = rect.bottom + window.scrollY + "px";
+              timeFmtMenu.style.left = rect.left + window.scrollX + "px";
+              timeFmtMenu.style.display = "flex";
+              setTimeout(() => {
+                function hide(ev) {
+                  if (
+                    !timeFmtMenu.contains(ev.target) &&
+                    ev.target !== timeFmtBtn
+                  ) {
+                    timeFmtMenu.style.display = "none";
+                    document.removeEventListener("mousedown", hide);
+                  }
+                }
+                document.addEventListener("mousedown", hide);
+              }, 0);
+            };
             // Save/cancel/close
             settingsModal.querySelector("#saveSettingsBtn").onclick =
               function () {
@@ -3550,6 +4519,22 @@
                 currentLang = lang;
                 localStorage.setItem("munetiosLang", lang);
                 translateUI();
+                // Date format
+                const dfBtn = settingsModal.querySelector(
+                  "#dateFmtDropdownBtn",
+                );
+                if (dfBtn) {
+                  const df = dfBtn.getAttribute("data-selected") || "MM/DD/YY";
+                  localStorage.setItem("munetiosDateFormat", df);
+                }
+                // Time format
+                const tfBtn = settingsModal.querySelector(
+                  "#timeFmtDropdownBtn",
+                );
+                if (tfBtn) {
+                  const tf = tfBtn.getAttribute("data-selected") || "12h";
+                  localStorage.setItem("munetiosTimeFormat", tf);
+                }
                 // Notifications already handled
                 settingsModal.style.display = "none";
               };
@@ -3580,6 +4565,31 @@
           settingsModal
             .querySelector("#langDropdownBtn")
             .setAttribute("data-selected", currentLang);
+          // Date format
+          const curDateFmt =
+            localStorage.getItem("munetiosDateFormat") || "MM/DD/YY";
+          const dateFmtLabels = {
+            "MM/DD/YY": translations[currentLang].dateFmtMDY || "MM/DD/YY",
+            "DD/MM/YY": translations[currentLang].dateFmtDMY || "DD/MM/YY",
+            "YYYY-MM-DD": translations[currentLang].dateFmtISO || "YYYY-MM-DD",
+          };
+          settingsModal.querySelector("#dateFmtDropdownText").textContent =
+            dateFmtLabels[curDateFmt] || curDateFmt;
+          settingsModal
+            .querySelector("#dateFmtDropdownBtn")
+            .setAttribute("data-selected", curDateFmt);
+          // Time format
+          const curTimeFmt =
+            localStorage.getItem("munetiosTimeFormat") || "12h";
+          const timeFmtLabels = {
+            "12h": translations[currentLang].hour12 || "12-hour",
+            "24h": translations[currentLang].hour24 || "24-hour",
+          };
+          settingsModal.querySelector("#timeFmtDropdownText").textContent =
+            timeFmtLabels[curTimeFmt] || curTimeFmt;
+          settingsModal
+            .querySelector("#timeFmtDropdownBtn")
+            .setAttribute("data-selected", curTimeFmt);
           settingsModal.style.display = "block";
           translateUI();
         }
@@ -3663,18 +4673,25 @@
           window._munetiosNotifs = [];
           // Get events/birthdays for today and future
           const now = new Date();
-          openDB().then((db) => {
+          openDB().then(async (db) => {
             // Events
             const tx = db.transaction("events", "readonly");
             const store = tx.objectStore("events");
             const req = store.getAll();
-            req.onsuccess = function () {
-              req.result.forEach((ev) => {
-                if (!ev.date) return;
+            req.onsuccess = async function () {
+              for (const item of req.result) {
+                let ev = item;
+                if (item.encrypted) {
+                  const dec = await decryptData(item.encrypted);
+                  if (dec)
+                    ev = { id: item.id, calendar: item.calendar, ...dec };
+                  else continue;
+                }
+                if (!ev.date) continue;
                 let evDate = new Date(
                   ev.date + (ev.time ? "T" + ev.time : "T09:00"),
                 );
-                if (evDate < now) return;
+                if (evDate < now) continue;
                 let ms = evDate - now;
                 if (ms > 0) {
                   let tid = setTimeout(() => {
@@ -3685,17 +4702,24 @@
                   }, ms);
                   window._munetiosNotifs.push(tid);
                 }
-              });
+              }
             };
             // Birthdays
             const tx2 = db.transaction("birthdays", "readonly");
             const store2 = tx2.objectStore("birthdays");
             const req2 = store2.getAll();
-            req2.onsuccess = function () {
-              req2.result.forEach((bd) => {
-                if (!bd.date) return;
+            req2.onsuccess = async function () {
+              for (const item of req2.result) {
+                let bd = item;
+                if (item.encrypted) {
+                  const dec = await decryptData(item.encrypted);
+                  if (dec)
+                    bd = { id: item.id, calendar: item.calendar, ...dec };
+                  else continue;
+                }
+                if (!bd.date) continue;
                 let parts = bd.date.split("-");
-                if (parts.length < 3) return;
+                if (parts.length < 3) continue;
                 let year = now.getFullYear();
                 let bdDate = new Date(
                   year,
@@ -3705,7 +4729,7 @@
                   0,
                   0,
                 );
-                if (bdDate < now) return;
+                if (bdDate < now) continue;
                 let ms = bdDate - now;
                 if (ms > 0) {
                   let tid = setTimeout(() => {
@@ -3716,7 +4740,7 @@
                   }, ms);
                   window._munetiosNotifs.push(tid);
                 }
-              });
+              }
             };
           });
         }
@@ -3762,12 +4786,20 @@
           if (!helpModal) {
             helpModal = document.createElement("div");
             helpModal.className = "modal";
+            helpModal.id = "helpModal";
             helpModal.style.zIndex = 4000;
+            const _htl = (k) =>
+              (window.translations &&
+                ((window.translations[
+                  localStorage.getItem("munetiosLang") || "en"
+                ] || {})[k] ||
+                  (window.translations["en"] || {})[k])) ||
+              k;
             helpModal.innerHTML = `
                         <div class="modal__content liquid-glass" style="max-width:800px !important;">
                             <div class="modal__header">
-                                <h2>Help & Info</h2>
-                                <div class="icon" id="closeHelpModal" title="Close" aria-label="Close">close</div>
+                                <h2>${_htl("helpInfo")}</h2>
+                                <div class="icon" id="closeHelpModal" title="${_htl("close")}" aria-label="${_htl("close")}">close</div>
                             </div>
                             <div class="modal__body" id="helpModalBody" style="max-height:60vh;overflow-y:auto;">
                                 <h3>How To Use</h3>
@@ -3831,8 +4863,19 @@
         // Minimal stub to avoid error; actual implementation is below
         function rerender() {}
 
+        function _tabTr(key) {
+          const _l = localStorage.getItem("munetiosLang") || "en";
+          return (
+            (window.translations &&
+              ((window.translations[_l] && window.translations[_l][key]) ||
+                (window.translations["en"] &&
+                  window.translations["en"][key]))) ||
+            key
+          );
+        }
         function showCalendar() {
-          contentTitle.textContent = "Calendar";
+          contentTitle.textContent = _tabTr("calendar");
+          window._activeTab = "calendar";
           calendarMainContent.style.display = "";
           if (tasksFrame) tasksFrame.style.display = "none";
           if (mealsDiv) mealsDiv.style.display = "none";
@@ -3840,7 +4883,8 @@
         }
 
         function showTasks() {
-          contentTitle.textContent = "Tasks";
+          contentTitle.textContent = _tabTr("tasks");
+          window._activeTab = "tasks";
           calendarMainContent.style.display = "none";
           if (!tasksFrame) {
             tasksFrame = document.createElement("iframe");
@@ -3858,7 +4902,8 @@
         }
 
         function showMeals() {
-          contentTitle.textContent = "Meals";
+          contentTitle.textContent = _tabTr("meals");
+          window._activeTab = "meals";
           calendarMainContent.style.display = "none";
           if (tasksFrame) tasksFrame.style.display = "none";
           if (!mealsDiv) {
@@ -4398,14 +5443,14 @@
         function getViewLabel(opt) {
           const lang = localStorage.getItem("munetiosLang") || "en";
           const tr =
-            typeof translations !== "undefined" && translations[lang]
-              ? translations[lang]
+            window.translations && window.translations[lang]
+              ? window.translations[lang]
               : {};
           return (
             tr[opt.labelKey] ||
-            (typeof translations !== "undefined" &&
-              translations["en"] &&
-              translations["en"][opt.labelKey]) ||
+            (window.translations &&
+              window.translations["en"] &&
+              window.translations["en"][opt.labelKey]) ||
             opt.labelKey
           );
         }
@@ -4577,14 +5622,14 @@
           // List all days of the month, with holidays if enabled
           const agLang = localStorage.getItem("munetiosLang") || "en";
           const agTr =
-            typeof translations !== "undefined" && translations[agLang]
-              ? translations[agLang]
+            window.translations && window.translations[agLang]
+              ? window.translations[agLang]
               : {};
           const agT = (k) =>
             agTr[k] ||
-            (typeof translations !== "undefined" &&
-              translations["en"] &&
-              translations["en"][k]) ||
+            (window.translations &&
+              window.translations["en"] &&
+              window.translations["en"][k]) ||
             k;
           todayDateCalendar.textContent =
             formatDate(new Date(year, month), {
@@ -4624,14 +5669,14 @@
           // Set title localized
           const tlLang = localStorage.getItem("munetiosLang") || "en";
           const tlTr =
-            typeof translations !== "undefined" && translations[tlLang]
-              ? translations[tlLang]
+            window.translations && window.translations[tlLang]
+              ? window.translations[tlLang]
               : {};
           const tlT = (k) =>
             tlTr[k] ||
-            (typeof translations !== "undefined" &&
-              translations["en"] &&
-              translations["en"][k]) ||
+            (window.translations &&
+              window.translations["en"] &&
+              window.translations["en"][k]) ||
             k;
           todayDateCalendar.textContent = `${tlT("timelineFor")} ${year}`;
 
@@ -4837,11 +5882,26 @@
             eventsModal.className = "modal";
             eventsModal.id = "allEventsModal";
             eventsModal.style.zIndex = 4000;
+            const _aeTr = (k) => {
+              const _l =
+                (typeof currentLang !== "undefined" ? currentLang : null) ||
+                localStorage.getItem("munetiosLang") ||
+                "en";
+              return (
+                (window.translations &&
+                  window.translations[_l] &&
+                  window.translations[_l][k]) ||
+                (window.translations &&
+                  window.translations["en"] &&
+                  window.translations["en"][k]) ||
+                k
+              );
+            };
             eventsModal.innerHTML = `
                             <div class="modal__content liquid-glass" style="max-width:520px;">
                                 <div class="modal__header">
-                                    <h2>All Events & Birthdays</h2>
-                                    <div class="icon" id="closeAllEventsModal" title="Close" aria-label="Close">close</div>
+                                    <h2>${_aeTr("allEventsTitle")}</h2>
+                                    <div class="icon" id="closeAllEventsModal" title="${_aeTr("close")}" aria-label="${_aeTr("close")}">close</div>
                                 </div>
                                 <div class="modal__body" id="allEventsModalBody" style="max-height:60vh;overflow-y:auto;"></div>
                             </div>
@@ -4856,14 +5916,14 @@
           // Load all events and birthdays for current calendar
           const evLang = localStorage.getItem("munetiosLang") || "en";
           const evTr =
-            typeof translations !== "undefined" && translations[evLang]
-              ? translations[evLang]
+            window.translations && window.translations[evLang]
+              ? window.translations[evLang]
               : {};
           const evT = (k) =>
             evTr[k] ||
-            (typeof translations !== "undefined" &&
-              translations["en"] &&
-              translations["en"][k]) ||
+            (window.translations &&
+              window.translations["en"] &&
+              window.translations["en"][k]) ||
             k;
           // Update modal title
           const allEvModalH2 = eventsModal.querySelector(".modal__header h2");
@@ -4872,33 +5932,59 @@
           Promise.all([
             openDB().then(
               (db) =>
-                new Promise((res) => {
+                new Promise(async (res) => {
                   const tx = db.transaction("events", "readonly");
                   const store = tx.objectStore("events");
                   const req = store.getAll();
-                  req.onsuccess = () =>
-                    res(
-                      req.result.filter(
-                        (ev) =>
-                          (ev.calendar || "My Calendar") === currentCalendar,
-                      ),
-                    );
+                  req.onsuccess = async function () {
+                    const raw = req.result || [];
+                    const decrypted = [];
+                    for (const item of raw) {
+                      if ((item.calendar || "My Calendar") !== currentCalendar)
+                        continue;
+                      if (item.encrypted) {
+                        const ev = await decryptData(item.encrypted);
+                        if (ev)
+                          decrypted.push({
+                            id: item.id,
+                            ...ev,
+                            calendar: item.calendar,
+                          });
+                      } else {
+                        decrypted.push(item);
+                      }
+                    }
+                    res(decrypted);
+                  };
                   req.onerror = () => res([]);
                 }),
             ),
             openDB().then(
               (db) =>
-                new Promise((res) => {
+                new Promise(async (res) => {
                   const tx = db.transaction("birthdays", "readonly");
                   const store = tx.objectStore("birthdays");
                   const req = store.getAll();
-                  req.onsuccess = () =>
-                    res(
-                      req.result.filter(
-                        (bd) =>
-                          (bd.calendar || "My Calendar") === currentCalendar,
-                      ),
-                    );
+                  req.onsuccess = async function () {
+                    const raw = req.result || [];
+                    const decrypted = [];
+                    for (const item of raw) {
+                      if ((item.calendar || "My Calendar") !== currentCalendar)
+                        continue;
+                      if (item.encrypted) {
+                        const bd = await decryptData(item.encrypted);
+                        if (bd)
+                          decrypted.push({
+                            id: item.id,
+                            ...bd,
+                            calendar: item.calendar,
+                          });
+                      } else {
+                        decrypted.push(item);
+                      }
+                    }
+                    res(decrypted);
+                  };
                   req.onerror = () => res([]);
                 }),
             ),
@@ -4971,13 +6057,24 @@
             eventsModal.querySelectorAll(".edit-event-btn").forEach((btn) => {
               btn.onclick = function () {
                 const id = Number(this.getAttribute("data-id"));
-                openDB().then((db) => {
+                openDB().then(async (db) => {
                   const tx = db.transaction("events", "readonly");
                   const store = tx.objectStore("events");
                   const req = store.get(id);
-                  req.onsuccess = function () {
-                    const ev = req.result;
-                    if (!ev) return;
+                  req.onsuccess = async function () {
+                    const rawItem = req.result;
+                    if (!rawItem) return;
+                    // Decrypt if needed
+                    let ev = rawItem;
+                    if (rawItem.encrypted) {
+                      const dec = await decryptData(rawItem.encrypted);
+                      if (dec)
+                        ev = {
+                          id: rawItem.id,
+                          calendar: rawItem.calendar,
+                          ...dec,
+                        };
+                    }
                     // Show modal and fill fields
                     showModal(createEventModal);
                     document.getElementById("eventTitle").value =
@@ -5000,7 +6097,7 @@
                         ev.calendar || "My Calendar";
                     }
                     // Save changes
-                    saveEventBtn.onclick = function () {
+                    saveEventBtn.onclick = async function () {
                       const title = document
                         .getElementById("eventTitle")
                         .value.trim();
@@ -5014,17 +6111,23 @@
                         ? calBtn.getAttribute("data-selected")
                         : ev.calendar || "My Calendar";
                       if (!title || !date) return;
+                      const updated = {
+                        title,
+                        date,
+                        time,
+                        desc,
+                        color,
+                        calendar,
+                      };
+                      const newEncrypted = await encryptData(updated);
                       openDB().then((db2) => {
                         const tx2 = db2.transaction("events", "readwrite");
                         const store2 = tx2.objectStore("events");
                         store2.put({
-                          ...ev,
-                          title,
+                          id: rawItem.id,
                           date,
-                          time,
-                          desc,
-                          color,
                           calendar,
+                          encrypted: newEncrypted,
                         });
                         tx2.oncomplete = () => {
                           hideModal(createEventModal);
@@ -6017,36 +7120,68 @@
         };
         function createFilterModal() {
           if (filterModal) return filterModal;
+          const _lang =
+            (typeof currentLang !== "undefined" ? currentLang : null) ||
+            localStorage.getItem("munetiosLang") ||
+            "en";
+          const tl =
+            (window.translations && window.translations[_lang]) ||
+            (window.translations && window.translations["en"]) ||
+            {};
+          const tr = (k) =>
+            tl[k] ||
+            (window.translations &&
+              window.translations["en"] &&
+              window.translations["en"][k]) ||
+            k;
           filterModal = document.createElement("div");
           filterModal.className = "modal";
           filterModal.style.zIndex = 4000;
           filterModal.innerHTML = `
                         <div class="modal__content liquid-glass" style="width:340px;">
                             <div class="modal__header">
-                                <h2>Filter Search</h2>
-                                <div class="icon" id="closeFilterModal" title="Close" aria-label="Close">close</div>
+                                <h2>${tr("filterSearch")}</h2>
+                                <div class="icon" id="closeFilterModal" title="${tr("close")}" aria-label="${tr("close")}">close</div>
                             </div>
                             <div class="modal__body">
-                                <label>Type:</label>
+                                <label>${tr("filterType")}</label>
                                 <div style="display:flex;gap:10px;margin-bottom:8px;">
-                                    <label><input type="checkbox" id="filterTypeEvent" checked> Events</label>
-                                    <label><input type="checkbox" id="filterTypeBirthday" checked> Birthdays</label>
-                                    <label><input type="checkbox" id="filterTypeHoliday" checked> Holidays</label>
+                                    <label><input type="checkbox" id="filterTypeEvent" checked> ${tr("events")}</label>
+                                    <label><input type="checkbox" id="filterTypeBirthday" checked> ${tr("birthdays")}</label>
+                                    <label><input type="checkbox" id="filterTypeHoliday" checked> ${tr("showHolidays")}</label>
                                 </div>
-                                <label for="filterHas">Has (text):</label>
-                                <input type="text" id="filterHas" placeholder="Must contain..." />
-                                <label for="filterNotHas">Doesn't have (text):</label>
-                                <input type="text" id="filterNotHas" placeholder="Must not contain..." />
-                                <label for="filterDate">Date:</label>
-                                <input type="date" id="filterDate" />
+                                <label for="filterHas">${tr("filterHas")}</label>
+                                <input type="text" id="filterHas" placeholder="${tr("filterHasPlaceholder")}" />
+                                <label for="filterNotHas">${tr("filterNotHas")}</label>
+                                <input type="text" id="filterNotHas" placeholder="${tr("filterNotHasPlaceholder")}" />
+                                <label for="filterDate">${tr("filterDateLabel")}</label>
+                                <div class="custom-date-picker" id="filterDate-picker">
+                                    <input type="hidden" id="filterDate" />
+                                    <button type="button" class="cdp-trigger">
+                                        <span class="icon">calendar_today</span>
+                                        <span class="cdp-display">${tr("selectDate")}</span>
+                                    </button>
+                                    <div class="cdp-popup" hidden>
+                                        <div class="cdp-nav">
+                                            <button type="button" class="cdp-prev">chevron_left</button>
+                                            <span class="cdp-month-year-display"></span>
+                                            <button type="button" class="cdp-next">chevron_right</button>
+                                        </div>
+                                        <div class="cdp-day-names">
+                                            <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+                                        </div>
+                                        <div class="cdp-days-grid"></div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal__footer">
-                                <munetios-button class="btn-primary" id="applyFilterBtn">Apply</munetios-button>
-                                <munetios-button id="clearFilterBtn">Clear</munetios-button>
+                                <munetios-button class="btn-primary" id="applyFilterBtn">${tr("apply")}</munetios-button>
+                                <munetios-button id="clearFilterBtn">${tr("clear")}</munetios-button>
                             </div>
                         </div>
                     `;
           document.body.appendChild(filterModal);
+          CustomDatePicker(filterModal.querySelector("#filterDate-picker"));
 
           // Close logic
           filterModal.querySelector("#closeFilterModal").onclick = () =>
@@ -6140,51 +7275,66 @@
           return Promise.all([
             openDB().then(
               (db) =>
-                new Promise((res) => {
+                new Promise(async (res) => {
                   const tx = db.transaction("events", "readonly");
                   const store = tx.objectStore("events");
                   const req = store.getAll();
-                  req.onsuccess = () => {
-                    res(
-                      req.result
-                        .filter(
-                          (ev) =>
-                            (ev.title &&
-                              ev.title.toLowerCase().includes(query)) ||
-                            (ev.desc && ev.desc.toLowerCase().includes(query)),
-                        )
-                        .map((ev) => ({
+                  req.onsuccess = async function () {
+                    const raw = req.result || [];
+                    const results = [];
+                    for (const item of raw) {
+                      let ev = item;
+                      if (item.encrypted) {
+                        const dec = await decryptData(item.encrypted);
+                        if (dec)
+                          ev = { id: item.id, calendar: item.calendar, ...dec };
+                        else continue;
+                      }
+                      if (
+                        (ev.title && ev.title.toLowerCase().includes(query)) ||
+                        (ev.desc && ev.desc.toLowerCase().includes(query))
+                      ) {
+                        results.push({
                           type: "event",
                           name: ev.title,
                           desc: ev.desc,
                           date: new Date(ev.date),
                           color: ev.color || "#6300ee",
-                        })),
-                    );
+                        });
+                      }
+                    }
+                    res(results);
                   };
                   req.onerror = () => res([]);
                 }),
             ),
             openDB().then(
               (db) =>
-                new Promise((res) => {
+                new Promise(async (res) => {
                   const tx = db.transaction("birthdays", "readonly");
                   const store = tx.objectStore("birthdays");
                   const req = store.getAll();
-                  req.onsuccess = () => {
-                    res(
-                      req.result
-                        .filter(
-                          (bd) =>
-                            bd.name && bd.name.toLowerCase().includes(query),
-                        )
-                        .map((bd) => ({
+                  req.onsuccess = async function () {
+                    const raw = req.result || [];
+                    const results = [];
+                    for (const item of raw) {
+                      let bd = item;
+                      if (item.encrypted) {
+                        const dec = await decryptData(item.encrypted);
+                        if (dec)
+                          bd = { id: item.id, calendar: item.calendar, ...dec };
+                        else continue;
+                      }
+                      if (bd.name && bd.name.toLowerCase().includes(query)) {
+                        results.push({
                           type: "birthday",
                           name: bd.name,
                           date: new Date(bd.date),
                           color: bd.color || "#ff69b4",
-                        })),
-                    );
+                        });
+                      }
+                    }
+                    res(results);
                   };
                   req.onerror = () => res([]);
                 }),
@@ -7210,7 +8360,11 @@
         let currentYear = today.getFullYear();
 
         function getMonthName(month) {
-          return today.toLocaleString("default", { month: "long" });
+          const name = new Date(currentYear, month).toLocaleString(
+            getCalendarLocale(),
+            { month: "long" },
+          );
+          return name.charAt(0).toUpperCase() + name.slice(1);
         }
 
         function renderMiniCalendar(month, year) {
@@ -7436,6 +8590,690 @@
           };
         });
       };
+
+      // ---- Custom Date Picker ----
+      function CustomDatePicker(pickerEl) {
+        const hiddenInput = pickerEl.querySelector('input[type="hidden"]');
+        const trigger = pickerEl.querySelector(".cdp-trigger");
+        const display = pickerEl.querySelector(".cdp-display");
+        const popup = pickerEl.querySelector(".cdp-popup");
+        // Move popup to body so it renders above modals
+        document.body.appendChild(popup);
+        const prevBtn = popup.querySelector(".cdp-prev");
+        const nextBtn = popup.querySelector(".cdp-next");
+        const monthYearEl = popup.querySelector(".cdp-month-year-display");
+        const daysGrid = popup.querySelector(".cdp-days-grid");
+        const MONTHS = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+        let _val = "";
+        let selectedDate = null;
+        const now = new Date();
+        let viewYear = now.getFullYear();
+        let viewMonth = now.getMonth();
+
+        function toISO(d) {
+          return (
+            d.getFullYear() +
+            "-" +
+            String(d.getMonth() + 1).padStart(2, "0") +
+            "-" +
+            String(d.getDate()).padStart(2, "0")
+          );
+        }
+        function parseVal(v) {
+          if (!v) return null;
+          const p = v.split("-");
+          if (p.length !== 3) return null;
+          const d = new Date(+p[0], +p[1] - 1, +p[2]);
+          return isNaN(d) ? null : d;
+        }
+        function formatDateDisplay(d) {
+          const fmt = localStorage.getItem("munetiosDateFormat") || "MM/DD/YY";
+          const m = String(d.getMonth() + 1).padStart(2, "0");
+          const day = String(d.getDate()).padStart(2, "0");
+          const y2 = String(d.getFullYear()).slice(-2);
+          const y4 = String(d.getFullYear());
+          if (fmt === "DD/MM/YY") return `${day}/${m}/${y2}`;
+          if (fmt === "YYYY-MM-DD") return `${y4}-${m}-${day}`;
+          return `${m}/${day}/${y2}`;
+        }
+        function updateDisplay() {
+          if (selectedDate) {
+            display.textContent = formatDateDisplay(selectedDate);
+            trigger.classList.add("has-value");
+          } else {
+            const _tl =
+              window.translations &&
+              window.translations[
+                typeof currentLang !== "undefined" ? currentLang : "en"
+              ];
+            display.textContent = (_tl && _tl.selectDate) || "Select date";
+            trigger.classList.remove("has-value");
+          }
+        }
+        function setVal(v) {
+          _val = v || "";
+          selectedDate = parseVal(_val);
+          if (selectedDate) {
+            viewYear = selectedDate.getFullYear();
+            viewMonth = selectedDate.getMonth();
+          }
+          updateDisplay();
+        }
+        function positionPopup() {
+          const rect = trigger.getBoundingClientRect();
+          const popW = popup.offsetWidth || 260;
+          const popH = popup.offsetHeight || 300;
+          let top = rect.bottom + 4;
+          let left = rect.left;
+          if (left + popW > window.innerWidth - 8)
+            left = window.innerWidth - popW - 8;
+          if (top + popH > window.innerHeight - 8) top = rect.top - popH - 4;
+          popup.style.top = top + "px";
+          popup.style.left = left + "px";
+        }
+        function renderGrid() {
+          monthYearEl.textContent = MONTHS[viewMonth] + " " + viewYear;
+          daysGrid.innerHTML = "";
+          const today = new Date();
+          const firstDow = new Date(viewYear, viewMonth, 1).getDay();
+          const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+          const prevDays = new Date(viewYear, viewMonth, 0).getDate();
+          for (let i = firstDow - 1; i >= 0; i--) {
+            const b = document.createElement("button");
+            b.type = "button";
+            b.className = "cdp-day cdp-other-month";
+            b.textContent = prevDays - i;
+            daysGrid.appendChild(b);
+          }
+          for (let d = 1; d <= daysInMonth; d++) {
+            const b = document.createElement("button");
+            b.type = "button";
+            b.className = "cdp-day";
+            b.textContent = d;
+            if (
+              today.getFullYear() === viewYear &&
+              today.getMonth() === viewMonth &&
+              today.getDate() === d
+            )
+              b.classList.add("cdp-today");
+            if (
+              selectedDate &&
+              selectedDate.getFullYear() === viewYear &&
+              selectedDate.getMonth() === viewMonth &&
+              selectedDate.getDate() === d
+            )
+              b.classList.add("cdp-selected");
+            const capturedD = d;
+            b.addEventListener("click", () => {
+              selectedDate = new Date(viewYear, viewMonth, capturedD);
+              _val = toISO(selectedDate);
+              popup.hidden = true;
+              updateDisplay();
+              renderGrid();
+              hiddenInput.dispatchEvent(new Event("change", { bubbles: true }));
+            });
+            daysGrid.appendChild(b);
+          }
+          const total = Math.ceil((firstDow + daysInMonth) / 7) * 7;
+          for (let d = 1; d <= total - firstDow - daysInMonth; d++) {
+            const b = document.createElement("button");
+            b.type = "button";
+            b.className = "cdp-day cdp-other-month";
+            b.textContent = d;
+            daysGrid.appendChild(b);
+          }
+        }
+        trigger.addEventListener("click", (e) => {
+          e.stopPropagation();
+          document.querySelectorAll(".cdp-popup, .ctp-popup").forEach((p) => {
+            if (p !== popup) p.hidden = true;
+          });
+          popup.hidden = !popup.hidden;
+          if (!popup.hidden) {
+            positionPopup();
+            renderGrid();
+          }
+        });
+        prevBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          if (--viewMonth < 0) {
+            viewMonth = 11;
+            viewYear--;
+          }
+          renderGrid();
+        });
+        nextBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          if (++viewMonth > 11) {
+            viewMonth = 0;
+            viewYear++;
+          }
+          renderGrid();
+        });
+        popup.addEventListener("click", (e) => e.stopPropagation());
+        document.addEventListener("click", () => {
+          popup.hidden = true;
+        });
+        Object.defineProperty(hiddenInput, "value", {
+          configurable: true,
+          enumerable: true,
+          get() {
+            return _val;
+          },
+          set(v) {
+            setVal(v);
+          },
+        });
+        setVal(hiddenInput.getAttribute("value") || "");
+      }
+
+      // ---- Custom Time Picker ----
+      function CustomTimePicker(pickerEl) {
+        const hiddenInput = pickerEl.querySelector('input[type="hidden"]');
+        const trigger = pickerEl.querySelector(".ctp-trigger");
+        const display = pickerEl.querySelector(".ctp-display");
+        const popup = pickerEl.querySelector(".ctp-popup");
+        // Move popup to body so it renders above modals
+        document.body.appendChild(popup);
+        const hoursCol = popup.querySelector(".ctp-hours");
+        const minsCol = popup.querySelector(".ctp-minutes");
+        const ampmCol = popup.querySelector(".ctp-ampm");
+        let _val = "";
+        let selHour = null; // stored as 0-23
+        let selMin = null;
+
+        function getTimeFmt() {
+          return localStorage.getItem("munetiosTimeFormat") || "12h";
+        }
+        function to12(h24) {
+          return {
+            h: h24 % 12 === 0 ? 12 : h24 % 12,
+            ampm: h24 < 12 ? "AM" : "PM",
+          };
+        }
+        function to24(h12, ampm) {
+          if (ampm === "AM") return h12 === 12 ? 0 : h12;
+          return h12 === 12 ? 12 : h12 + 12;
+        }
+        function updateDisplay() {
+          if (selHour !== null && selMin !== null) {
+            const fmt = getTimeFmt();
+            if (fmt === "12h") {
+              const { h, ampm } = to12(selHour);
+              display.textContent =
+                h + ":" + String(selMin).padStart(2, "0") + " " + ampm;
+            } else {
+              display.textContent =
+                String(selHour).padStart(2, "0") +
+                ":" +
+                String(selMin).padStart(2, "0");
+            }
+            trigger.classList.add("has-value");
+          } else {
+            const _tl =
+              window.translations &&
+              window.translations[
+                typeof currentLang !== "undefined" ? currentLang : "en"
+              ];
+            display.textContent = (_tl && _tl.selectTime) || "Select time";
+            trigger.classList.remove("has-value");
+          }
+        }
+        function setVal(v) {
+          _val = v || "";
+          if (!_val) {
+            selHour = null;
+            selMin = null;
+          } else {
+            const p = _val.split(":");
+            selHour = parseInt(p[0], 10);
+            selMin = parseInt(p[1], 10);
+          }
+          updateDisplay();
+        }
+        function positionPopup() {
+          const rect = trigger.getBoundingClientRect();
+          const popW = popup.offsetWidth || 180;
+          const popH = popup.offsetHeight || 210;
+          let top = rect.bottom + 4;
+          let left = rect.left;
+          if (left + popW > window.innerWidth - 8)
+            left = window.innerWidth - popW - 8;
+          if (top + popH > window.innerHeight - 8) top = rect.top - popH - 4;
+          popup.style.top = top + "px";
+          popup.style.left = left + "px";
+        }
+        function buildColumns() {
+          const fmt = getTimeFmt();
+          const curAmPm =
+            selHour !== null ? (selHour < 12 ? "AM" : "PM") : "AM";
+
+          // Hours
+          hoursCol.innerHTML = "";
+          if (fmt === "12h") {
+            if (ampmCol) ampmCol.style.display = "";
+            for (let h = 1; h <= 12; h++) {
+              const item = document.createElement("div");
+              const h24 = to24(h, curAmPm);
+              item.className =
+                "ctp-item" + (selHour === h24 ? " ctp-selected" : "");
+              item.textContent = String(h);
+              const capH = h;
+              item.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const ap =
+                  selHour !== null ? (selHour < 12 ? "AM" : "PM") : "AM";
+                selHour = to24(capH, ap);
+                if (selMin === null) selMin = 0;
+                _val =
+                  String(selHour).padStart(2, "0") +
+                  ":" +
+                  String(selMin).padStart(2, "0");
+                updateDisplay();
+                buildColumns();
+                hiddenInput.dispatchEvent(
+                  new Event("change", { bubbles: true }),
+                );
+              });
+              hoursCol.appendChild(item);
+            }
+          } else {
+            if (ampmCol) ampmCol.style.display = "none";
+            for (let h = 0; h < 24; h++) {
+              const item = document.createElement("div");
+              item.className =
+                "ctp-item" + (h === selHour ? " ctp-selected" : "");
+              item.textContent = String(h).padStart(2, "0");
+              const capH = h;
+              item.addEventListener("click", (e) => {
+                e.stopPropagation();
+                selHour = capH;
+                if (selMin === null) selMin = 0;
+                _val =
+                  String(selHour).padStart(2, "0") +
+                  ":" +
+                  String(selMin).padStart(2, "0");
+                updateDisplay();
+                buildColumns();
+                hiddenInput.dispatchEvent(
+                  new Event("change", { bubbles: true }),
+                );
+              });
+              hoursCol.appendChild(item);
+            }
+          }
+
+          // Minutes
+          minsCol.innerHTML = "";
+          for (let m = 0; m < 60; m += 5) {
+            const item = document.createElement("div");
+            item.className = "ctp-item" + (m === selMin ? " ctp-selected" : "");
+            item.textContent = String(m).padStart(2, "0");
+            const capM = m;
+            item.addEventListener("click", (e) => {
+              e.stopPropagation();
+              selMin = capM;
+              if (selHour === null)
+                selHour = fmt === "12h" ? to24(12, "AM") : 0;
+              _val =
+                String(selHour).padStart(2, "0") +
+                ":" +
+                String(selMin).padStart(2, "0");
+              updateDisplay();
+              buildColumns();
+              hiddenInput.dispatchEvent(new Event("change", { bubbles: true }));
+            });
+            minsCol.appendChild(item);
+          }
+
+          // AM / PM
+          if (ampmCol && fmt === "12h") {
+            ampmCol.innerHTML = "";
+            ["AM", "PM"].forEach((ap) => {
+              const item = document.createElement("div");
+              item.className =
+                "ctp-item" + (ap === curAmPm ? " ctp-selected" : "");
+              item.textContent = ap;
+              item.addEventListener("click", (e) => {
+                e.stopPropagation();
+                if (selHour === null) {
+                  selHour = ap === "AM" ? 8 : 20;
+                } else {
+                  const { h } = to12(selHour);
+                  selHour = to24(h, ap);
+                }
+                if (selMin === null) selMin = 0;
+                _val =
+                  String(selHour).padStart(2, "0") +
+                  ":" +
+                  String(selMin).padStart(2, "0");
+                updateDisplay();
+                buildColumns();
+                hiddenInput.dispatchEvent(
+                  new Event("change", { bubbles: true }),
+                );
+              });
+              ampmCol.appendChild(item);
+            });
+          }
+
+          const sh = hoursCol.querySelector(".ctp-selected");
+          if (sh) sh.scrollIntoView({ block: "center" });
+          const sm = minsCol.querySelector(".ctp-selected");
+          if (sm) sm.scrollIntoView({ block: "center" });
+        }
+        trigger.addEventListener("click", (e) => {
+          e.stopPropagation();
+          document.querySelectorAll(".cdp-popup, .ctp-popup").forEach((p) => {
+            if (p !== popup) p.hidden = true;
+          });
+          popup.hidden = !popup.hidden;
+          if (!popup.hidden) {
+            positionPopup();
+            buildColumns();
+          }
+        });
+        popup.addEventListener("click", (e) => e.stopPropagation());
+        document.addEventListener("click", () => {
+          popup.hidden = true;
+        });
+        Object.defineProperty(hiddenInput, "value", {
+          configurable: true,
+          enumerable: true,
+          get() {
+            return _val;
+          },
+          set(v) {
+            setVal(v);
+          },
+        });
+        setVal(hiddenInput.getAttribute("value") || "");
+      }
+      // Initialize static pickers on page load
+      document
+        .querySelectorAll(".custom-date-picker")
+        .forEach(CustomDatePicker);
+      document
+        .querySelectorAll(".custom-time-picker")
+        .forEach(CustomTimePicker);
+
+      // ── Accessibility & Keyboard Navigation ─────────────────────────────
+      (function () {
+        const FOCUSABLE_SEL = [
+          "a[href]",
+          "button:not([disabled])",
+          'input:not([disabled]):not([type="hidden"])',
+          "select:not([disabled])",
+          "textarea:not([disabled])",
+          '[tabindex]:not([tabindex="-1"])',
+        ].join(",");
+
+        function getFocusable(container) {
+          return Array.from(container.querySelectorAll(FOCUSABLE_SEL)).filter(
+            (n) => !n.closest("[hidden]") && n.offsetParent !== null,
+          );
+        }
+
+        function getTopmostModal() {
+          return (
+            Array.from(document.querySelectorAll(".modal, [role='dialog']"))
+              .reverse()
+              .find((m) => m.style.display === "block") || null
+          );
+        }
+
+        // 1. Add tabindex + role="button" to icon-divs that act as buttons
+        document.querySelectorAll(".icon[aria-label]").forEach((el) => {
+          if (el.tagName !== "BUTTON" && el.tagName !== "A") {
+            if (!el.hasAttribute("tabindex")) el.setAttribute("tabindex", "0");
+            if (!el.getAttribute("role")) el.setAttribute("role", "button");
+          }
+        });
+        document
+          .querySelectorAll(".calendar__button__my__calendar")
+          .forEach((el) => {
+            if (el.tagName !== "BUTTON" && el.tagName !== "A") {
+              if (!el.hasAttribute("tabindex"))
+                el.setAttribute("tabindex", "0");
+              if (!el.getAttribute("role")) el.setAttribute("role", "button");
+            }
+          });
+        const _addBd = document.getElementById("addBirthdayBtn");
+        if (_addBd && !_addBd.hasAttribute("tabindex")) {
+          _addBd.setAttribute("tabindex", "0");
+          _addBd.setAttribute("role", "button");
+        }
+
+        // 2. Tab list: aria-selected sync + arrow key navigation
+        const tabsLeft = document.querySelector(".tabs__left[role='tablist']");
+        if (tabsLeft) {
+          const tabEls = Array.from(
+            tabsLeft.querySelectorAll(".tab[role='tab']"),
+          );
+          // Sync aria-selected on click
+          tabEls.forEach((el, i) => {
+            el.addEventListener("click", () => {
+              tabEls.forEach((t, j) => {
+                t.setAttribute("aria-selected", j === i ? "true" : "false");
+                t.setAttribute("tabindex", j === i ? "0" : "-1");
+              });
+            });
+          });
+          // Arrow key navigation
+          tabsLeft.addEventListener("keydown", (e) => {
+            const idx = tabEls.indexOf(document.activeElement);
+            if (idx < 0) return;
+            let next = null;
+            if (e.key === "ArrowRight") next = (idx + 1) % tabEls.length;
+            else if (e.key === "ArrowLeft")
+              next = (idx - 1 + tabEls.length) % tabEls.length;
+            else if (e.key === "Home") next = 0;
+            else if (e.key === "End") next = tabEls.length - 1;
+            if (next !== null) {
+              e.preventDefault();
+              tabEls.forEach((t, j) => {
+                t.setAttribute("aria-selected", j === next ? "true" : "false");
+                t.setAttribute("tabindex", j === next ? "0" : "-1");
+              });
+              tabEls[next].focus();
+              tabEls[next].click();
+            }
+          });
+        }
+
+        // 3. MutationObserver: patch dynamic modals + ctp-items + icon buttons
+        let _preModalFocus = null;
+        new MutationObserver((mutations) => {
+          for (const mut of mutations) {
+            // New nodes added to DOM
+            for (const node of mut.addedNodes) {
+              if (node.nodeType !== 1) continue;
+              // Newly inserted modal → add dialog role/aria
+              if (node.classList && node.classList.contains("modal")) {
+                if (!node.getAttribute("role"))
+                  node.setAttribute("role", "dialog");
+                if (!node.getAttribute("aria-modal"))
+                  node.setAttribute("aria-modal", "true");
+                const h2 = node.querySelector("h2");
+                if (h2) {
+                  if (!h2.id)
+                    h2.id = "mttl-" + Math.random().toString(36).slice(2, 8);
+                  if (!node.getAttribute("aria-labelledby"))
+                    node.setAttribute("aria-labelledby", h2.id);
+                }
+              }
+              // New icon buttons inside injected content
+              if (node.querySelectorAll) {
+                node.querySelectorAll(".icon[aria-label]").forEach((el) => {
+                  if (
+                    el.tagName !== "BUTTON" &&
+                    el.tagName !== "A" &&
+                    !el.getAttribute("role")
+                  ) {
+                    el.setAttribute("role", "button");
+                    if (!el.hasAttribute("tabindex"))
+                      el.setAttribute("tabindex", "0");
+                  }
+                });
+                // New ctp-items need tabindex for keyboard nav
+                const ctpItems =
+                  node.classList && node.classList.contains("ctp-item")
+                    ? [node]
+                    : [];
+                node
+                  .querySelectorAll(".ctp-item")
+                  .forEach((i) => ctpItems.push(i));
+                ctpItems.forEach((item) => {
+                  if (!item.hasAttribute("tabindex"))
+                    item.setAttribute("tabindex", "0");
+                });
+              }
+            }
+            // Style change on modal: auto-focus + return focus on close
+            if (mut.type === "attributes" && mut.attributeName === "style") {
+              const el = mut.target;
+              if (
+                !el.classList.contains("modal") &&
+                el.getAttribute("role") !== "dialog"
+              )
+                continue;
+              if (el.style.display === "block") {
+                _preModalFocus = document.activeElement;
+                requestAnimationFrame(() => {
+                  const first = getFocusable(el)[0];
+                  if (first) first.focus();
+                });
+              } else if (
+                el.style.display === "none" &&
+                _preModalFocus &&
+                _preModalFocus.focus
+              ) {
+                const restore = _preModalFocus;
+                _preModalFocus = null;
+                requestAnimationFrame(() => restore.focus());
+              }
+            }
+          }
+        }).observe(document.body, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          attributeFilter: ["style"],
+        });
+
+        // 4. Global keydown: Escape (close modal) + Tab (focus trap) + Enter/Space
+        document.addEventListener("keydown", (e) => {
+          // Escape → close topmost visible modal
+          if (e.key === "Escape") {
+            const modal = getTopmostModal();
+            if (modal) {
+              const closeBtn = modal.querySelector(
+                '[id^="close"], [aria-label="Close"], .modal-close',
+              );
+              if (closeBtn) closeBtn.click();
+              else modal.style.display = "none";
+              e.preventDefault();
+              return;
+            }
+          }
+
+          // Tab → trap focus inside open modal
+          if (e.key === "Tab") {
+            const modal = getTopmostModal();
+            if (modal) {
+              const focusable = getFocusable(modal);
+              if (focusable.length === 0) return;
+              const first = focusable[0];
+              const last = focusable[focusable.length - 1];
+              if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+              } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+              }
+              return;
+            }
+          }
+
+          // Enter / Space → activate role=button on non-native elements
+          if (e.key === "Enter" || e.key === " ") {
+            const t = e.target;
+            if (
+              t.getAttribute("role") === "button" &&
+              t.tagName !== "BUTTON" &&
+              t.tagName !== "A" &&
+              t.tagName !== "INPUT" &&
+              t.tagName !== "TEXTAREA" &&
+              t.tagName !== "SELECT"
+            ) {
+              e.preventDefault();
+              t.click();
+            }
+          }
+        });
+
+        // 5. Date-picker grid: arrow key navigation between day buttons
+        document.addEventListener("keydown", (e) => {
+          const target = e.target;
+          if (!target.classList || !target.classList.contains("cdp-day"))
+            return;
+          const grid = target.closest(".cdp-days-grid");
+          if (!grid) return;
+          const days = Array.from(grid.querySelectorAll(".cdp-day"));
+          const idx = days.indexOf(target);
+          const step = {
+            ArrowRight: 1,
+            ArrowLeft: -1,
+            ArrowDown: 7,
+            ArrowUp: -7,
+          }[e.key];
+          if (step === undefined) return;
+          e.preventDefault();
+          const next = days[idx + step];
+          if (next) next.focus();
+        });
+
+        // 6. Time-picker columns: arrow key navigation between items
+        document.addEventListener("keydown", (e) => {
+          const target = e.target;
+          if (!target.classList || !target.classList.contains("ctp-item"))
+            return;
+          const col = target.parentElement;
+          if (!col) return;
+          const items = Array.from(col.querySelectorAll(".ctp-item"));
+          const idx = items.indexOf(target);
+          let next = null;
+          if (e.key === "ArrowDown") {
+            e.preventDefault();
+            next = items[(idx + 1) % items.length];
+          } else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            next = items[(idx - 1 + items.length) % items.length];
+          } else if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            target.click();
+            return;
+          }
+          if (next) {
+            next.focus();
+            next.scrollIntoView({ block: "nearest" });
+          }
+        });
+      })();
     </script>
   </body>
 </html>
