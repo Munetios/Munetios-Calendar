@@ -1408,6 +1408,57 @@
     </div>
     <div class="search__wrapper liquid-glass" _ng-random></div>
     <script nonce="IijhdEUFuhf43UF43hF">
+      // --- Global locale map and date formatter ---
+      const MUNETIOS_LOCALE_MAP = {
+        en: "en-US",
+        es: "es-ES",
+        fr: "fr-FR",
+        de: "de-DE",
+        it: "it-IT",
+        pt: "pt-PT",
+        ru: "ru-RU",
+        zh: "zh-CN",
+        ja: "ja-JP",
+        ko: "ko-KR",
+        tr: "tr-TR",
+        ar: "ar-SA",
+        hi: "hi-IN",
+        bn: "bn-BD",
+        nl: "nl-NL",
+        pl: "pl-PL",
+        sv: "sv-SE",
+        no: "nb-NO",
+        da: "da-DK",
+        fi: "fi-FI",
+        hu: "hu-HU",
+        cs: "cs-CZ",
+      };
+      function getCalendarLocale() {
+        const lang = localStorage.getItem("munetiosLang") || "en";
+        return MUNETIOS_LOCALE_MAP[lang] || "en-US";
+      }
+      function formatDate(date, opts) {
+        return new Intl.DateTimeFormat(getCalendarLocale(), opts).format(date);
+      }
+      function getLocalizedWeekdaysNarrow() {
+        const locale = getCalendarLocale();
+        const result = [];
+        // Jan 7 2024 = Sunday
+        for (let i = 0; i < 7; i++) {
+          result.push(
+            new Intl.DateTimeFormat(locale, { weekday: "narrow" }).format(
+              new Date(2024, 0, 7 + i),
+            ),
+          );
+        }
+        return result;
+      }
+      function getLocalizedMonthName(month, year) {
+        return new Intl.DateTimeFormat(getCalendarLocale(), {
+          month: "long",
+        }).format(new Date(year, month));
+      }
+
       (function () {
         const moreBtn = document.getElementById("moreBtn");
         const dropdownMenu = document.getElementById("dropdownMenu");
@@ -1471,6 +1522,8 @@
         // Supported languages and translations
         const translations = {
           en: {
+            locale: "en-US",
+            langName: "English",
             theme: "Theme",
             system: "System",
             light: "Light",
@@ -1500,8 +1553,43 @@
             more: "More",
             close: "Close",
             search: "Search",
+            eventTitle: "Event Title:",
+            eventDate: "Event Date:",
+            eventTime: "Event Time:",
+            eventDescription: "Event Description (Optional):",
+            eventColor: "Event Color",
+            birthdayName: "Name:",
+            birthdayDate: "Birthday Date:",
+            birthdayColor: "Birthday Color",
+            createEvent: "Create Event",
+            addBirthdayTitle: "Add Birthday",
+            viewMonth: "Month",
+            viewWeek: "Week",
+            viewDay: "Day",
+            viewYear: "Year",
+            viewAgenda: "Agenda",
+            viewTimeline: "Timeline",
+            backup: "Backup",
+            restore: "Restore",
+            deleteAllData: "Delete all data",
+            security: "Security",
+            resetEncryptionKey: "Reset Encryption Key (Under construction)",
+            allHolidaysIn: "All Holidays in",
+            timelineFor: "Timeline for",
+            agendaSuffix: "Agenda",
+            events: "Events",
+            birthdays: "Birthdays",
+            noEvents: "No events or birthdays found.",
+            deleteEvent: "Delete Event",
+            deleteConfirm: "Are you sure you want to delete this event?",
+            delete: "Delete",
+            myCalendars: "My Calendars:",
+            otherCalendars: "Other Calendars:",
+            next: "Next",
           },
           es: {
+            locale: "es-ES",
+            langName: "Español",
             theme: "Tema",
             system: "Sistema",
             light: "Claro",
@@ -1531,8 +1619,44 @@
             more: "Más",
             close: "Cerrar",
             search: "Buscar",
+            eventTitle: "Título del evento:",
+            eventDate: "Fecha del evento:",
+            eventTime: "Hora del evento:",
+            eventDescription: "Descripción del evento (Opcional):",
+            eventColor: "Color del evento",
+            birthdayName: "Nombre:",
+            birthdayDate: "Fecha de cumpleaños:",
+            birthdayColor: "Color de cumpleaños",
+            createEvent: "Crear evento",
+            addBirthdayTitle: "Agregar cumpleaños",
+            viewMonth: "Mes",
+            viewWeek: "Semana",
+            viewDay: "Día",
+            viewYear: "Año",
+            viewAgenda: "Agenda",
+            viewTimeline: "Cronología",
+            backup: "Respaldar",
+            restore: "Restaurar",
+            deleteAllData: "Eliminar todos los datos",
+            security: "Seguridad",
+            resetEncryptionKey:
+              "Restablecer clave de cifrado (En construcción)",
+            allHolidaysIn: "Todos los festivos en",
+            timelineFor: "Cronología para",
+            agendaSuffix: "Agenda",
+            events: "Eventos",
+            birthdays: "Cumpleaños",
+            noEvents: "No se encontraron eventos ni cumpleaños.",
+            deleteEvent: "Eliminar evento",
+            deleteConfirm: "¿Estás seguro de que quieres eliminar este evento?",
+            delete: "Eliminar",
+            myCalendars: "Mis calendarios:",
+            otherCalendars: "Otros calendarios:",
+            next: "Siguiente",
           },
           fr: {
+            locale: "fr-FR",
+            langName: "Français",
             theme: "Thème",
             system: "Système",
             light: "Clair",
@@ -1562,8 +1686,44 @@
             more: "Plus",
             close: "Fermer",
             search: "Rechercher",
+            eventTitle: "Titre de l'événement :",
+            eventDate: "Date de l'événement :",
+            eventTime: "Heure de l'événement :",
+            eventDescription: "Description de l'événement (Optionnel) :",
+            eventColor: "Couleur de l'événement",
+            birthdayName: "Nom :",
+            birthdayDate: "Date d'anniversaire :",
+            birthdayColor: "Couleur d'anniversaire",
+            createEvent: "Créer un événement",
+            addBirthdayTitle: "Ajouter un anniversaire",
+            viewMonth: "Mois",
+            viewWeek: "Semaine",
+            viewDay: "Jour",
+            viewYear: "Année",
+            viewAgenda: "Agenda",
+            viewTimeline: "Chronologie",
+            backup: "Sauvegarder",
+            restore: "Restaurer",
+            deleteAllData: "Supprimer toutes les données",
+            security: "Sécurité",
+            resetEncryptionKey:
+              "Réinitialiser la clé de chiffrement (En construction)",
+            allHolidaysIn: "Tous les jours fériés en",
+            timelineFor: "Chronologie pour",
+            agendaSuffix: "Agenda",
+            events: "Événements",
+            birthdays: "Anniversaires",
+            noEvents: "Aucun événement ou anniversaire trouvé.",
+            deleteEvent: "Supprimer l'événement",
+            deleteConfirm: "Voulez-vous vraiment supprimer cet événement ?",
+            delete: "Supprimer",
+            myCalendars: "Mes calendriers :",
+            otherCalendars: "Autres calendriers :",
+            next: "Suivant",
           },
           de: {
+            locale: "de-DE",
+            langName: "Deutsch",
             theme: "Thema",
             system: "System",
             light: "Hell",
@@ -1593,8 +1753,44 @@
             more: "Mehr",
             close: "Schließen",
             search: "Suchen",
+            eventTitle: "Ereignistitel:",
+            eventDate: "Ereignisdatum:",
+            eventTime: "Ereigniszeit:",
+            eventDescription: "Ereignisbeschreibung (Optional):",
+            eventColor: "Ereignisfarbe",
+            birthdayName: "Name:",
+            birthdayDate: "Geburtstag:",
+            birthdayColor: "Geburtstagsfarbe",
+            createEvent: "Ereignis erstellen",
+            addBirthdayTitle: "Geburtstag hinzufügen",
+            viewMonth: "Monat",
+            viewWeek: "Woche",
+            viewDay: "Tag",
+            viewYear: "Jahr",
+            viewAgenda: "Agenda",
+            viewTimeline: "Zeitachse",
+            backup: "Sichern",
+            restore: "Wiederherstellen",
+            deleteAllData: "Alle Daten löschen",
+            security: "Sicherheit",
+            resetEncryptionKey:
+              "Verschlüsselungsschlüssel zurücksetzen (Im Aufbau)",
+            allHolidaysIn: "Alle Feiertage in",
+            timelineFor: "Zeitachse für",
+            agendaSuffix: "Agenda",
+            events: "Ereignisse",
+            birthdays: "Geburtstage",
+            noEvents: "Keine Ereignisse oder Geburtstage gefunden.",
+            deleteEvent: "Ereignis löschen",
+            deleteConfirm: "Möchten Sie dieses Ereignis wirklich löschen?",
+            delete: "Löschen",
+            myCalendars: "Meine Kalender:",
+            otherCalendars: "Andere Kalender:",
+            next: "Weiter",
           },
           it: {
+            locale: "it-IT",
+            langName: "Italiano",
             theme: "Tema",
             system: "Sistema",
             light: "Chiaro",
@@ -1624,8 +1820,44 @@
             more: "Altro",
             close: "Chiudi",
             search: "Cerca",
+            eventTitle: "Titolo evento:",
+            eventDate: "Data evento:",
+            eventTime: "Ora evento:",
+            eventDescription: "Descrizione evento (Opzionale):",
+            eventColor: "Colore evento",
+            birthdayName: "Nome:",
+            birthdayDate: "Data di compleanno:",
+            birthdayColor: "Colore compleanno",
+            createEvent: "Crea evento",
+            addBirthdayTitle: "Aggiungi compleanno",
+            viewMonth: "Mese",
+            viewWeek: "Settimana",
+            viewDay: "Giorno",
+            viewYear: "Anno",
+            viewAgenda: "Agenda",
+            viewTimeline: "Cronologia",
+            backup: "Backup",
+            restore: "Ripristina",
+            deleteAllData: "Elimina tutti i dati",
+            security: "Sicurezza",
+            resetEncryptionKey:
+              "Reimposta chiave di cifratura (In costruzione)",
+            allHolidaysIn: "Tutte le festività in",
+            timelineFor: "Cronologia per",
+            agendaSuffix: "Agenda",
+            events: "Eventi",
+            birthdays: "Compleanni",
+            noEvents: "Nessun evento o compleanno trovato.",
+            deleteEvent: "Elimina evento",
+            deleteConfirm: "Sei sicuro di voler eliminare questo evento?",
+            delete: "Elimina",
+            myCalendars: "I miei calendari:",
+            otherCalendars: "Altri calendari:",
+            next: "Avanti",
           },
           pt: {
+            locale: "pt-PT",
+            langName: "Português",
             theme: "Tema",
             system: "Sistema",
             light: "Claro",
@@ -1655,8 +1887,44 @@
             more: "Mais",
             close: "Fechar",
             search: "Pesquisar",
+            eventTitle: "Título do evento:",
+            eventDate: "Data do evento:",
+            eventTime: "Hora do evento:",
+            eventDescription: "Descrição do evento (Opcional):",
+            eventColor: "Cor do evento",
+            birthdayName: "Nome:",
+            birthdayDate: "Data de aniversário:",
+            birthdayColor: "Cor do aniversário",
+            createEvent: "Criar evento",
+            addBirthdayTitle: "Adicionar aniversário",
+            viewMonth: "Mês",
+            viewWeek: "Semana",
+            viewDay: "Dia",
+            viewYear: "Ano",
+            viewAgenda: "Agenda",
+            viewTimeline: "Linha do tempo",
+            backup: "Backup",
+            restore: "Restaurar",
+            deleteAllData: "Excluir todos os dados",
+            security: "Segurança",
+            resetEncryptionKey:
+              "Redefinir chave de criptografia (Em construção)",
+            allHolidaysIn: "Todos os feriados em",
+            timelineFor: "Linha do tempo para",
+            agendaSuffix: "Agenda",
+            events: "Eventos",
+            birthdays: "Aniversários",
+            noEvents: "Nenhum evento ou aniversário encontrado.",
+            deleteEvent: "Excluir evento",
+            deleteConfirm: "Tem certeza de que deseja excluir este evento?",
+            delete: "Excluir",
+            myCalendars: "Meus calendários:",
+            otherCalendars: "Outros calendários:",
+            next: "Próximo",
           },
           ru: {
+            locale: "ru-RU",
+            langName: "Русский",
             theme: "Тема",
             system: "Система",
             light: "Светлая",
@@ -1686,8 +1954,43 @@
             more: "Еще",
             close: "Закрыть",
             search: "Поиск",
+            eventTitle: "Название события:",
+            eventDate: "Дата события:",
+            eventTime: "Время события:",
+            eventDescription: "Описание события (Необязательно):",
+            eventColor: "Цвет события",
+            birthdayName: "Имя:",
+            birthdayDate: "Дата дня рождения:",
+            birthdayColor: "Цвет дня рождения",
+            createEvent: "Создать событие",
+            addBirthdayTitle: "Добавить день рождения",
+            viewMonth: "Месяц",
+            viewWeek: "Неделя",
+            viewDay: "День",
+            viewYear: "Год",
+            viewAgenda: "Повестка",
+            viewTimeline: "Хронология",
+            backup: "Резервная копия",
+            restore: "Восстановить",
+            deleteAllData: "Удалить все данные",
+            security: "Безопасность",
+            resetEncryptionKey: "Сбросить ключ шифрования (В разработке)",
+            allHolidaysIn: "Все праздники в",
+            timelineFor: "Хронология для",
+            agendaSuffix: "Повестка",
+            events: "События",
+            birthdays: "Дни рождения",
+            noEvents: "События и дни рождения не найдены.",
+            deleteEvent: "Удалить событие",
+            deleteConfirm: "Вы уверены, что хотите удалить это событие?",
+            delete: "Удалить",
+            myCalendars: "Мои календари:",
+            otherCalendars: "Другие календари:",
+            next: "Далее",
           },
           zh: {
+            locale: "zh-CN",
+            langName: "中文",
             theme: "主题",
             system: "系统",
             light: "浅色",
@@ -1717,8 +2020,43 @@
             more: "更多",
             close: "关闭",
             search: "搜索",
+            eventTitle: "活动标题：",
+            eventDate: "活动日期：",
+            eventTime: "活动时间：",
+            eventDescription: "活动说明（可选）：",
+            eventColor: "活动颜色",
+            birthdayName: "姓名：",
+            birthdayDate: "生日日期：",
+            birthdayColor: "生日颜色",
+            createEvent: "创建活动",
+            addBirthdayTitle: "添加生日",
+            viewMonth: "月",
+            viewWeek: "周",
+            viewDay: "日",
+            viewYear: "年",
+            viewAgenda: "日程",
+            viewTimeline: "时间轴",
+            backup: "备份",
+            restore: "恢复",
+            deleteAllData: "删除所有数据",
+            security: "安全",
+            resetEncryptionKey: "重置加密密钥（建设中）",
+            allHolidaysIn: "所有节假日：",
+            timelineFor: "时间轴：",
+            agendaSuffix: "日程",
+            events: "活动",
+            birthdays: "生日",
+            noEvents: "未找到活动或生日。",
+            deleteEvent: "删除活动",
+            deleteConfirm: "确定要删除此活动吗？",
+            delete: "删除",
+            myCalendars: "我的日历：",
+            otherCalendars: "其他日历：",
+            next: "下一步",
           },
           ja: {
+            locale: "ja-JP",
+            langName: "日本語",
             theme: "テーマ",
             system: "システム",
             light: "ライト",
@@ -1748,8 +2086,43 @@
             more: "もっと",
             close: "閉じる",
             search: "検索",
+            eventTitle: "イベントタイトル：",
+            eventDate: "イベント日付：",
+            eventTime: "イベント時刻：",
+            eventDescription: "イベントの説明（任意）：",
+            eventColor: "イベントの色",
+            birthdayName: "名前：",
+            birthdayDate: "誕生日：",
+            birthdayColor: "誕生日の色",
+            createEvent: "イベントを作成",
+            addBirthdayTitle: "誕生日を追加",
+            viewMonth: "月",
+            viewWeek: "週",
+            viewDay: "日",
+            viewYear: "年",
+            viewAgenda: "予定",
+            viewTimeline: "タイムライン",
+            backup: "バックアップ",
+            restore: "復元",
+            deleteAllData: "すべてのデータを削除",
+            security: "セキュリティ",
+            resetEncryptionKey: "暗号化キーをリセット（建設中）",
+            allHolidaysIn: "すべての祝日：",
+            timelineFor: "タイムライン：",
+            agendaSuffix: "予定",
+            events: "イベント",
+            birthdays: "誕生日",
+            noEvents: "イベントや誕生日が見つかりません。",
+            deleteEvent: "イベントを削除",
+            deleteConfirm: "このイベントを削除してもよろしいですか？",
+            delete: "削除",
+            myCalendars: "マイカレンダー：",
+            otherCalendars: "他のカレンダー：",
+            next: "次へ",
           },
           ko: {
+            locale: "ko-KR",
+            langName: "한국어",
             theme: "테마",
             system: "시스템",
             light: "라이트",
@@ -1779,8 +2152,43 @@
             more: "더보기",
             close: "닫기",
             search: "검색",
+            eventTitle: "이벤트 제목:",
+            eventDate: "이벤트 날짜:",
+            eventTime: "이벤트 시간:",
+            eventDescription: "이벤트 설명 (선택):",
+            eventColor: "이벤트 색상",
+            birthdayName: "이름:",
+            birthdayDate: "생일 날짜:",
+            birthdayColor: "생일 색상",
+            createEvent: "이벤트 만들기",
+            addBirthdayTitle: "생일 추가",
+            viewMonth: "월",
+            viewWeek: "주",
+            viewDay: "일",
+            viewYear: "연도",
+            viewAgenda: "일정",
+            viewTimeline: "타임라인",
+            backup: "백업",
+            restore: "복원",
+            deleteAllData: "모든 데이터 삭제",
+            security: "보안",
+            resetEncryptionKey: "암호화 키 재설정 (공사 중)",
+            allHolidaysIn: "모든 공휴일:",
+            timelineFor: "타임라인:",
+            agendaSuffix: "일정",
+            events: "이벤트",
+            birthdays: "생일",
+            noEvents: "이벤트 또는 생일을 찾을 수 없습니다.",
+            deleteEvent: "이벤트 삭제",
+            deleteConfirm: "이 이벤트를 삭제하시겠습니까?",
+            delete: "삭제",
+            myCalendars: "내 캘린더:",
+            otherCalendars: "다른 캘린더:",
+            next: "다음",
           },
           tr: {
+            locale: "tr-TR",
+            langName: "Türkçe",
             theme: "Tema",
             system: "Sistem",
             light: "Açık",
@@ -1810,8 +2218,44 @@
             more: "Daha fazla",
             close: "Kapat",
             search: "Ara",
+            eventTitle: "Etkinlik başlığı:",
+            eventDate: "Etkinlik tarihi:",
+            eventTime: "Etkinlik saati:",
+            eventDescription: "Etkinlik açıklaması (İsteğe bağlı):",
+            eventColor: "Etkinlik rengi",
+            birthdayName: "Ad:",
+            birthdayDate: "Doğum günü tarihi:",
+            birthdayColor: "Doğum günü rengi",
+            createEvent: "Etkinlik oluştur",
+            addBirthdayTitle: "Doğum günü ekle",
+            viewMonth: "Ay",
+            viewWeek: "Hafta",
+            viewDay: "Gün",
+            viewYear: "Yıl",
+            viewAgenda: "Ajanda",
+            viewTimeline: "Zaman çizelgesi",
+            backup: "Yedekle",
+            restore: "Geri yükle",
+            deleteAllData: "Tüm verileri sil",
+            security: "Güvenlik",
+            resetEncryptionKey:
+              "Şifreleme anahtarını sıfırla (Yapım aşamasında)",
+            allHolidaysIn: "Tüm tatil günleri:",
+            timelineFor: "Zaman çizelgesi:",
+            agendaSuffix: "Ajanda",
+            events: "Etkinlikler",
+            birthdays: "Doğum günleri",
+            noEvents: "Etkinlik veya doğum günü bulunamadı.",
+            deleteEvent: "Etkinliği sil",
+            deleteConfirm: "Bu etkinliği silmek istediğinizden emin misiniz?",
+            delete: "Sil",
+            myCalendars: "Takvimlerim:",
+            otherCalendars: "Diğer takvimler:",
+            next: "İleri",
           },
           ar: {
+            locale: "ar-SA",
+            langName: "العربية",
             theme: "السمة",
             system: "النظام",
             light: "فاتح",
@@ -1841,6 +2285,704 @@
             more: "المزيد",
             close: "إغلاق",
             search: "بحث",
+            eventTitle: "عنوان الحدث:",
+            eventDate: "تاريخ الحدث:",
+            eventTime: "وقت الحدث:",
+            eventDescription: "وصف الحدث (اختياري):",
+            eventColor: "لون الحدث",
+            birthdayName: "الاسم:",
+            birthdayDate: "تاريخ عيد الميلاد:",
+            birthdayColor: "لون عيد الميلاد",
+            createEvent: "إنشاء حدث",
+            addBirthdayTitle: "إضافة عيد ميلاد",
+            viewMonth: "شهر",
+            viewWeek: "أسبوع",
+            viewDay: "يوم",
+            viewYear: "سنة",
+            viewAgenda: "جدول أعمال",
+            viewTimeline: "الجدول الزمني",
+            backup: "نسخ احتياطي",
+            restore: "استعادة",
+            deleteAllData: "حذف جميع البيانات",
+            security: "الأمان",
+            resetEncryptionKey: "إعادة تعيين مفتاح التشفير (قيد الإنشاء)",
+            allHolidaysIn: "جميع العطلات في",
+            timelineFor: "الجدول الزمني لـ",
+            agendaSuffix: "جدول أعمال",
+            events: "الأحداث",
+            birthdays: "أعياد الميلاد",
+            noEvents: "لم يتم العثور على أحداث أو أعياد ميلاد.",
+            deleteEvent: "حذف الحدث",
+            deleteConfirm: "هل أنت متأكد أنك تريد حذف هذا الحدث؟",
+            delete: "حذف",
+            myCalendars: "تقاويمي:",
+            otherCalendars: "تقاويم أخرى:",
+            next: "التالي",
+          },
+          hi: {
+            locale: "hi-IN",
+            langName: "हिन्दी",
+            theme: "थीम",
+            system: "सिस्टम",
+            light: "हल्का",
+            dark: "डार्क",
+            language: "भाषा",
+            notifications: "डेस्कटॉप सूचनाएं सक्षम करें",
+            save: "सहेजें",
+            cancel: "रद्द करें",
+            settings: "सेटिंग्स",
+            notificationsEnabled: "डेस्कटॉप सूचनाएं सक्षम हैं।",
+            notificationsDenied: "सूचनाएं अस्वीकार की गई।",
+            notificationsUnsupported: "सूचनाएं समर्थित नहीं हैं।",
+            today: "आज",
+            calendar: "कैलेंडर",
+            tasks: "कार्य",
+            meals: "भोजन",
+            addBirthday: "जन्मदिन जोड़ें",
+            showHolidays: "छुट्टियां दिखाएं",
+            view: "दृश्य",
+            print: "प्रिंट",
+            share: "साझा करें",
+            newEvent: "नई घटना",
+            select: "चुनें",
+            favorites: "पसंदीदा",
+            help: "सहायता",
+            apps: "ऐप्स",
+            more: "अधिक",
+            close: "बंद करें",
+            search: "खोजें",
+            eventTitle: "घटना शीर्षक:",
+            eventDate: "घटना तिथि:",
+            eventTime: "घटना समय:",
+            eventDescription: "घटना विवरण (वैकल्पिक):",
+            eventColor: "घटना रंग",
+            birthdayName: "नाम:",
+            birthdayDate: "जन्मदिन तिथि:",
+            birthdayColor: "जन्मदिन रंग",
+            createEvent: "घटना बनाएं",
+            addBirthdayTitle: "जन्मदिन जोड़ें",
+            viewMonth: "माह",
+            viewWeek: "सप्ताह",
+            viewDay: "दिन",
+            viewYear: "वर्ष",
+            viewAgenda: "एजेंडा",
+            viewTimeline: "समयरेखा",
+            backup: "बैकअप",
+            restore: "पुनर्स्थापित करें",
+            deleteAllData: "सभी डेटा हटाएं",
+            security: "सुरक्षा",
+            resetEncryptionKey: "एन्क्रिप्शन कुंजी रीसेट करें (निर्माणाधीन)",
+            allHolidaysIn: "सभी छुट्टियां:",
+            timelineFor: "समयरेखा:",
+            agendaSuffix: "एजेंडा",
+            events: "घटनाएं",
+            birthdays: "जन्मदिन",
+            noEvents: "कोई घटना या जन्मदिन नहीं मिला।",
+            deleteEvent: "घटना हटाएं",
+            deleteConfirm: "क्या आप वाकई इस घटना को हटाना चाहते हैं?",
+            delete: "हटाएं",
+            myCalendars: "मेरे कैलेंडर:",
+            otherCalendars: "अन्य कैलेंडर:",
+            next: "अगला",
+          },
+          bn: {
+            locale: "bn-BD",
+            langName: "বাংলা",
+            theme: "থিম",
+            system: "সিস্টেম",
+            light: "হালকা",
+            dark: "অন্ধকার",
+            language: "ভাষা",
+            notifications: "ডেস্কটপ বিজ্ঞপ্তি সক্ষম করুন",
+            save: "সংরক্ষণ করুন",
+            cancel: "বাতিল করুন",
+            settings: "সেটিংস",
+            notificationsEnabled: "ডেস্কটপ বিজ্ঞপ্তি সক্ষম।",
+            notificationsDenied: "বিজ্ঞপ্তি প্রত্যাখ্যান করা হয়েছে।",
+            notificationsUnsupported: "বিজ্ঞপ্তি সমর্থিত নয়।",
+            today: "আজ",
+            calendar: "ক্যালেন্ডার",
+            tasks: "কাজ",
+            meals: "খাবার",
+            addBirthday: "জন্মদিন যোগ করুন",
+            showHolidays: "ছুটির দিন দেখান",
+            view: "দেখুন",
+            print: "প্রিন্ট",
+            share: "শেয়ার করুন",
+            newEvent: "নতুন ইভেন্ট",
+            select: "নির্বাচন করুন",
+            favorites: "প্রিয়",
+            help: "সাহায্য",
+            apps: "অ্যাপস",
+            more: "আরো",
+            close: "বন্ধ করুন",
+            search: "অনুসন্ধান",
+            eventTitle: "ইভেন্ট শিরোনাম:",
+            eventDate: "ইভেন্টের তারিখ:",
+            eventTime: "ইভেন্টের সময়:",
+            eventDescription: "ইভেন্টের বিবরণ (ঐচ্ছিক):",
+            eventColor: "ইভেন্টের রঙ",
+            birthdayName: "নাম:",
+            birthdayDate: "জন্মদিনের তারিখ:",
+            birthdayColor: "জন্মদিনের রঙ",
+            createEvent: "ইভেন্ট তৈরি করুন",
+            addBirthdayTitle: "জন্মদিন যোগ করুন",
+            viewMonth: "মাস",
+            viewWeek: "সপ্তাহ",
+            viewDay: "দিন",
+            viewYear: "বছর",
+            viewAgenda: "এজেন্ডা",
+            viewTimeline: "টাইমলাইন",
+            backup: "ব্যাকআপ",
+            restore: "পুনরুদ্ধার করুন",
+            deleteAllData: "সব ডেটা মুছুন",
+            security: "নিরাপত্তা",
+            resetEncryptionKey: "এনক্রিপশন কী রিসেট করুন (নির্মাণাধীন)",
+            allHolidaysIn: "সব ছুটি:",
+            timelineFor: "টাইমলাইন:",
+            agendaSuffix: "এজেন্ডা",
+            events: "ইভেন্ট",
+            birthdays: "জন্মদিন",
+            noEvents: "কোনো ইভেন্ট বা জন্মদিন পাওয়া যায়নি।",
+            deleteEvent: "ইভেন্ট মুছুন",
+            deleteConfirm: "আপনি কি সত্যিই এই ইভেন্টটি মুছতে চান?",
+            delete: "মুছুন",
+            myCalendars: "আমার ক্যালেন্ডার:",
+            otherCalendars: "অন্যান্য ক্যালেন্ডার:",
+            next: "পরবর্তী",
+          },
+          nl: {
+            locale: "nl-NL",
+            langName: "Nederlands",
+            theme: "Thema",
+            system: "Systeem",
+            light: "Licht",
+            dark: "Donker",
+            language: "Taal",
+            notifications: "Bureaubladmeldingen inschakelen",
+            save: "Opslaan",
+            cancel: "Annuleren",
+            settings: "Instellingen",
+            notificationsEnabled: "Bureaubladmeldingen ingeschakeld.",
+            notificationsDenied: "Meldingen geweigerd.",
+            notificationsUnsupported: "Meldingen worden niet ondersteund.",
+            today: "Vandaag",
+            calendar: "Kalender",
+            tasks: "Taken",
+            meals: "Maaltijden",
+            addBirthday: "Verjaardag toevoegen",
+            showHolidays: "Feestdagen weergeven",
+            view: "Weergave",
+            print: "Afdrukken",
+            share: "Delen",
+            newEvent: "Nieuw evenement",
+            select: "Selecteren",
+            favorites: "Favorieten",
+            help: "Help",
+            apps: "Apps",
+            more: "Meer",
+            close: "Sluiten",
+            search: "Zoeken",
+            eventTitle: "Gebeurtenistitel:",
+            eventDate: "Gebeurtenisdatum:",
+            eventTime: "Gebeurtenistijd:",
+            eventDescription: "Gebeurtenisbeschrijving (Optioneel):",
+            eventColor: "Gebeurteniskleur",
+            birthdayName: "Naam:",
+            birthdayDate: "Verjaardagsdatum:",
+            birthdayColor: "Verjaardagskleur",
+            createEvent: "Evenement aanmaken",
+            addBirthdayTitle: "Verjaardag toevoegen",
+            viewMonth: "Maand",
+            viewWeek: "Week",
+            viewDay: "Dag",
+            viewYear: "Jaar",
+            viewAgenda: "Agenda",
+            viewTimeline: "Tijdlijn",
+            backup: "Back-up",
+            restore: "Herstellen",
+            deleteAllData: "Alle gegevens verwijderen",
+            security: "Beveiliging",
+            resetEncryptionKey: "Versleutelingssleutel resetten (In aanbouw)",
+            allHolidaysIn: "Alle feestdagen in",
+            timelineFor: "Tijdlijn voor",
+            agendaSuffix: "Agenda",
+            events: "Evenementen",
+            birthdays: "Verjaardagen",
+            noEvents: "Geen evenementen of verjaardagen gevonden.",
+            deleteEvent: "Evenement verwijderen",
+            deleteConfirm: "Weet u zeker dat u dit evenement wilt verwijderen?",
+            delete: "Verwijderen",
+            myCalendars: "Mijn kalenders:",
+            otherCalendars: "Andere kalenders:",
+            next: "Volgende",
+          },
+          pl: {
+            locale: "pl-PL",
+            langName: "Polski",
+            theme: "Motyw",
+            system: "System",
+            light: "Jasny",
+            dark: "Ciemny",
+            language: "Język",
+            notifications: "Włącz powiadomienia na pulpicie",
+            save: "Zapisz",
+            cancel: "Anuluj",
+            settings: "Ustawienia",
+            notificationsEnabled: "Powiadomienia na pulpicie włączone.",
+            notificationsDenied: "Powiadomienia odrzucone.",
+            notificationsUnsupported: "Powiadomienia nie są obsługiwane.",
+            today: "Dziś",
+            calendar: "Kalendarz",
+            tasks: "Zadania",
+            meals: "Posiłki",
+            addBirthday: "Dodaj urodziny",
+            showHolidays: "Pokaż święta",
+            view: "Widok",
+            print: "Drukuj",
+            share: "Udostępnij",
+            newEvent: "Nowe zdarzenie",
+            select: "Wybierz",
+            favorites: "Ulubione",
+            help: "Pomoc",
+            apps: "Aplikacje",
+            more: "Więcej",
+            close: "Zamknij",
+            search: "Szukaj",
+            eventTitle: "Tytuł zdarzenia:",
+            eventDate: "Data zdarzenia:",
+            eventTime: "Czas zdarzenia:",
+            eventDescription: "Opis zdarzenia (Opcjonalnie):",
+            eventColor: "Kolor zdarzenia",
+            birthdayName: "Imię:",
+            birthdayDate: "Data urodzin:",
+            birthdayColor: "Kolor urodzin",
+            createEvent: "Utwórz zdarzenie",
+            addBirthdayTitle: "Dodaj urodziny",
+            viewMonth: "Miesiąc",
+            viewWeek: "Tydzień",
+            viewDay: "Dzień",
+            viewYear: "Rok",
+            viewAgenda: "Agenda",
+            viewTimeline: "Oś czasu",
+            backup: "Kopia zapasowa",
+            restore: "Przywróć",
+            deleteAllData: "Usuń wszystkie dane",
+            security: "Bezpieczeństwo",
+            resetEncryptionKey: "Zresetuj klucz szyfrowania (W budowie)",
+            allHolidaysIn: "Wszystkie święta w",
+            timelineFor: "Oś czasu dla",
+            agendaSuffix: "Agenda",
+            events: "Zdarzenia",
+            birthdays: "Urodziny",
+            noEvents: "Nie znaleziono zdarzeń ani urodzin.",
+            deleteEvent: "Usuń zdarzenie",
+            deleteConfirm: "Czy na pewno chcesz usunąć to zdarzenie?",
+            delete: "Usuń",
+            myCalendars: "Moje kalendarze:",
+            otherCalendars: "Inne kalendarze:",
+            next: "Dalej",
+          },
+          sv: {
+            locale: "sv-SE",
+            langName: "Svenska",
+            theme: "Tema",
+            system: "System",
+            light: "Ljust",
+            dark: "Mörkt",
+            language: "Språk",
+            notifications: "Aktivera skrivbordsmeddelanden",
+            save: "Spara",
+            cancel: "Avbryt",
+            settings: "Inställningar",
+            notificationsEnabled: "Skrivbordsmeddelanden aktiverade.",
+            notificationsDenied: "Meddelanden nekade.",
+            notificationsUnsupported: "Meddelanden stöds inte.",
+            today: "Idag",
+            calendar: "Kalender",
+            tasks: "Uppgifter",
+            meals: "Måltider",
+            addBirthday: "Lägg till födelsedag",
+            showHolidays: "Visa helgdagar",
+            view: "Vy",
+            print: "Skriv ut",
+            share: "Dela",
+            newEvent: "Ny händelse",
+            select: "Välj",
+            favorites: "Favoriter",
+            help: "Hjälp",
+            apps: "Appar",
+            more: "Mer",
+            close: "Stäng",
+            search: "Sök",
+            eventTitle: "Händelserubrik:",
+            eventDate: "Händelsedatum:",
+            eventTime: "Händelsetid:",
+            eventDescription: "Händelsebeskrivning (Valfritt):",
+            eventColor: "Händelsefärg",
+            birthdayName: "Namn:",
+            birthdayDate: "Födelsedag:",
+            birthdayColor: "Födelsedag-färg",
+            createEvent: "Skapa händelse",
+            addBirthdayTitle: "Lägg till födelsedag",
+            viewMonth: "Månad",
+            viewWeek: "Vecka",
+            viewDay: "Dag",
+            viewYear: "År",
+            viewAgenda: "Agenda",
+            viewTimeline: "Tidslinje",
+            backup: "Säkerhetskopiera",
+            restore: "Återställ",
+            deleteAllData: "Ta bort alla data",
+            security: "Säkerhet",
+            resetEncryptionKey:
+              "Återställ krypteringsnyckel (Under konstruktion)",
+            allHolidaysIn: "Alla helgdagar i",
+            timelineFor: "Tidslinje för",
+            agendaSuffix: "Agenda",
+            events: "Händelser",
+            birthdays: "Födelsedagar",
+            noEvents: "Inga händelser eller födelsedagar hittades.",
+            deleteEvent: "Ta bort händelse",
+            deleteConfirm:
+              "Är du säker på att du vill ta bort den här händelsen?",
+            delete: "Ta bort",
+            myCalendars: "Mina kalendrar:",
+            otherCalendars: "Andra kalendrar:",
+            next: "Nästa",
+          },
+          no: {
+            locale: "nb-NO",
+            langName: "Norsk",
+            theme: "Tema",
+            system: "System",
+            light: "Lyst",
+            dark: "Mørkt",
+            language: "Språk",
+            notifications: "Aktiver skrivebordsvarslinger",
+            save: "Lagre",
+            cancel: "Avbryt",
+            settings: "Innstillinger",
+            notificationsEnabled: "Skrivebordsvarslinger aktivert.",
+            notificationsDenied: "Varslinger avvist.",
+            notificationsUnsupported: "Varslinger støttes ikke.",
+            today: "I dag",
+            calendar: "Kalender",
+            tasks: "Oppgaver",
+            meals: "Måltider",
+            addBirthday: "Legg til bursdag",
+            showHolidays: "Vis helligdager",
+            view: "Visning",
+            print: "Skriv ut",
+            share: "Del",
+            newEvent: "Ny hendelse",
+            select: "Velg",
+            favorites: "Favoritter",
+            help: "Hjelp",
+            apps: "Apper",
+            more: "Mer",
+            close: "Lukk",
+            search: "Søk",
+            eventTitle: "Hendelsestitel:",
+            eventDate: "Hendelsesdato:",
+            eventTime: "Hendelsestid:",
+            eventDescription: "Hendelsesbeskrivelse (Valgfritt):",
+            eventColor: "Hendelsesfarge",
+            birthdayName: "Navn:",
+            birthdayDate: "Bursdagsdato:",
+            birthdayColor: "Bursdagsfarge",
+            createEvent: "Opprett hendelse",
+            addBirthdayTitle: "Legg til bursdag",
+            viewMonth: "Måned",
+            viewWeek: "Uke",
+            viewDay: "Dag",
+            viewYear: "År",
+            viewAgenda: "Agenda",
+            viewTimeline: "Tidslinje",
+            backup: "Sikkerhetskopiér",
+            restore: "Gjenopprett",
+            deleteAllData: "Slett alle data",
+            security: "Sikkerhet",
+            resetEncryptionKey:
+              "Tilbakestill krypteringsnøkkel (Under konstruksjon)",
+            allHolidaysIn: "Alle helligdager i",
+            timelineFor: "Tidslinje for",
+            agendaSuffix: "Agenda",
+            events: "Hendelser",
+            birthdays: "Bursdager",
+            noEvents: "Ingen hendelser eller bursdager funnet.",
+            deleteEvent: "Slett hendelse",
+            deleteConfirm: "Er du sikker på at du vil slette denne hendelsen?",
+            delete: "Slett",
+            myCalendars: "Mine kalendere:",
+            otherCalendars: "Andre kalendere:",
+            next: "Neste",
+          },
+          da: {
+            locale: "da-DK",
+            langName: "Dansk",
+            theme: "Tema",
+            system: "System",
+            light: "Lyst",
+            dark: "Mørkt",
+            language: "Sprog",
+            notifications: "Aktivér skrivebordsmeddelelser",
+            save: "Gem",
+            cancel: "Annuller",
+            settings: "Indstillinger",
+            notificationsEnabled: "Skrivebordsmeddelelser aktiveret.",
+            notificationsDenied: "Meddelelser afvist.",
+            notificationsUnsupported: "Meddelelser understøttes ikke.",
+            today: "I dag",
+            calendar: "Kalender",
+            tasks: "Opgaver",
+            meals: "Måltider",
+            addBirthday: "Tilføj fødselsdag",
+            showHolidays: "Vis helligdage",
+            view: "Visning",
+            print: "Udskriv",
+            share: "Del",
+            newEvent: "Ny begivenhed",
+            select: "Vælg",
+            favorites: "Favoritter",
+            help: "Hjælp",
+            apps: "Apps",
+            more: "Mere",
+            close: "Luk",
+            search: "Søg",
+            eventTitle: "Begivenhedstitel:",
+            eventDate: "Begivenhedsdato:",
+            eventTime: "Begivenhedstid:",
+            eventDescription: "Begivenhedsbeskrivelse (Valgfrit):",
+            eventColor: "Begivenhedsfarve",
+            birthdayName: "Navn:",
+            birthdayDate: "Fødselsdato:",
+            birthdayColor: "Fødselsdagsfarve",
+            createEvent: "Opret begivenhed",
+            addBirthdayTitle: "Tilføj fødselsdag",
+            viewMonth: "Måned",
+            viewWeek: "Uge",
+            viewDay: "Dag",
+            viewYear: "År",
+            viewAgenda: "Dagsorden",
+            viewTimeline: "Tidslinje",
+            backup: "Sikkerhedskopier",
+            restore: "Gendan",
+            deleteAllData: "Slet alle data",
+            security: "Sikkerhed",
+            resetEncryptionKey: "Nulstil krypteringsnøgle (Under konstruktion)",
+            allHolidaysIn: "Alle helligdage i",
+            timelineFor: "Tidslinje for",
+            agendaSuffix: "Dagsorden",
+            events: "Begivenheder",
+            birthdays: "Fødselsdage",
+            noEvents: "Ingen begivenheder eller fødselsdage fundet.",
+            deleteEvent: "Slet begivenhed",
+            deleteConfirm:
+              "Er du sikker på, at du vil slette denne begivenhed?",
+            delete: "Slet",
+            myCalendars: "Mine kalendere:",
+            otherCalendars: "Andre kalendere:",
+            next: "Næste",
+          },
+          fi: {
+            locale: "fi-FI",
+            langName: "Suomi",
+            theme: "Teema",
+            system: "Järjestelmä",
+            light: "Vaalea",
+            dark: "Tumma",
+            language: "Kieli",
+            notifications: "Ota työpöytäilmoitukset käyttöön",
+            save: "Tallenna",
+            cancel: "Peruuta",
+            settings: "Asetukset",
+            notificationsEnabled: "Työpöytäilmoitukset käytössä.",
+            notificationsDenied: "Ilmoitukset hylätty.",
+            notificationsUnsupported: "Ilmoituksia ei tueta.",
+            today: "Tänään",
+            calendar: "Kalenteri",
+            tasks: "Tehtävät",
+            meals: "Ateriat",
+            addBirthday: "Lisää syntymäpäivä",
+            showHolidays: "Näytä vapaapäivät",
+            view: "Näkymä",
+            print: "Tulosta",
+            share: "Jaa",
+            newEvent: "Uusi tapahtuma",
+            select: "Valitse",
+            favorites: "Suosikit",
+            help: "Ohje",
+            apps: "Sovellukset",
+            more: "Lisää",
+            close: "Sulje",
+            search: "Hae",
+            eventTitle: "Tapahtuman otsikko:",
+            eventDate: "Tapahtumapäivä:",
+            eventTime: "Tapahtuma-aika:",
+            eventDescription: "Tapahtuman kuvaus (Valinnainen):",
+            eventColor: "Tapahtuman väri",
+            birthdayName: "Nimi:",
+            birthdayDate: "Syntymäpäivä:",
+            birthdayColor: "Syntymäpäiväväri",
+            createEvent: "Luo tapahtuma",
+            addBirthdayTitle: "Lisää syntymäpäivä",
+            viewMonth: "Kuukausi",
+            viewWeek: "Viikko",
+            viewDay: "Päivä",
+            viewYear: "Vuosi",
+            viewAgenda: "Esityslista",
+            viewTimeline: "Aikajana",
+            backup: "Varmuuskopio",
+            restore: "Palauta",
+            deleteAllData: "Poista kaikki tiedot",
+            security: "Turvallisuus",
+            resetEncryptionKey: "Nollaa salausavain (Rakenteilla)",
+            allHolidaysIn: "Kaikki vapaapäivät:",
+            timelineFor: "Aikajana:",
+            agendaSuffix: "Esityslista",
+            events: "Tapahtumat",
+            birthdays: "Syntymäpäivät",
+            noEvents: "Tapahtumia tai syntymäpäiviä ei löydy.",
+            deleteEvent: "Poista tapahtuma",
+            deleteConfirm: "Haluatko varmasti poistaa tämän tapahtuman?",
+            delete: "Poista",
+            myCalendars: "Omat kalenterit:",
+            otherCalendars: "Muut kalenterit:",
+            next: "Seuraava",
+          },
+          hu: {
+            locale: "hu-HU",
+            langName: "Magyar",
+            theme: "Téma",
+            system: "Rendszer",
+            light: "Világos",
+            dark: "Sötét",
+            language: "Nyelv",
+            notifications: "Asztali értesítések engedélyezése",
+            save: "Mentés",
+            cancel: "Mégse",
+            settings: "Beállítások",
+            notificationsEnabled: "Asztali értesítések engedélyezve.",
+            notificationsDenied: "Értesítések megtagadva.",
+            notificationsUnsupported: "Az értesítések nem támogatottak.",
+            today: "Ma",
+            calendar: "Naptár",
+            tasks: "Feladatok",
+            meals: "Étkezések",
+            addBirthday: "Születésnap hozzáadása",
+            showHolidays: "Ünnepnapok megjelenítése",
+            view: "Nézet",
+            print: "Nyomtatás",
+            share: "Megosztás",
+            newEvent: "Új esemény",
+            select: "Kiválasztás",
+            favorites: "Kedvencek",
+            help: "Súgó",
+            apps: "Alkalmazások",
+            more: "Tovább",
+            close: "Bezárás",
+            search: "Keresés",
+            eventTitle: "Esemény neve:",
+            eventDate: "Esemény dátuma:",
+            eventTime: "Esemény ideje:",
+            eventDescription: "Esemény leírása (Nem kötelező):",
+            eventColor: "Esemény színe",
+            birthdayName: "Név:",
+            birthdayDate: "Születésnap dátuma:",
+            birthdayColor: "Születésnap színe",
+            createEvent: "Esemény létrehozása",
+            addBirthdayTitle: "Születésnap hozzáadása",
+            viewMonth: "Hónap",
+            viewWeek: "Hét",
+            viewDay: "Nap",
+            viewYear: "Év",
+            viewAgenda: "Napirend",
+            viewTimeline: "Idővonal",
+            backup: "Biztonsági mentés",
+            restore: "Visszaállítás",
+            deleteAllData: "Összes adat törlése",
+            security: "Biztonság",
+            resetEncryptionKey:
+              "Titkosítási kulcs visszaállítása (Fejlesztés alatt)",
+            allHolidaysIn: "Összes ünnepnap:",
+            timelineFor: "Idővonal:",
+            agendaSuffix: "Napirend",
+            events: "Események",
+            birthdays: "Születésnapok",
+            noEvents: "Nem található esemény vagy születésnap.",
+            deleteEvent: "Esemény törlése",
+            deleteConfirm: "Biztosan törölni szeretné ezt az eseményt?",
+            delete: "Törlés",
+            myCalendars: "Naptáraim:",
+            otherCalendars: "Más naptárak:",
+            next: "Következő",
+          },
+          cs: {
+            locale: "cs-CZ",
+            langName: "Čeština",
+            theme: "Motiv",
+            system: "Systém",
+            light: "Světlý",
+            dark: "Tmavý",
+            language: "Jazyk",
+            notifications: "Povolit oznámení na ploše",
+            save: "Uložit",
+            cancel: "Zrušit",
+            settings: "Nastavení",
+            notificationsEnabled: "Oznámení na ploše povolena.",
+            notificationsDenied: "Oznámení zamítnuta.",
+            notificationsUnsupported: "Oznámení nejsou podporována.",
+            today: "Dnes",
+            calendar: "Kalendář",
+            tasks: "Úkoly",
+            meals: "Jídla",
+            addBirthday: "Přidat narozeniny",
+            showHolidays: "Zobrazit svátky",
+            view: "Zobrazení",
+            print: "Tisk",
+            share: "Sdílet",
+            newEvent: "Nová událost",
+            select: "Vybrat",
+            favorites: "Oblíbené",
+            help: "Nápověda",
+            apps: "Aplikace",
+            more: "Více",
+            close: "Zavřít",
+            search: "Hledat",
+            eventTitle: "Název události:",
+            eventDate: "Datum události:",
+            eventTime: "Čas události:",
+            eventDescription: "Popis události (Volitelné):",
+            eventColor: "Barva události",
+            birthdayName: "Jméno:",
+            birthdayDate: "Datum narozenin:",
+            birthdayColor: "Barva narozenin",
+            createEvent: "Vytvořit událost",
+            addBirthdayTitle: "Přidat narozeniny",
+            viewMonth: "Měsíc",
+            viewWeek: "Týden",
+            viewDay: "Den",
+            viewYear: "Rok",
+            viewAgenda: "Program",
+            viewTimeline: "Časová osa",
+            backup: "Záloha",
+            restore: "Obnovit",
+            deleteAllData: "Smazat všechna data",
+            security: "Zabezpečení",
+            resetEncryptionKey: "Resetovat šifrovací klíč (Ve výstavbě)",
+            allHolidaysIn: "Všechny svátky v",
+            timelineFor: "Časová osa pro",
+            agendaSuffix: "Program",
+            events: "Události",
+            birthdays: "Narozeniny",
+            noEvents: "Žádné události ani narozeniny nenalezeny.",
+            deleteEvent: "Smazat událost",
+            deleteConfirm: "Opravdu chcete smazat tuto událost?",
+            delete: "Smazat",
+            myCalendars: "Moje kalendáře:",
+            otherCalendars: "Jiné kalendáře:",
+            next: "Další",
           },
         };
         let currentLang = localStorage.getItem("munetiosLang") || "en";
@@ -1904,7 +3046,65 @@
               t("save");
             settingsModal.querySelector("#cancelSettingsBtn").textContent =
               t("cancel");
+            const backupBtn = settingsModal.querySelector("#backupDataBtn");
+            if (backupBtn) backupBtn.textContent = t("backup");
+            const restoreBtn = settingsModal.querySelector("#restoreDataBtn");
+            if (restoreBtn) restoreBtn.textContent = t("restore");
+            const delBtn = settingsModal.querySelector("#deleteAllDataBtn");
+            if (delBtn) delBtn.textContent = t("deleteAllData");
           }
+          // Create event modal labels
+          const evtTitle = document.querySelector('label[for="eventTitle"]');
+          if (evtTitle) evtTitle.textContent = t("eventTitle");
+          const evtDate = document.querySelector('label[for="eventDate"]');
+          if (evtDate) evtDate.textContent = t("eventDate");
+          const evtTime = document.querySelector('label[for="eventTime"]');
+          if (evtTime) evtTime.textContent = t("eventTime");
+          const evtDesc = document.querySelector(
+            'label[for="eventDescription"]',
+          );
+          if (evtDesc) evtDesc.textContent = t("eventDescription");
+          const evtColor = document.querySelector('label[for="eventColor"]');
+          if (evtColor) evtColor.textContent = t("eventColor");
+          // Create event modal title
+          const createEvtModal = document.getElementById("createEventModal");
+          if (createEvtModal) {
+            const h2 = createEvtModal.querySelector(".modal__header h2");
+            if (h2) h2.textContent = t("createEvent");
+          }
+          // Add birthday modal labels
+          const bdName = document.querySelector('label[for="birthdayName"]');
+          if (bdName) bdName.textContent = t("birthdayName");
+          const bdDate = document.querySelector('label[for="birthdayDate"]');
+          if (bdDate) bdDate.textContent = t("birthdayDate");
+          const bdColor = document.querySelector('label[for="birthdayColor"]');
+          if (bdColor) bdColor.textContent = t("birthdayColor");
+          const addBdModal = document.getElementById("addBirthdayModal");
+          if (addBdModal) {
+            const h2 = addBdModal.querySelector(".modal__header h2");
+            if (h2) h2.textContent = t("addBirthdayTitle");
+          }
+          // My Calendars / Other Calendars headings
+          const sidebar = document.querySelector(".sidebar");
+          if (sidebar) {
+            const h3s = sidebar.querySelectorAll("h3");
+            if (h3s[0]) h3s[0].textContent = t("myCalendars");
+            if (h3s[1]) h3s[1].textContent = t("otherCalendars");
+          }
+          // Search placeholder
+          const searchInput = document.getElementById("searchInput");
+          if (searchInput) searchInput.placeholder = t("search");
+          // Create event modal buttons
+          const saveEventBtn = document.getElementById("saveEventBtn");
+          if (saveEventBtn) saveEventBtn.textContent = t("save");
+          const cancelEventBtn = document.getElementById("cancelEventBtn");
+          if (cancelEventBtn) cancelEventBtn.textContent = t("cancel");
+          // Add birthday modal buttons
+          const saveBirthdayBtn = document.getElementById("saveBirthdayBtn");
+          if (saveBirthdayBtn) saveBirthdayBtn.textContent = t("save");
+          const cancelBirthdayBtn =
+            document.getElementById("cancelBirthdayBtn");
+          if (cancelBirthdayBtn) cancelBirthdayBtn.textContent = t("cancel");
         }
         // Helper: apply theme (system, light, dark)
         function applyTheme(theme) {
@@ -2085,6 +3285,13 @@
 
         function showDeleteAllDataModal() {
           // 10-step confirmation modal with code at end
+          function tDel(key) {
+            return (
+              (translations[currentLang] && translations[currentLang][key]) ||
+              translations["en"][key] ||
+              key
+            );
+          }
           let modal = document.getElementById("deleteAllDataModal");
           if (!modal) {
             modal = document.createElement("div");
@@ -2094,16 +3301,16 @@
             modal.innerHTML = `
                                 <div class="modal__content liquid-glass" style="max-width:420px;">
                                     <div class="modal__header">
-                                        <h2>Delete All Data</h2>
-                                        <div class="icon" id="closeDeleteAllDataModal" title="Close" aria-label="Close">close</div>
+                                        <h2>${tDel("deleteAllData")}</h2>
+                                        <div class="icon" id="closeDeleteAllDataModal" title="${tDel("close")}" aria-label="${tDel("close")}">close</div>
                                     </div>
                                     <div class="modal__body" id="deleteAllDataModalBody" style="padding-bottom:10px;">
                                         <div id="deleteStepText"></div>
                                         <div id="deleteStepInputWrapper" style="margin-top:12px;"></div>
                                     </div>
                                     <div class="modal__footer">
-                                        <munetios-button class="btn-primary" id="deleteAllDataNextBtn">Next</munetios-button>
-                                        <munetios-button id="deleteAllDataCancelBtn">Cancel</munetios-button>
+                                        <munetios-button class="btn-primary" id="deleteAllDataNextBtn">${tDel("next")}</munetios-button>
+                                        <munetios-button id="deleteAllDataCancelBtn">${tDel("cancel")}</munetios-button>
                                     </div>
                                 </div>
                             `;
@@ -2115,6 +3322,13 @@
             modal.onclick = (e) => {
               if (e.target === modal) modal.style.display = "none";
             };
+          } else {
+            // Re-translate title and buttons if modal was already created
+            modal.querySelector("h2").textContent = tDel("deleteAllData");
+            modal.querySelector("#deleteAllDataNextBtn").textContent =
+              tDel("next");
+            modal.querySelector("#deleteAllDataCancelBtn").textContent =
+              tDel("cancel");
           }
           let step = 1;
           const totalSteps = 10;
@@ -2140,7 +3354,7 @@
               inputWrapper.innerHTML = `<input type="text" id="deleteAllDataCodeInput" placeholder="Enter code" style="width:100%;padding:8px;border-radius:8px;border:1px solid #ccc;">`;
             }
             modal.querySelector("#deleteAllDataNextBtn").textContent =
-              step === totalSteps ? "Delete" : "Next";
+              step === totalSteps ? tDel("delete") : tDel("next");
           }
           renderStep();
           modal.querySelector("#deleteAllDataNextBtn").onclick = function () {
@@ -2156,18 +3370,24 @@
                 showToast("Incorrect code", { type: "error" });
                 return;
               }
-              // Delete all data
-              openDB().then((db) => {
+              // Delete all data and reset encryption key
+              openDB().then(async (db) => {
                 const tx1 = db.transaction("events", "readwrite");
                 const tx2 = db.transaction("birthdays", "readwrite");
                 tx1.objectStore("events").clear();
                 tx2.objectStore("birthdays").clear();
-                tx2.oncomplete = function () {
-                  showToast("All data deleted!", { type: "success" });
-                  rerender();
-                  modal.style.display = "none";
-                  location.reload();
-                };
+                await new Promise((resolve) => {
+                  tx2.oncomplete = resolve;
+                });
+                try {
+                  await resetEncryptionKey();
+                } catch (e) {
+                  console.error("Key reset failed:", e);
+                }
+                showToast("All data deleted!", { type: "success" });
+                rerender();
+                modal.style.display = "none";
+                location.reload();
               });
             }
           };
@@ -2212,7 +3432,7 @@
                                         <div>
                                             <munetios-button id="langDropdownBtn" style="width:100%;justify-content:space-between;">
                                                 <span class="icon">language</span>
-                                                <span id="langDropdownText">${currentLang.toUpperCase()}</span>
+                                                <span id="langDropdownText">${(translations[currentLang] && translations[currentLang].langName) || currentLang.toUpperCase()}</span>
                                                 <span class="icon">expand_more</span>
                                             </munetios-button>
                                             <munetios-dropdown-menu id="langDropdownMenu"></munetios-dropdown-menu>
@@ -2223,15 +3443,11 @@
                                             <span style="font-size:15px;vertical-align:middle;">${translations[currentLang].notifications}</span>
                                         </div>
                                         <div style="display:flex;gap:10px;justify-content:space-between;">
-                                            <munetios-button id="backupDataBtn" title="Backup Data" aria-label="Backup Data">Backup</munetios-button>
-                                            <munetios-button id="restoreDataBtn" title="Restore Data" aria-label="Restore Data">Restore</munetios-button>
-                                            <munetios-button id="deleteAllDataBtn" title="Delete All Data" aria-label="Delete All Data" style=" white-space: nowrap; color:#fff;background:#d5000062;">Delete all data</munetios-button>
+                                            <munetios-button id="backupDataBtn" title="Backup Data" aria-label="Backup Data">${translations[currentLang].backup}</munetios-button>
+                                            <munetios-button id="restoreDataBtn" title="Restore Data" aria-label="Restore Data">${translations[currentLang].restore}</munetios-button>
+                                            <munetios-button id="deleteAllDataBtn" title="Delete All Data" aria-label="Delete All Data" style=" white-space: nowrap; color:#fff;background:#d5000062;">${translations[currentLang].deleteAllData}</munetios-button>
                                         </div>
-                                        <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.18);">
-                                            <label style="color:#ffe066;display:block;margin-bottom:8px;font-weight:600;">🔒 Security</label>
-                                            <p style="font-size:0.85em;opacity:0.8;margin-bottom:12px;line-height:1.4;">Reset your encryption key. Warning: This will make existing encrypted data unreadable. You'll need to re-enter all data.</p>
-                                            <munetios-button id="resetEncryptionKeyBtn" style="background:#ff3d00 !important;width:100%;justify-content:center;" title="Reset Encryption Key" disabled aria-label="Reset Encryption Key">🔑 Reset Encryption Key (Under construction)</munetios-button>
-                                        </div>
+
                                     </div>
                                     <div class="modal__footer">
                                         <munetios-button class="btn-primary" id="saveSettingsBtn">${translations[currentLang].save}</munetios-button>
@@ -2286,11 +3502,13 @@
               Object.keys(translations).forEach((lang) => {
                 const item = document.createElement("div");
                 item.className = "dropdown-item";
-                item.textContent = lang.toUpperCase();
+                const langName =
+                  translations[lang].langName || lang.toUpperCase();
+                item.textContent = `${langName} (${lang.toUpperCase()})`;
                 if (lang === currentLang) item.style.fontWeight = "bold";
                 item.onclick = () => {
                   settingsModal.querySelector("#langDropdownText").textContent =
-                    lang.toUpperCase();
+                    langName;
                   langMenu.style.display = "none";
                   langBtn.setAttribute("data-selected", lang);
                 };
@@ -2318,52 +3536,6 @@
                 } else {
                   notificationsEnabled = false;
                   localStorage.setItem("munetiosNotifications", "off");
-                }
-              };
-            // Reset encryption key button
-            settingsModal.querySelector("#resetEncryptionKeyBtn").onclick =
-              async function () {
-                if (
-                  confirm(
-                    "⚠️ Are you absolutely sure you want to reset your encryption key?\n\n" +
-                      "This will make ALL existing encrypted data (events, birthdays, calendars) permanently unreadable.\n\n" +
-                      "You will need to re-enter all your data.\n\n" +
-                      "This action CANNOT be undone!\n\n" +
-                      "Click OK to proceed with resetting the key.",
-                  )
-                ) {
-                  try {
-                    await resetEncryptionKey();
-                    showToast(
-                      "🔑 Encryption key reset successfully! All existing data is now unreadable. Please re-enter your data.",
-                      { type: "success" },
-                    );
-                    // Optionally clear all data
-                    if (
-                      confirm(
-                        "Do you want to also clear all encrypted data from the database?",
-                      )
-                    ) {
-                      await openDB().then((db) => {
-                        const tx1 = db.transaction("events", "readwrite");
-                        const tx2 = db.transaction("birthdays", "readwrite");
-                        tx1.objectStore("events").clear();
-                        tx2.objectStore("birthdays").clear();
-                        return new Promise((resolve) => {
-                          tx2.oncomplete = resolve;
-                        });
-                      });
-                      showToast("Database cleared successfully!", {
-                        type: "success",
-                      });
-                      location.reload();
-                    }
-                  } catch (error) {
-                    showToast("❌ Failed to reset encryption key.", {
-                      type: "error",
-                    });
-                    console.error("Error resetting key:", error);
-                  }
                 }
               };
             // Save/cancel/close
@@ -2398,6 +3570,7 @@
           settingsModal.querySelector("#themeDropdownText").textContent =
             translations[currentLang][currentTheme];
           settingsModal.querySelector("#langDropdownText").textContent =
+            (translations[currentLang] && translations[currentLang].langName) ||
             currentLang.toUpperCase();
           settingsModal.querySelector("#notifCheckbox").checked =
             notificationsEnabled;
@@ -2417,9 +3590,9 @@
 
         // --- Desktop Notifications: schedule notifications for events/birthdays ---
 
-        // IndexedDB setup for events and birthdays (move this up so saveEventToDB is defined)
+        // IndexedDB setup for events and birthdays (notification scheduling — must match main DB version)
         const DB_NAME = "munetios_calendar";
-        const DB_VERSION = 1;
+        const DB_VERSION = 2;
         let db = null;
 
         function openDB() {
@@ -2427,18 +3600,21 @@
             if (db) return resolve(db);
             const req = indexedDB.open(DB_NAME, DB_VERSION);
             req.onupgradeneeded = function (e) {
-              const db = e.target.result;
-              if (!db.objectStoreNames.contains("events")) {
-                db.createObjectStore("events", {
+              const database = e.target.result;
+              if (!database.objectStoreNames.contains("events")) {
+                database.createObjectStore("events", {
                   keyPath: "id",
                   autoIncrement: true,
                 });
               }
-              if (!db.objectStoreNames.contains("birthdays")) {
-                db.createObjectStore("birthdays", {
+              if (!database.objectStoreNames.contains("birthdays")) {
+                database.createObjectStore("birthdays", {
                   keyPath: "id",
                   autoIncrement: true,
                 });
+              }
+              if (!database.objectStoreNames.contains("encryption")) {
+                database.createObjectStore("encryption", { keyPath: "id" });
               }
             };
             req.onsuccess = function (e) {
@@ -3212,13 +4388,27 @@
         const searchResults = document.querySelector(".search__wrapper");
 
         const viewOptions = [
-          { label: "Month", value: "month" },
-          { label: "Week", value: "week" },
-          { label: "Day", value: "day" },
-          { label: "Year", value: "year" },
-          { label: "Agenda", value: "agenda" },
-          { label: "Timeline", value: "timeline" },
+          { labelKey: "viewMonth", value: "month" },
+          { labelKey: "viewWeek", value: "week" },
+          { labelKey: "viewDay", value: "day" },
+          { labelKey: "viewYear", value: "year" },
+          { labelKey: "viewAgenda", value: "agenda" },
+          { labelKey: "viewTimeline", value: "timeline" },
         ];
+        function getViewLabel(opt) {
+          const lang = localStorage.getItem("munetiosLang") || "en";
+          const tr =
+            typeof translations !== "undefined" && translations[lang]
+              ? translations[lang]
+              : {};
+          return (
+            tr[opt.labelKey] ||
+            (typeof translations !== "undefined" &&
+              translations["en"] &&
+              translations["en"][opt.labelKey]) ||
+            opt.labelKey
+          );
+        }
         let currentView = "month";
 
         // Week view rendering logic
@@ -3260,14 +4450,14 @@
           }
 
           // Header
-          todayDateCalendar.textContent = `${weekDays[0].toLocaleDateString(undefined, { month: "short", day: "numeric" })} - ${weekDays[6].toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}`;
+          todayDateCalendar.textContent = `${formatDate(weekDays[0], { month: "short", day: "numeric" })} – ${formatDate(weekDays[6], { month: "short", day: "numeric", year: "numeric" })}`;
           // Build week grid: first column is time, next 7 columns are days
           let html = `<div class="calendar__dates__grid" style="display:grid;grid-template-columns:80px repeat(7,1fr);height:auto;min-height:600px;">`;
 
           // Header row: blank for time, then days
           html += `<div style="background:transparent"></div>`;
           for (let i = 0; i < 7; i++) {
-            html += `<div style="font-weight:bold;color:#fff;text-align:center;padding:8px 0 8px 0;background:rgba(255,255,255,0.04);border-radius:10px;">${weekDays[i].toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" })}</div>`;
+            html += `<div style="font-weight:bold;color:#fff;text-align:center;padding:8px 0 8px 0;background:rgba(255,255,255,0.04);border-radius:10px;">${formatDate(weekDays[i], { weekday: "short", month: "short", day: "numeric" })}</div>`;
           }
 
           // 24 hour time slots (12AM to 11PM)
@@ -3307,7 +4497,7 @@
             day = 1;
           }
           let date = new Date(year, month, day);
-          todayDateCalendar.textContent = date.toLocaleDateString(undefined, {
+          todayDateCalendar.textContent = formatDate(date, {
             weekday: "long",
             month: "long",
             day: "numeric",
@@ -3316,7 +4506,7 @@
 
           let html = `<div class="calendar__dates__grid" style="display:grid;grid-template-columns:80px 1fr;height:auto;min-height:600px;">`;
           html += `<div style="background:transparent"></div>`;
-          html += `<div style="font-weight:bold;color:#fff;text-align:center;padding:8px 0 8px 0;background:rgba(255,255,255,0.04);border-radius:10px;">${date.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" })}</div>`;
+          html += `<div style="font-weight:bold;color:#fff;text-align:center;padding:8px 0 8px 0;background:rgba(255,255,255,0.04);border-radius:10px;">${formatDate(date, { weekday: "short", month: "short", day: "numeric" })}</div>`;
           for (let hour = 0; hour < 24; hour++) {
             let ampm = hour < 12 ? "AM" : "PM";
             let displayHour = hour % 12 === 0 ? 12 : hour % 12;
@@ -3344,14 +4534,15 @@
           todayDateCalendar.textContent = year;
           let html = `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">`;
           let today = new Date();
+          const yrWeekdays = getLocalizedWeekdaysNarrow();
           for (let m = 0; m < 12; m++) {
             let daysInMonth = new Date(year, m + 1, 0).getDate();
             let firstDay = new Date(year, m, 1).getDay();
             html += `<div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:10px 6px 12px 6px;box-shadow:0 2px 8px 0 rgba(31,38,135,0.10);">
-                            <div style="font-weight:bold;text-align:center;color:#fff;margin-bottom:6px;">${new Date(year, m).toLocaleString("default", { month: "long" })}</div>
+                            <div style="font-weight:bold;text-align:center;color:#fff;margin-bottom:6px;">${getLocalizedMonthName(m, year)}</div>
                             <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;">`;
-            // Weekdays
-            const weekdays = ["S", "M", "T", "W", "T", "F", "S"];
+            // Weekdays (localized)
+            const weekdays = yrWeekdays;
             for (let d = 0; d < 7; d++) {
               html += `<div style="font-size:11px;opacity:.7;text-align:center;">${weekdays[d]}</div>`;
             }
@@ -3384,11 +4575,24 @@
 
         function renderAgendaView(month, year) {
           // List all days of the month, with holidays if enabled
+          const agLang = localStorage.getItem("munetiosLang") || "en";
+          const agTr =
+            typeof translations !== "undefined" && translations[agLang]
+              ? translations[agLang]
+              : {};
+          const agT = (k) =>
+            agTr[k] ||
+            (typeof translations !== "undefined" &&
+              translations["en"] &&
+              translations["en"][k]) ||
+            k;
           todayDateCalendar.textContent =
-            new Date(year, month).toLocaleString("default", {
+            formatDate(new Date(year, month), {
               month: "long",
               year: "numeric",
-            }) + " Agenda";
+            }) +
+            " " +
+            agT("agendaSuffix");
           let daysInMonth = new Date(year, month + 1, 0).getDate();
           let holidaysThisMonth = showHolidays
             ? getHolidaysForMonth(month, year)
@@ -3405,7 +4609,7 @@
             html += `<div style="display:flex;align-items:center;gap:16px;padding:10px 18px;border-radius:12px;${isToday ? "background:rgba(99,0,238,0.548);" : "background:rgba(255,255,255,0.04);"}">
                             <div style="font-weight:bold;font-size:18px;width:60px;text-align:right;color:#fff;">${d}</div>
                             <div style="flex:1;">
-                                <div style="font-size:15px;color:#fff;">${date.toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" })}</div>
+                                <div style="font-size:15px;color:#fff;">${formatDate(date, { weekday: "long", month: "long", day: "numeric" })}</div>
                                 ${holiday ? `<div style="font-size:13px;color:#ffe066;margin-top:2px;">${holiday.name}</div>` : ""}
                             </div>
                         </div>`;
@@ -3417,8 +4621,19 @@
           calendarMainContent.insertAdjacentHTML("beforeend", html);
         }
         function renderTimelineView(month, year) {
-          // Set title to "Timeline for {year}" regardless of month/year
-          todayDateCalendar.textContent = `Timeline for ${year}`;
+          // Set title localized
+          const tlLang = localStorage.getItem("munetiosLang") || "en";
+          const tlTr =
+            typeof translations !== "undefined" && translations[tlLang]
+              ? translations[tlLang]
+              : {};
+          const tlT = (k) =>
+            tlTr[k] ||
+            (typeof translations !== "undefined" &&
+              translations["en"] &&
+              translations["en"][k]) ||
+            k;
+          todayDateCalendar.textContent = `${tlT("timelineFor")} ${year}`;
 
           // Remove all top dates in the timeline (no bars, no numbers)
           let html = `<div style="overflow-x:auto;padding:20px 0;">
@@ -3439,16 +4654,16 @@
           }
           if (allHolidays.length > 0) {
             html += `<div style="margin-top:24px;">
-                            <div style="font-weight:bold;color:#fff;font-size:22px;margin-bottom:8px;">All Holidays in ${year}</div>
+                            <div style="font-weight:bold;color:#fff;font-size:22px;margin-bottom:8px;">${tlT("allHolidaysIn")} ${year}</div>
                             <div style="display:flex;flex-direction:column;gap:12px;">`;
             allHolidays.sort((a, b) => a.month - b.month || a.day - b.day);
             allHolidays.forEach((h) => {
-              let dateStr = new Date(year, h.month, h.day).toLocaleDateString(
-                undefined,
-                { month: "short", day: "numeric" },
-              );
+              let tlDateStr = formatDate(new Date(year, h.month, h.day), {
+                month: "short",
+                day: "numeric",
+              });
               html += `<div style="color:#ffe066;font-size:15px;">
-                                <span style="color:#fff;opacity:.7;">${dateStr}:</span> ${h.name}
+                                <span style="color:#fff;opacity:.7;">${tlDateStr}:</span> ${h.name}
                             </div>`;
             });
             html += `</div></div>`;
@@ -3496,7 +4711,8 @@
         // Update calendar view when changed from dropdown
         function updateCalendarView(view) {
           currentView = view;
-          const label = viewOptions.find((opt) => opt.value === view).label;
+          const opt = viewOptions.find((o) => o.value === view);
+          const label = getViewLabel(opt);
           viewBtn.querySelector(".btn__right__text").textContent = label;
           // Save to localStorage
           localStorage.setItem("calendarView", view);
@@ -3509,9 +4725,9 @@
         const savedLabel = localStorage.getItem("calendarViewLabel");
         if (savedView && viewOptions.some((opt) => opt.value === savedView)) {
           currentView = savedView;
+          const savedOpt = viewOptions.find((opt) => opt.value === savedView);
           viewBtn.querySelector(".btn__right__text").textContent =
-            savedLabel ||
-            viewOptions.find((opt) => opt.value === savedView).label;
+            getViewLabel(savedOpt);
         }
         const viewBtnRect = () => viewBtn.getBoundingClientRect();
 
@@ -3520,7 +4736,7 @@
           viewOptions.forEach((opt) => {
             const div = document.createElement("div");
             div.className = "dropdown-item";
-            div.textContent = opt.label;
+            div.textContent = getViewLabel(opt);
             if (opt.value === currentView) {
               div.style.fontWeight = "bold";
             }
@@ -3638,6 +4854,21 @@
             };
           }
           // Load all events and birthdays for current calendar
+          const evLang = localStorage.getItem("munetiosLang") || "en";
+          const evTr =
+            typeof translations !== "undefined" && translations[evLang]
+              ? translations[evLang]
+              : {};
+          const evT = (k) =>
+            evTr[k] ||
+            (typeof translations !== "undefined" &&
+              translations["en"] &&
+              translations["en"][k]) ||
+            k;
+          // Update modal title
+          const allEvModalH2 = eventsModal.querySelector(".modal__header h2");
+          if (allEvModalH2)
+            allEvModalH2.textContent = evT("events") + " & " + evT("birthdays");
           Promise.all([
             openDB().then(
               (db) =>
@@ -3674,18 +4905,25 @@
           ]).then(([events, birthdays]) => {
             let html = "";
             if (!events.length && !birthdays.length) {
-              html = `<div style="color:#fff;opacity:.7;">No events or birthdays found.</div>`;
+              html = `<div style="color:#fff;opacity:.7;">${evT("noEvents")}</div>`;
             } else {
               if (events.length) {
-                html += `<div style="font-weight:bold;color:#fff;font-size:17px;margin-bottom:6px;">Events</div>`;
+                html += `<div style="font-weight:bold;color:#fff;font-size:17px;margin-bottom:6px;">${evT("events")}</div>`;
                 events.sort((a, b) => (a.date > b.date ? 1 : -1));
                 events.forEach((ev) => {
                   let dateStr = ev.date
-                    ? new Date(ev.date).toLocaleDateString(undefined, {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      })
+                    ? formatDate(
+                        new Date(
+                          ev.date.indexOf("T") > -1
+                            ? ev.date
+                            : ev.date + "T00:00",
+                        ),
+                        {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                        },
+                      )
                     : "";
                   html += `<div style="margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:flex-start;gap:8px;">
                                         <span class="icon" style="color:${ev.color || "#6300ee"};font-size:20px;vertical-align:middle;">event</span>
@@ -3700,14 +4938,21 @@
                 });
               }
               if (birthdays.length) {
-                html += `<div style="font-weight:bold;color:#fff;font-size:17px;margin:12px 0 6px 0;">Birthdays</div>`;
+                html += `<div style="font-weight:bold;color:#fff;font-size:17px;margin:12px 0 6px 0;">${evT("birthdays")}</div>`;
                 birthdays.sort((a, b) => (a.date > b.date ? 1 : -1));
                 birthdays.forEach((bd) => {
                   let dateStr = bd.date
-                    ? new Date(bd.date).toLocaleDateString(undefined, {
-                        month: "short",
-                        day: "numeric",
-                      })
+                    ? formatDate(
+                        new Date(
+                          bd.date.indexOf("T") > -1
+                            ? bd.date
+                            : bd.date + "T00:00",
+                        ),
+                        {
+                          month: "short",
+                          day: "numeric",
+                        },
+                      )
                     : "";
                   html += `<div style="margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:flex-start;gap:8px;">
                                         <span class="icon" style="color:${bd.color || "#ff69b4"};font-size:20px;vertical-align:middle;">cake</span>
@@ -4017,7 +5262,7 @@
             keys.forEach((key) => {
               let [year, month, day] = key.split("-").map(Number);
               let dateObj = new Date(year, month - 1, day);
-              html += `<div style="color:#ffe066;">${dateObj.toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric", year: "numeric" })}</div>`;
+              html += `<div style="color:#ffe066;">${formatDate(dateObj, { weekday: "long", month: "long", day: "numeric", year: "numeric" })}</div>`;
             });
             let url =
               window.location.origin +
@@ -4029,7 +5274,7 @@
                 .map((key) => {
                   let [year, month, day] = key.split("-").map(Number);
                   let dateObj = new Date(year, month - 1, day);
-                  return dateObj.toLocaleDateString(undefined, {
+                  return formatDate(dateObj, {
                     weekday: "long",
                     month: "long",
                     day: "numeric",
@@ -4062,7 +5307,7 @@
             keys.forEach((key) => {
               let [year, month, day] = key.split("-").map(Number);
               let dateObj = new Date(year, month - 1, day);
-              html += `<div style="color:#6300ee;">${dateObj.toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric", year: "numeric" })}</div>`;
+              html += `<div style="color:#6300ee;">${formatDate(dateObj, { weekday: "long", month: "long", day: "numeric", year: "numeric" })}</div>`;
             });
             let win = window.open("", "", "width=600,height=700");
             win.document.write(
@@ -4189,7 +5434,7 @@
           }
           // Fill modal body
           let dateObj = new Date(year, month, day);
-          let dateStr = dateObj.toLocaleDateString(undefined, {
+          let dateStr = formatDate(dateObj, {
             weekday: "long",
             month: "long",
             day: "numeric",
@@ -4346,7 +5591,7 @@
             };
           }
           let dateObj = new Date(year, month, day);
-          let dateStr = dateObj.toLocaleDateString(undefined, {
+          let dateStr = formatDate(dateObj, {
             weekday: "long",
             month: "long",
             day: "numeric",
@@ -4462,7 +5707,7 @@
           arr.forEach((key) => {
             let [year, month, day] = key.split("-").map(Number);
             let dateObj = new Date(year, month - 1, day);
-            let dateStr = dateObj.toLocaleDateString(undefined, {
+            let dateStr = formatDate(dateObj, {
               weekday: "long",
               month: "long",
               day: "numeric",
@@ -5053,7 +6298,7 @@
             } else {
               dateObj = new Date();
             }
-            let dateStr = dateObj.toLocaleDateString(undefined, {
+            let dateStr = formatDate(dateObj, {
               month: "short",
               day: "numeric",
               year: "numeric",
@@ -5516,10 +6761,10 @@
             getEventsForMonth(month, year),
             getBirthdaysForMonth(month, year),
           ]).then(([events, birthdays]) => {
-            todayDateCalendar.textContent = new Date(
-              year,
-              month,
-            ).toLocaleString("default", { month: "long", year: "numeric" });
+            todayDateCalendar.textContent = formatDate(new Date(year, month), {
+              month: "long",
+              year: "numeric",
+            });
             const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             const holidaysThisMonth = showHolidays
@@ -5623,14 +6868,14 @@
             }
 
             // Header
-            todayDateCalendar.textContent = `${weekDays[0].toLocaleDateString(undefined, { month: "short", day: "numeric" })} - ${weekDays[6].toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}`;
+            todayDateCalendar.textContent = `${formatDate(weekDays[0], { month: "short", day: "numeric" })} – ${formatDate(weekDays[6], { month: "short", day: "numeric", year: "numeric" })}`;
             // Build week grid: first column is time, next 7 columns are days
             let html = `<div class="calendar__dates__grid" style="display:grid;grid-template-columns:80px repeat(7,1fr);height:auto;min-height:600px;">`;
 
             // Header row: blank for time, then days
             html += `<div style="background:transparent"></div>`;
             for (let i = 0; i < 7; i++) {
-              html += `<div style="font-weight:bold;color:#fff;text-align:center;padding:8px 0 8px 0;background:rgba(255,255,255,0.04);border-radius:10px;">${weekDays[i].toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" })}</div>`;
+              html += `<div style="font-weight:bold;color:#fff;text-align:center;padding:8px 0 8px 0;background:rgba(255,255,255,0.04);border-radius:10px;">${formatDate(weekDays[i], { weekday: "short", month: "short", day: "numeric" })}</div>`;
             }
 
             // 24 hour time slots (12AM to 11PM)
@@ -5713,7 +6958,7 @@
               date = new Date(year, month, 1);
               selectedDate = new Date(date);
             }
-            todayDateCalendar.textContent = date.toLocaleDateString(undefined, {
+            todayDateCalendar.textContent = formatDate(date, {
               weekday: "long",
               month: "long",
               day: "numeric",
@@ -5722,7 +6967,7 @@
 
             let html = `<div class="calendar__dates__grid" style="display:grid;grid-template-columns:80px 1fr;height:auto;min-height:600px;">`;
             html += `<div style="background:transparent"></div>`;
-            html += `<div style="font-weight:bold;color:#fff;text-align:center;padding:8px 0 8px 0;background:rgba(255,255,255,0.04);border-radius:10px;">${date.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" })}</div>`;
+            html += `<div style="font-weight:bold;color:#fff;text-align:center;padding:8px 0 8px 0;background:rgba(255,255,255,0.04);border-radius:10px;">${formatDate(date, { weekday: "short", month: "short", day: "numeric" })}</div>`;
             for (let hour = 0; hour < 24; hour++) {
               let ampm = hour < 12 ? "AM" : "PM";
               let displayHour = hour % 12 === 0 ? 12 : hour % 12;
@@ -5776,10 +7021,10 @@
         };
         function renderCalendar(month, year) {
           // Header
-          todayDateCalendar.textContent = new Date(year, month).toLocaleString(
-            "default",
-            { month: "long", year: "numeric" },
-          );
+          todayDateCalendar.textContent = formatDate(new Date(year, month), {
+            month: "long",
+            year: "numeric",
+          });
 
           // Days grid
           const firstDay = new Date(year, month, 1).getDay();
@@ -5979,7 +7224,7 @@
           // Header: Month/Year left, arrows right
           let html = `
             <div class="mini__calendar__arrows">
-            <span class="mini__calendar__month-year">${new Date(year, month).toLocaleString("default", { month: "long" })} ${year}</span>
+            <span class="mini__calendar__month-year">${getLocalizedMonthName(month, year)} ${year}</span>
             <span>
                 <span class="icon" id="miniPrevMonth">chevron_left</span>
                 <span class="icon" id="miniNextMonth">chevron_right</span>
@@ -5988,8 +7233,8 @@
             <div class="mini__calendar__days">
         `;
 
-          // Weekdays
-          const weekdays = ["S", "M", "T", "W", "T", "F", "S"];
+          // Weekdays (localized narrow)
+          const weekdays = getLocalizedWeekdaysNarrow();
           for (let d = 0; d < 7; d++) {
             html += `<div class="mini__calendar__day" style="font-weight:bold;opacity:.7;cursor:default">${weekdays[d]}</div>`;
           }
@@ -6052,10 +7297,7 @@
             day: "numeric",
             year: "numeric",
           };
-          todayDateSpan.textContent = now.toLocaleDateString(
-            undefined,
-            options,
-          );
+          todayDateSpan.textContent = formatDate(now, options);
         }
         updateTodayDate();
       })();
