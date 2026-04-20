@@ -87,6 +87,157 @@
             background: rgba(99, 0, 238, 0.15);
             transition: background 0.2s;
         }
+        /* =========================
+   🌐 Base (all screens)
+========================= */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.links {
+    display: flex;
+    gap: 14px;
+}
+
+.logo h3 {
+    white-space: nowrap;
+}
+
+.content {
+    overflow-x: auto; /* 🔥 allow scrolling */
+}
+
+/* =========================
+   🖥️ Ultra-wide (≥1600px)
+========================= */
+@media (min-width: 1600px) {
+    .content {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    body {
+        font-size: 18px;
+    }
+}
+
+/* =========================
+   💻 Desktop (≤1599px)
+========================= */
+@media (max-width: 1599px) {
+    .content {
+        max-width: 1200px;
+    }
+}
+
+/* =========================
+   💻 Small laptops (≤1199px)
+========================= */
+@media (max-width: 1199px) {
+    .content {
+        max-width: 100%;
+        padding: 0 20px;
+    }
+}
+
+/* =========================
+   📱 Tablet (≤1023px)
+========================= */
+@media (max-width: 1023px) {
+
+    /* Keep navbar horizontal */
+    .topbar {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+
+    .links {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    /* Tables scroll instead of breaking */
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+/* =========================
+   📱 Large phones (≤767px)
+========================= */
+@media (max-width: 767px) {
+
+    body {
+        margin: 12px;
+        font-size: 15px;
+    }
+
+    /* 🔥 Hide links (your requirement) */
+    .links {
+        display: none;
+    }
+
+    /* Keep topbar compact */
+    .topbar {
+        flex-wrap: nowrap;
+    }
+
+    /* Content scrolls horizontally */
+    .content {
+        overflow-x: auto;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    th, td {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+}
+
+/* =========================
+   📱 Small phones (≤480px)
+========================= */
+@media (max-width: 480px) {
+
+    body {
+        margin: 10px;
+        font-size: 14px;
+    }
+
+    .logo img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .logo h3 {
+        font-size: 0.85rem;
+    }
+
+    /* Still hidden */
+    .links {
+        display: none;
+    }
+
+    .content {
+        overflow-x: auto;
+    }
+
+    th, td {
+        padding: 8px;
+        font-size: 0.85rem;
+    }
+}
     </style> 
 </head>
 <body>
