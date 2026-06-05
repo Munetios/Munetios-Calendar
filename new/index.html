@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Munetios Calendar</title>
+    <title translate="no">Munetios Calendar</title>
     <meta
       name="description"
       content="A modern calendar application built with Munetios."
@@ -35,14 +35,6 @@
     />
 
     <link
-      href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght,ROND@6..144,1..1000,90&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded"
-    />
-    <link
       rel="apple-touch-icon"
       sizes="180x180"
       href="/new/apple-touch-icon.png"
@@ -63,16 +55,15 @@
     <meta
       http-equiv="Content-Security-Policy"
       content="
-        default-src 'self' https://calendar.munetios.com https://*.munetios.com https://api.munetios.com;
-        script-src 'self' https://calendar.munetios.com https://*.munetios.com https://api.munetios.com 'nonce-IijhdEUFuhf43UF43hF';
-        style-src 'self' https://*.munetios.com https://api.munetios.com 'unsafe-inline';
-        font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com https://api.munetios.com;
-        img-src 'self' data: https://calendar.munetios.com https://api.munetios.com;
-        connect-src 'self' https://api.munetios.com;
+        default-src 'self' https://*.munetios.com;
+        script-src 'self' https://*.munetios.com 'nonce-IijhdEUFuhf43UF43hF';
+        style-src 'self' https://fonts.googleapis.com https://*.munetios.com 'unsafe-inline';
+        img-src 'self' data: https://*.munetios.com;
+        connect-src 'self' https://*.munetios.com;
         manifest-src 'self';
         object-src 'none';
         base-uri 'self';
-        frame-src 'self' https://www.munetios.com https://tasks.munetios.com;
+        frame-src 'self' https://*.munetios.com;
         frame-ancestors 'self';
     "
     />
@@ -1132,6 +1123,24 @@
         color: #ffe066;
         font-size: 1em;
         font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .cdp-month-select,
+      .cdp-year-select {
+        border: 1px solid rgba(164, 124, 255, 0.35);
+        border-radius: 14px;
+        background: rgba(22, 0, 51, 0.72);
+        color: #fff;
+        padding: 6px 8px;
+        font: inherit;
+        outline: none;
+      }
+      .cdp-month-select:focus,
+      .cdp-year-select:focus {
+        border-color: #c9a8ff;
+        box-shadow: 0 0 0 2px rgba(164, 124, 255, 0.25);
       }
       .cdp-prev,
       .cdp-next {
@@ -1299,6 +1308,156 @@
         outline-offset: 2px;
         border-radius: 6px;
       }
+      .june7-surface,
+      munetios-button,
+      .menu-knCjenC,
+      .today__date__topbar__left,
+      .calendar__arrows__switcher__buttons,
+      .search__bar,
+      .topbar__right,
+      .sidebar,
+      .mini__calendar,
+      .calendar__button__my__calendar,
+      .calendar__content,
+      .modal__content,
+      munetios-dropdown-menu,
+      .cdp-popup,
+      .ctp-popup {
+        border-radius: 53px;
+      }
+      .tab {
+        border-radius: 678px;
+      }
+      .icon,
+      .mini__calendar__arrows .icon,
+      input[type="checkbox"] {
+        border-radius: 72px;
+      }
+      .calendar__dates_button,
+      .calendar__dates__today,
+      .mini__calendar__day,
+      .mini__calendar__today,
+      .cdp-day,
+      .ctp-item {
+        border-radius: 18px;
+      }
+      .calendar__content {
+        min-height: clamp(680px, calc(100vh - 190px), 1080px);
+        padding: clamp(18px, 2.2vw, 32px);
+      }
+      .calendar__content__header__title {
+        font-size: clamp(1.35rem, 2vw, 2.2rem);
+        font-weight: 720;
+      }
+      .calendar__dates__grid {
+        gap: clamp(8px, 1vw, 14px);
+        align-items: stretch;
+      }
+      .calendar__dates_button,
+      .calendar__dates__today {
+        min-height: clamp(92px, 10vw, 156px);
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        justify-content: flex-start;
+        align-items: flex-start;
+        font-size: clamp(1rem, 1.2vw, 1.25rem);
+        text-align: left;
+        transition:
+          background 0.22s ease,
+          border-color 0.22s ease,
+          box-shadow 0.22s ease,
+          transform 0.22s ease;
+      }
+      .calendar__dates_button:hover,
+      .calendar__dates__today:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 16px 42px rgba(31, 38, 135, 0.28);
+      }
+      .calendar-event-chip,
+      .calendar-birthday-chip,
+      .calendar-holiday-chip {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: clamp(0.78rem, 0.9vw, 0.95rem);
+        line-height: 1.25;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .settings-modal-content {
+        width: min(760px, calc(100vw - 32px));
+        max-height: min(840px, calc(100vh - 32px));
+        overflow-y: auto;
+        padding: 0;
+      }
+      .settings-modal-body {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        max-height: calc(100vh - 180px);
+        overflow-y: auto;
+        padding: 20px 24px;
+      }
+      .settings-modal-header,
+      .settings-modal-footer {
+        padding: 20px 24px;
+      }
+      .settings-card {
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 20px;
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .settings-card--wide {
+        grid-column: 1 / -1;
+      }
+      .settings-card label {
+        margin: 0;
+        color: #d8c2ff;
+        font-size: 0.92rem;
+      }
+      .settings-select-btn {
+        width: 100%;
+        justify-content: space-between;
+        min-height: 46px;
+      }
+      .settings-toggle-row,
+      .settings-actions-row,
+      .sidebar-quick-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .sidebar-quick-actions .calendar__button__my__calendar {
+        flex: 1 1 100%;
+      }
+      .sidebar-section-label {
+        margin: 4px 0 0;
+        color: rgba(255, 255, 255, 0.72);
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0;
+      }
+      @media (max-width: 760px) {
+        .settings-modal-body {
+          grid-template-columns: 1fr;
+        }
+        .calendar__content {
+          min-height: calc(100vh - 150px);
+        }
+        .calendar__dates_button,
+        .calendar__dates__today {
+          min-height: 74px;
+          padding: 10px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -1443,6 +1602,36 @@
         <div id="addBirthdayBtn" class="calendar__button__my__calendar">
           <div class="icon">cake</div>
           <span _ng-random>Add Birthday</span>
+        </div>
+        <div class="sidebar-section-label" id="sidebarToolsLabel">Tools</div>
+        <div class="sidebar-quick-actions">
+          <div
+            id="sidebarAddEventBtn"
+            class="calendar__button__my__calendar"
+            title="Add Event"
+            aria-label="Add Event"
+          >
+            <div class="icon">event</div>
+            <span>Add Event</span>
+          </div>
+          <div
+            id="sidebarAllEventsBtn"
+            class="calendar__button__my__calendar"
+            title="Events"
+            aria-label="Events"
+          >
+            <div class="icon">event_note</div>
+            <span>Events</span>
+          </div>
+          <div
+            id="sidebarSettingsBtn"
+            class="calendar__button__my__calendar"
+            title="Settings"
+            aria-label="Settings"
+          >
+            <div class="icon">tune</div>
+            <span>Settings</span>
+          </div>
         </div>
         <h3>My Calendars:</h3>
         <div class="calendar__picker__my__calendar" _ng-random>
@@ -1733,6 +1922,20 @@
         </div>
       </div>
     </div>
+    <munetios-dropdown-menu id="themeDropdownMenu"></munetios-dropdown-menu>
+    <munetios-dropdown-menu id="langDropdownMenu"></munetios-dropdown-menu>
+    <munetios-dropdown-menu id="dateFmtDropdownMenu"></munetios-dropdown-menu>
+    <munetios-dropdown-menu id="timeFmtDropdownMenu"></munetios-dropdown-menu>
+    <munetios-dropdown-menu id="weekStartDropdownMenu"></munetios-dropdown-menu>
+    <munetios-dropdown-menu id="densityDropdownMenu"></munetios-dropdown-menu>
+    <munetios-dropdown-menu
+      id="notifyLeadDropdownMenu"
+    ></munetios-dropdown-menu>
+    <munetios-dropdown-menu id="countryDropdownMenu"></munetios-dropdown-menu>
+    <munetios-dropdown-menu id="eventCalendarDropdown"></munetios-dropdown-menu>
+    <munetios-dropdown-menu
+      id="birthdayCalendarDropdown"
+    ></munetios-dropdown-menu>
     <div class="search__wrapper liquid-glass" _ng-random></div>
     <script nonce="IijhdEUFuhf43UF43hF">
       // --- Global locale map and date formatter ---
@@ -1764,20 +1967,46 @@
         const lang = localStorage.getItem("munetiosLang") || "en";
         return MUNETIOS_LOCALE_MAP[lang] || "en-US";
       }
+      function getWeekStartDay() {
+        const day = Number(localStorage.getItem("munetiosWeekStarts") || "0");
+        return day >= 0 && day <= 6 ? day : 0;
+      }
+      function getWeekdayLabel(day, format = "long") {
+        const baseSunday = new Date(2024, 0, 7 + day);
+        return new Intl.DateTimeFormat(getCalendarLocale(), {
+          weekday: format,
+        }).format(baseSunday);
+      }
+      function getWeekdayOffset(day) {
+        return (day - getWeekStartDay() + 7) % 7;
+      }
+      function getStartOfWeek(date) {
+        const start = new Date(date);
+        start.setDate(date.getDate() - getWeekdayOffset(date.getDay()));
+        start.setHours(0, 0, 0, 0);
+        return start;
+      }
       function formatDate(date, opts) {
         const s = new Intl.DateTimeFormat(getCalendarLocale(), opts).format(
           date,
         );
         return s.charAt(0).toUpperCase() + s.slice(1);
       }
+      function showCatchToast(message, error) {
+        console.error(message, error);
+        if (typeof showToast === "function") {
+          showToast(message, { type: "error" });
+        }
+      }
       function getLocalizedWeekdaysNarrow() {
         const locale = getCalendarLocale();
         const result = [];
         // Jan 7 2024 = Sunday
         for (let i = 0; i < 7; i++) {
+          const dayOffset = getWeekStartDay() + i;
           result.push(
             new Intl.DateTimeFormat(locale, { weekday: "narrow" }).format(
-              new Date(2024, 0, 7 + i),
+              new Date(2024, 0, 7 + dayOffset),
             ),
           );
         }
@@ -3756,6 +3985,462 @@
             helpInfo: "Nápověda a informace",
           },
         });
+        const settingsTranslationPack = {
+          en: {
+            appearance: "Appearance",
+            calendarBehavior: "Calendar behavior",
+            dataPrivacy: "Data & privacy",
+            weekStarts: "Week starts",
+            country: "Country",
+            autoCountry: "Auto",
+            sunday: "Sunday",
+            monday: "Monday",
+            calendarDensity: "Calendar density",
+            comfortable: "Comfortable",
+            compact: "Compact",
+            notificationLeadTime: "Event notifications",
+            atStart: "At start time",
+            fiveMinutesBefore: "5 minutes before",
+            fifteenMinutesBefore: "15 minutes before",
+            instantEventNotifications: "Notify at the exact event minute",
+            sidebarTools: "Tools",
+            addEvent: "Add Event",
+            importExport: "Import & Export",
+            notificationTest: "Test notification",
+          },
+          es: {
+            appearance: "Apariencia",
+            calendarBehavior: "Comportamiento del calendario",
+            dataPrivacy: "Datos y privacidad",
+            weekStarts: "La semana empieza",
+            sunday: "Domingo",
+            monday: "Lunes",
+            calendarDensity: "Densidad del calendario",
+            comfortable: "Cómoda",
+            compact: "Compacta",
+            notificationLeadTime: "Notificaciones de eventos",
+            atStart: "A la hora de inicio",
+            fiveMinutesBefore: "5 minutos antes",
+            fifteenMinutesBefore: "15 minutos antes",
+            instantEventNotifications:
+              "Notificar en el minuto exacto del evento",
+            sidebarTools: "Herramientas",
+            addEvent: "Agregar evento",
+            importExport: "Importar y exportar",
+            notificationTest: "Probar notificación",
+          },
+          fr: {
+            appearance: "Apparence",
+            calendarBehavior: "Comportement du calendrier",
+            dataPrivacy: "Données et confidentialité",
+            weekStarts: "La semaine commence",
+            sunday: "Dimanche",
+            monday: "Lundi",
+            calendarDensity: "Densité du calendrier",
+            comfortable: "Confortable",
+            compact: "Compacte",
+            notificationLeadTime: "Notifications d'événements",
+            atStart: "À l'heure de début",
+            fiveMinutesBefore: "5 minutes avant",
+            fifteenMinutesBefore: "15 minutes avant",
+            instantEventNotifications:
+              "Notifier à la minute exacte de l'événement",
+            sidebarTools: "Outils",
+            addEvent: "Ajouter un événement",
+            importExport: "Importer et exporter",
+            notificationTest: "Tester la notification",
+          },
+          de: {
+            appearance: "Darstellung",
+            calendarBehavior: "Kalenderverhalten",
+            dataPrivacy: "Daten und Datenschutz",
+            weekStarts: "Woche beginnt",
+            sunday: "Sonntag",
+            monday: "Montag",
+            calendarDensity: "Kalenderdichte",
+            comfortable: "Komfortabel",
+            compact: "Kompakt",
+            notificationLeadTime: "Ereignisbenachrichtigungen",
+            atStart: "Zur Startzeit",
+            fiveMinutesBefore: "5 Minuten vorher",
+            fifteenMinutesBefore: "15 Minuten vorher",
+            instantEventNotifications:
+              "Zur exakten Ereignisminute benachrichtigen",
+            sidebarTools: "Werkzeuge",
+            addEvent: "Ereignis hinzufügen",
+            importExport: "Importieren und exportieren",
+            notificationTest: "Benachrichtigung testen",
+          },
+          it: {
+            appearance: "Aspetto",
+            calendarBehavior: "Comportamento calendario",
+            dataPrivacy: "Dati e privacy",
+            weekStarts: "La settimana inizia",
+            sunday: "Domenica",
+            monday: "Lunedì",
+            calendarDensity: "Densità calendario",
+            comfortable: "Comoda",
+            compact: "Compatta",
+            notificationLeadTime: "Notifiche evento",
+            atStart: "All'ora di inizio",
+            fiveMinutesBefore: "5 minuti prima",
+            fifteenMinutesBefore: "15 minuti prima",
+            instantEventNotifications: "Notifica al minuto esatto dell'evento",
+            sidebarTools: "Strumenti",
+            addEvent: "Aggiungi evento",
+            importExport: "Importa ed esporta",
+            notificationTest: "Prova notifica",
+          },
+          pt: {
+            appearance: "Aparência",
+            calendarBehavior: "Comportamento do calendário",
+            dataPrivacy: "Dados e privacidade",
+            weekStarts: "A semana começa",
+            sunday: "Domingo",
+            monday: "Segunda-feira",
+            calendarDensity: "Densidade do calendário",
+            comfortable: "Confortável",
+            compact: "Compacta",
+            notificationLeadTime: "Notificações de eventos",
+            atStart: "Na hora de início",
+            fiveMinutesBefore: "5 minutos antes",
+            fifteenMinutesBefore: "15 minutos antes",
+            instantEventNotifications: "Notificar no minuto exato do evento",
+            sidebarTools: "Ferramentas",
+            addEvent: "Adicionar evento",
+            importExport: "Importar e exportar",
+            notificationTest: "Testar notificação",
+          },
+          ru: {
+            appearance: "Внешний вид",
+            calendarBehavior: "Поведение календаря",
+            dataPrivacy: "Данные и конфиденциальность",
+            weekStarts: "Неделя начинается",
+            sunday: "Воскресенье",
+            monday: "Понедельник",
+            calendarDensity: "Плотность календаря",
+            comfortable: "Удобная",
+            compact: "Компактная",
+            notificationLeadTime: "Уведомления о событиях",
+            atStart: "В момент начала",
+            fiveMinutesBefore: "За 5 минут",
+            fifteenMinutesBefore: "За 15 минут",
+            instantEventNotifications: "Уведомлять в точную минуту события",
+            sidebarTools: "Инструменты",
+            addEvent: "Добавить событие",
+            importExport: "Импорт и экспорт",
+            notificationTest: "Проверить уведомление",
+          },
+          zh: {
+            appearance: "外观",
+            calendarBehavior: "日历行为",
+            dataPrivacy: "数据和隐私",
+            weekStarts: "一周开始于",
+            sunday: "星期日",
+            monday: "星期一",
+            calendarDensity: "日历密度",
+            comfortable: "舒适",
+            compact: "紧凑",
+            notificationLeadTime: "事件通知",
+            atStart: "开始时",
+            fiveMinutesBefore: "提前 5 分钟",
+            fifteenMinutesBefore: "提前 15 分钟",
+            instantEventNotifications: "在事件准确分钟通知",
+            sidebarTools: "工具",
+            addEvent: "添加事件",
+            importExport: "导入和导出",
+            notificationTest: "测试通知",
+          },
+          ja: {
+            appearance: "外観",
+            calendarBehavior: "カレンダー動作",
+            dataPrivacy: "データとプライバシー",
+            weekStarts: "週の開始",
+            sunday: "日曜日",
+            monday: "月曜日",
+            calendarDensity: "カレンダー密度",
+            comfortable: "標準",
+            compact: "コンパクト",
+            notificationLeadTime: "イベント通知",
+            atStart: "開始時刻",
+            fiveMinutesBefore: "5分前",
+            fifteenMinutesBefore: "15分前",
+            instantEventNotifications: "イベントの正確な分に通知",
+            sidebarTools: "ツール",
+            addEvent: "イベントを追加",
+            importExport: "インポートとエクスポート",
+            notificationTest: "通知をテスト",
+          },
+          ko: {
+            appearance: "모양",
+            calendarBehavior: "캘린더 동작",
+            dataPrivacy: "데이터 및 개인정보",
+            weekStarts: "주 시작",
+            sunday: "일요일",
+            monday: "월요일",
+            calendarDensity: "캘린더 밀도",
+            comfortable: "편안하게",
+            compact: "간결하게",
+            notificationLeadTime: "이벤트 알림",
+            atStart: "시작 시간",
+            fiveMinutesBefore: "5분 전",
+            fifteenMinutesBefore: "15분 전",
+            instantEventNotifications: "이벤트 정확한 분에 알림",
+            sidebarTools: "도구",
+            addEvent: "이벤트 추가",
+            importExport: "가져오기 및 내보내기",
+            notificationTest: "알림 테스트",
+          },
+          tr: {
+            appearance: "Görünüm",
+            calendarBehavior: "Takvim davranışı",
+            dataPrivacy: "Veri ve gizlilik",
+            weekStarts: "Hafta başlangıcı",
+            sunday: "Pazar",
+            monday: "Pazartesi",
+            calendarDensity: "Takvim yoğunluğu",
+            comfortable: "Rahat",
+            compact: "Kompakt",
+            notificationLeadTime: "Etkinlik bildirimleri",
+            atStart: "Başlangıçta",
+            fiveMinutesBefore: "5 dakika önce",
+            fifteenMinutesBefore: "15 dakika önce",
+            instantEventNotifications: "Etkinliğin tam dakikasında bildir",
+            sidebarTools: "Araçlar",
+            addEvent: "Etkinlik ekle",
+            importExport: "İçe ve dışa aktar",
+            notificationTest: "Bildirimi test et",
+          },
+          ar: {
+            appearance: "المظهر",
+            calendarBehavior: "سلوك التقويم",
+            dataPrivacy: "البيانات والخصوصية",
+            weekStarts: "تبدأ الأسبوع",
+            sunday: "الأحد",
+            monday: "الاثنين",
+            calendarDensity: "كثافة التقويم",
+            comfortable: "مريح",
+            compact: "مضغوط",
+            notificationLeadTime: "إشعارات الأحداث",
+            atStart: "عند وقت البدء",
+            fiveMinutesBefore: "قبل 5 دقائق",
+            fifteenMinutesBefore: "قبل 15 دقيقة",
+            instantEventNotifications: "الإشعار في دقيقة الحدث بالضبط",
+            sidebarTools: "الأدوات",
+            addEvent: "إضافة حدث",
+            importExport: "استيراد وتصدير",
+            notificationTest: "اختبار الإشعار",
+          },
+          hi: {
+            appearance: "दिखावट",
+            calendarBehavior: "कैलेंडर व्यवहार",
+            dataPrivacy: "डेटा और गोपनीयता",
+            weekStarts: "सप्ताह शुरू होता है",
+            sunday: "रविवार",
+            monday: "सोमवार",
+            calendarDensity: "कैलेंडर घनत्व",
+            comfortable: "आरामदायक",
+            compact: "कॉम्पैक्ट",
+            notificationLeadTime: "इवेंट सूचनाएं",
+            atStart: "शुरुआत पर",
+            fiveMinutesBefore: "5 मिनट पहले",
+            fifteenMinutesBefore: "15 मिनट पहले",
+            instantEventNotifications: "इवेंट के ठीक मिनट पर सूचना दें",
+            sidebarTools: "टूल",
+            addEvent: "इवेंट जोड़ें",
+            importExport: "आयात और निर्यात",
+            notificationTest: "सूचना जांचें",
+          },
+          bn: {
+            appearance: "চেহারা",
+            calendarBehavior: "ক্যালেন্ডারের আচরণ",
+            dataPrivacy: "ডেটা ও গোপনীয়তা",
+            weekStarts: "সপ্তাহ শুরু",
+            sunday: "রবিবার",
+            monday: "সোমবার",
+            calendarDensity: "ক্যালেন্ডারের ঘনত্ব",
+            comfortable: "আরামদায়ক",
+            compact: "কমপ্যাক্ট",
+            notificationLeadTime: "ইভেন্ট বিজ্ঞপ্তি",
+            atStart: "শুরুর সময়",
+            fiveMinutesBefore: "৫ মিনিট আগে",
+            fifteenMinutesBefore: "১৫ মিনিট আগে",
+            instantEventNotifications: "ইভেন্টের ঠিক মিনিটে বিজ্ঞপ্তি",
+            sidebarTools: "টুল",
+            addEvent: "ইভেন্ট যোগ করুন",
+            importExport: "আমদানি ও রপ্তানি",
+            notificationTest: "বিজ্ঞপ্তি পরীক্ষা",
+          },
+          nl: {
+            appearance: "Uiterlijk",
+            calendarBehavior: "Agendagedrag",
+            dataPrivacy: "Gegevens en privacy",
+            weekStarts: "Week begint op",
+            sunday: "Zondag",
+            monday: "Maandag",
+            calendarDensity: "Agendadichtheid",
+            comfortable: "Comfortabel",
+            compact: "Compact",
+            notificationLeadTime: "Gebeurtenismeldingen",
+            atStart: "Op starttijd",
+            fiveMinutesBefore: "5 minuten ervoor",
+            fifteenMinutesBefore: "15 minuten ervoor",
+            instantEventNotifications: "Melden op de exacte gebeurtenisminuut",
+            sidebarTools: "Hulpmiddelen",
+            addEvent: "Gebeurtenis toevoegen",
+            importExport: "Importeren en exporteren",
+            notificationTest: "Melding testen",
+          },
+          pl: {
+            appearance: "Wygląd",
+            calendarBehavior: "Zachowanie kalendarza",
+            dataPrivacy: "Dane i prywatność",
+            weekStarts: "Tydzień zaczyna się",
+            sunday: "Niedziela",
+            monday: "Poniedziałek",
+            calendarDensity: "Gęstość kalendarza",
+            comfortable: "Wygodna",
+            compact: "Kompaktowa",
+            notificationLeadTime: "Powiadomienia o zdarzeniach",
+            atStart: "W chwili rozpoczęcia",
+            fiveMinutesBefore: "5 minut wcześniej",
+            fifteenMinutesBefore: "15 minut wcześniej",
+            instantEventNotifications:
+              "Powiadamiaj w dokładnej minucie zdarzenia",
+            sidebarTools: "Narzędzia",
+            addEvent: "Dodaj zdarzenie",
+            importExport: "Import i eksport",
+            notificationTest: "Test powiadomienia",
+          },
+          sv: {
+            appearance: "Utseende",
+            calendarBehavior: "Kalenderbeteende",
+            dataPrivacy: "Data och integritet",
+            weekStarts: "Veckan börjar",
+            sunday: "Söndag",
+            monday: "Måndag",
+            calendarDensity: "Kalendertäthet",
+            comfortable: "Bekväm",
+            compact: "Kompakt",
+            notificationLeadTime: "Händelseaviseringar",
+            atStart: "Vid starttid",
+            fiveMinutesBefore: "5 minuter före",
+            fifteenMinutesBefore: "15 minuter före",
+            instantEventNotifications: "Avisera vid exakt händelseminut",
+            sidebarTools: "Verktyg",
+            addEvent: "Lägg till händelse",
+            importExport: "Importera och exportera",
+            notificationTest: "Testa avisering",
+          },
+          no: {
+            appearance: "Utseende",
+            calendarBehavior: "Kalenderatferd",
+            dataPrivacy: "Data og personvern",
+            weekStarts: "Uken starter",
+            sunday: "Søndag",
+            monday: "Mandag",
+            calendarDensity: "Kalendertetthet",
+            comfortable: "Komfortabel",
+            compact: "Kompakt",
+            notificationLeadTime: "Hendelsesvarsler",
+            atStart: "Ved starttid",
+            fiveMinutesBefore: "5 minutter før",
+            fifteenMinutesBefore: "15 minutter før",
+            instantEventNotifications: "Varsle på nøyaktig hendelsesminutt",
+            sidebarTools: "Verktøy",
+            addEvent: "Legg til hendelse",
+            importExport: "Importer og eksporter",
+            notificationTest: "Test varsel",
+          },
+          da: {
+            appearance: "Udseende",
+            calendarBehavior: "Kalenderadfærd",
+            dataPrivacy: "Data og privatliv",
+            weekStarts: "Ugen starter",
+            sunday: "Søndag",
+            monday: "Mandag",
+            calendarDensity: "Kalendertæthed",
+            comfortable: "Komfortabel",
+            compact: "Kompakt",
+            notificationLeadTime: "Begivenhedsmeddelelser",
+            atStart: "Ved starttid",
+            fiveMinutesBefore: "5 minutter før",
+            fifteenMinutesBefore: "15 minutter før",
+            instantEventNotifications:
+              "Giv besked på det præcise begivenhedsminut",
+            sidebarTools: "Værktøjer",
+            addEvent: "Tilføj begivenhed",
+            importExport: "Import og eksport",
+            notificationTest: "Test meddelelse",
+          },
+          fi: {
+            appearance: "Ulkoasu",
+            calendarBehavior: "Kalenterin toiminta",
+            dataPrivacy: "Data ja tietosuoja",
+            weekStarts: "Viikko alkaa",
+            sunday: "Sunnuntai",
+            monday: "Maanantai",
+            calendarDensity: "Kalenterin tiheys",
+            comfortable: "Väljä",
+            compact: "Tiivis",
+            notificationLeadTime: "Tapahtumailmoitukset",
+            atStart: "Aloitushetkellä",
+            fiveMinutesBefore: "5 minuuttia ennen",
+            fifteenMinutesBefore: "15 minuuttia ennen",
+            instantEventNotifications: "Ilmoita tarkalla tapahtumaminuutilla",
+            sidebarTools: "Työkalut",
+            addEvent: "Lisää tapahtuma",
+            importExport: "Tuo ja vie",
+            notificationTest: "Testaa ilmoitus",
+          },
+          hu: {
+            appearance: "Megjelenés",
+            calendarBehavior: "Naptár viselkedése",
+            dataPrivacy: "Adatok és adatvédelem",
+            weekStarts: "A hét kezdete",
+            sunday: "Vasárnap",
+            monday: "Hétfő",
+            calendarDensity: "Naptár sűrűsége",
+            comfortable: "Kényelmes",
+            compact: "Kompakt",
+            notificationLeadTime: "Eseményértesítések",
+            atStart: "Kezdéskor",
+            fiveMinutesBefore: "5 perccel korábban",
+            fifteenMinutesBefore: "15 perccel korábban",
+            instantEventNotifications: "Értesítés az esemény pontos percében",
+            sidebarTools: "Eszközök",
+            addEvent: "Esemény hozzáadása",
+            importExport: "Importálás és exportálás",
+            notificationTest: "Értesítés tesztelése",
+          },
+          cs: {
+            appearance: "Vzhled",
+            calendarBehavior: "Chování kalendáře",
+            dataPrivacy: "Data a soukromí",
+            weekStarts: "Týden začíná",
+            sunday: "Neděle",
+            monday: "Pondělí",
+            calendarDensity: "Hustota kalendáře",
+            comfortable: "Pohodlná",
+            compact: "Kompaktní",
+            notificationLeadTime: "Oznámení událostí",
+            atStart: "V čase začátku",
+            fiveMinutesBefore: "5 minut předem",
+            fifteenMinutesBefore: "15 minut předem",
+            instantEventNotifications: "Oznámit přesně v minutě události",
+            sidebarTools: "Nástroje",
+            addEvent: "Přidat událost",
+            importExport: "Import a export",
+            notificationTest: "Test oznámení",
+          },
+        };
+        Object.keys(translations).forEach((lang) => {
+          translations[lang] = {
+            ...settingsTranslationPack.en,
+            ...(settingsTranslationPack[lang] || {}),
+            ...translations[lang],
+          };
+        });
         let currentLang = localStorage.getItem("munetiosLang") || "en";
         let currentTheme = localStorage.getItem("munetiosTheme") || "system";
         let notificationsEnabled =
@@ -3778,6 +4463,21 @@
           document
             .getElementById("addBirthdayBtn")
             .querySelector("span").textContent = t("addBirthday");
+          const sidebarToolsLabel =
+            document.getElementById("sidebarToolsLabel");
+          if (sidebarToolsLabel)
+            sidebarToolsLabel.textContent = t("sidebarTools");
+          const sidebarAddEvent = document.getElementById("sidebarAddEventBtn");
+          if (sidebarAddEvent)
+            sidebarAddEvent.querySelector("span").textContent = t("addEvent");
+          const sidebarAllEvents = document.getElementById(
+            "sidebarAllEventsBtn",
+          );
+          if (sidebarAllEvents)
+            sidebarAllEvents.querySelector("span").textContent = t("events");
+          const sidebarSettings = document.getElementById("sidebarSettingsBtn");
+          if (sidebarSettings)
+            sidebarSettings.querySelector("span").textContent = t("settings");
           document.querySelector('label[for="showHolidays"]').textContent =
             t("showHolidays");
           document
@@ -3811,8 +4511,20 @@
               t("theme");
             settingsModal.querySelector(".lang-label").textContent =
               t("language");
-            settingsModal.querySelector(".notif-label").textContent =
-              t("notifications");
+            settingsModal.querySelector(".notif-label").textContent = t(
+              "instantEventNotifications",
+            );
+            const weekStartLabel =
+              settingsModal.querySelector(".weekstart-label");
+            if (weekStartLabel) weekStartLabel.textContent = t("weekStarts");
+            const countryLabel = settingsModal.querySelector(".country-label");
+            if (countryLabel) countryLabel.textContent = t("country");
+            const densityLabel = settingsModal.querySelector(".density-label");
+            if (densityLabel) densityLabel.textContent = t("calendarDensity");
+            const notifLeadLabel =
+              settingsModal.querySelector(".notiflead-label");
+            if (notifLeadLabel)
+              notifLeadLabel.textContent = t("notificationLeadTime");
             settingsModal.querySelector("#saveSettingsBtn").textContent =
               t("save");
             settingsModal.querySelector("#cancelSettingsBtn").textContent =
@@ -4112,7 +4824,7 @@
                   };
                 });
               } catch (err) {
-                showToast("Invalid backup file", { type: "error" });
+                showToast("Failed to restore backup", { type: "error" });
               }
             };
             reader.readAsText(file);
@@ -4188,7 +4900,7 @@
             const inputWrapper = modal.querySelector("#deleteStepInputWrapper");
             inputWrapper.innerHTML = "";
             if (step === totalSteps) {
-              inputWrapper.innerHTML = `<input type="text" id="deleteAllDataCodeInput" placeholder="Enter code" style="width:100%;padding:8px;border-radius:8px;border:1px solid #ccc;">`;
+              inputWrapper.innerHTML = `<input type="text" id="deleteAllDataCodeInput" placeholder="Enter code" style="width:100%;padding:8px;border-radius:16px;border:1px solid #ccc;">`;
             }
             modal.querySelector("#deleteAllDataNextBtn").textContent =
               step === totalSteps ? tDel("delete") : tDel("next");
@@ -4243,147 +4955,286 @@
             showDeleteAllDataModal();
           }
         });
-        // Helper: show settings modal
+        function applyCalendarDensity() {
+          const oldStyle = document.getElementById("munetios-density-style");
+          if (oldStyle) oldStyle.remove();
+          const density =
+            localStorage.getItem("munetiosCalendarDensity") || "comfortable";
+          const style = document.createElement("style");
+          style.id = "munetios-density-style";
+          style.textContent =
+            density === "compact"
+              ? `
+                .calendar__dates_button,
+                .calendar__dates__today {
+                  min-height: clamp(72px, 7.5vw, 112px) !important;
+                  padding: 10px !important;
+                  gap: 4px !important;
+                }
+                .calendar-event-chip,
+                .calendar-birthday-chip,
+                .calendar-holiday-chip {
+                  font-size: 0.78rem !important;
+                }
+              `
+              : "";
+          document.head.appendChild(style);
+        }
+
+        function getSettingsLabel(key) {
+          return (
+            (translations[currentLang] && translations[currentLang][key]) ||
+            (translations.en && translations.en[key]) ||
+            key
+          );
+        }
+
+        const MUNETIOS_COUNTRIES = [
+          "US",
+          "CA",
+          "GB",
+          "AU",
+          "DE",
+          "FR",
+          "ES",
+          "IT",
+          "PT",
+          "NL",
+          "PL",
+          "SE",
+          "NO",
+          "DK",
+          "FI",
+          "HU",
+          "CZ",
+          "TR",
+          "JP",
+          "KR",
+          "CN",
+          "IN",
+          "BD",
+          "RU",
+          "SA",
+        ];
+
+        function inferCountryFromEnvironment() {
+          const locale =
+            (navigator.languages && navigator.languages[0]) ||
+            navigator.language ||
+            "en-US";
+          const localeCountry = locale.split("-")[1];
+          if (
+            localeCountry &&
+            MUNETIOS_COUNTRIES.includes(localeCountry.toUpperCase())
+          ) {
+            return localeCountry.toUpperCase();
+          }
+          const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+          if (tz.includes("London")) return "GB";
+          if (tz.includes("Toronto") || tz.includes("Vancouver")) return "CA";
+          if (tz.includes("Sydney") || tz.includes("Melbourne")) return "AU";
+          if (tz.includes("Berlin")) return "DE";
+          if (tz.includes("Paris")) return "FR";
+          if (tz.includes("Madrid")) return "ES";
+          if (tz.includes("Rome")) return "IT";
+          if (tz.includes("Lisbon")) return "PT";
+          if (tz.includes("Amsterdam")) return "NL";
+          if (tz.includes("Warsaw")) return "PL";
+          if (tz.includes("Stockholm")) return "SE";
+          if (tz.includes("Oslo")) return "NO";
+          if (tz.includes("Copenhagen")) return "DK";
+          if (tz.includes("Helsinki")) return "FI";
+          if (tz.includes("Budapest")) return "HU";
+          if (tz.includes("Prague")) return "CZ";
+          if (tz.includes("Istanbul")) return "TR";
+          if (tz.includes("Tokyo")) return "JP";
+          if (tz.includes("Seoul")) return "KR";
+          if (tz.includes("Shanghai")) return "CN";
+          if (tz.includes("Kolkata")) return "IN";
+          if (tz.includes("Dhaka")) return "BD";
+          if (tz.includes("Moscow")) return "RU";
+          if (tz.includes("Riyadh")) return "SA";
+          return "US";
+        }
+
+        function getSelectedCountry() {
+          const saved =
+            localStorage.getItem("munetiosHolidayCountry") || "auto";
+          return saved === "auto" ? inferCountryFromEnvironment() : saved;
+        }
+
+        function getCountryLabel(country) {
+          if (country === "auto") {
+            return `${getSettingsLabel("autoCountry")} (${getCountryLabel(getSelectedCountry())})`;
+          }
+          try {
+            const displayNames = new Intl.DisplayNames([getCalendarLocale()], {
+              type: "region",
+            });
+            return displayNames.of(country) || country;
+          } catch (e) {
+            return country;
+          }
+        }
+        window.getMunetiosHolidayCountry = getSelectedCountry;
+        window.MUNETIOS_COUNTRIES = MUNETIOS_COUNTRIES;
+
+        function ensureBodyDropdown(id) {
+          let menu = document.getElementById(id);
+          if (!menu) {
+            menu = document.createElement("munetios-dropdown-menu");
+            menu.id = id;
+            menu.className = "settings-body-dropdown";
+            document.body.appendChild(menu);
+          } else if (menu.parentElement !== document.body) {
+            document.body.appendChild(menu);
+          }
+          menu.style.display = "none";
+          return menu;
+        }
+
+        function showBodyDropdown(btn, menu, options, onSelect) {
+          menu.innerHTML = "";
+          const selected = btn.getAttribute("data-selected");
+          options.forEach((opt) => {
+            const item = document.createElement("div");
+            item.className = "dropdown-item";
+            item.textContent = opt.label;
+            if (String(opt.value) === String(selected))
+              item.style.fontWeight = "bold";
+            item.onclick = () => {
+              btn.setAttribute("data-selected", opt.value);
+              const text = btn.querySelector(".settings-dropdown-text");
+              if (text) text.textContent = opt.label;
+              menu.style.display = "none";
+              onSelect(opt);
+            };
+            menu.appendChild(item);
+          });
+          const rect = btn.getBoundingClientRect();
+          const menuWidth = Math.max(rect.width, 220);
+          menu.style.position = "fixed";
+          menu.style.width = menuWidth + "px";
+          menu.style.maxHeight = "min(360px, calc(100vh - 24px))";
+          menu.style.overflowY = "auto";
+          menu.style.top = rect.bottom + 6 + "px";
+          menu.style.left =
+            Math.min(rect.left, window.innerWidth - menuWidth - 10) + "px";
+          menu.style.display = "flex";
+          setTimeout(() => {
+            function hide(ev) {
+              if (!menu.contains(ev.target) && ev.target !== btn) {
+                menu.style.display = "none";
+                document.removeEventListener("mousedown", hide);
+              }
+            }
+            document.addEventListener("mousedown", hide);
+          }, 0);
+        }
+
+        function settingsSelect(id, icon, label, selected) {
+          return `
+            <munetios-button id="${id}" class="settings-select-btn" data-selected="${selected}">
+              <span class="icon">${icon}</span>
+              <span class="settings-dropdown-text">${label}</span>
+              <span class="icon">expand_more</span>
+            </munetios-button>
+          `;
+        }
+
         function showSettingsModal() {
           if (!settingsModal) {
             settingsModal = document.createElement("div");
             settingsModal.className = "modal";
             settingsModal.style.zIndex = 4100;
+            const themeMenu = ensureBodyDropdown("themeDropdownMenu");
+            const langMenu = ensureBodyDropdown("langDropdownMenu");
+            const dateFmtMenu = ensureBodyDropdown("dateFmtDropdownMenu");
+            const timeFmtMenu = ensureBodyDropdown("timeFmtDropdownMenu");
+            const weekStartMenu = ensureBodyDropdown("weekStartDropdownMenu");
+            const densityMenu = ensureBodyDropdown("densityDropdownMenu");
+            const notifyLeadMenu = ensureBodyDropdown("notifyLeadDropdownMenu");
+            const countryMenu = ensureBodyDropdown("countryDropdownMenu");
             settingsModal.innerHTML = `
-                                <div class="modal__content liquid-glass" >
-                                    <div class="modal__header">
-                                        <h2>${translations[currentLang].settings}</h2>
-                                        <div class="icon" id="closeSettingsModal" title="${translations[currentLang].close}" aria-label="${translations[currentLang].close}">close</div>
-                                    </div>
-                                    <div class="modal__body" style="display:flex;flex-direction:column;gap:18px;">
-                                        <label class="theme-label">${translations[currentLang].theme}</label>
-                                        <div>
-                                            <munetios-button id="themeDropdownBtn" style="width:100%;justify-content:space-between;">
-                                                <span class="icon">palette</span>
-                                                <span id="themeDropdownText">${translations[currentLang][currentTheme]}</span>
-                                                <span class="icon">expand_more</span>
-                                            </munetios-button>
-                                            <munetios-dropdown-menu id="themeDropdownMenu"></munetios-dropdown-menu>
-                                        </div>
-                                        <label class="lang-label">${translations[currentLang].language}</label>
-                                        <div>
-                                            <munetios-button id="langDropdownBtn" style="width:100%;justify-content:space-between;">
-                                                <span class="icon">language</span>
-                                                <span id="langDropdownText">${(translations[currentLang] && translations[currentLang].langName) || currentLang.toUpperCase()}</span>
-                                                <span class="icon">expand_more</span>
-                                            </munetios-button>
-                                            <munetios-dropdown-menu id="langDropdownMenu"></munetios-dropdown-menu>
-                                        </div>
-                                        <label class="notif-label">${translations[currentLang].notifications}</label>
-                                        <div>
-                                            <input type="checkbox" id="notifCheckbox" ${notificationsEnabled ? "checked" : ""} style="vertical-align:middle;margin-right:8px;">
-                                            <span style="font-size:15px;vertical-align:middle;">${translations[currentLang].notifications}</span>
-                                        </div>
-                                        <label class="datefmt-label">${translations[currentLang].dateFormat || "Date Format"}</label>
-                                        <div>
-                                            <munetios-button id="dateFmtDropdownBtn" style="width:100%;justify-content:space-between;">
-                                                <span class="icon">calendar_today</span>
-                                                <span id="dateFmtDropdownText">MM/DD/YY</span>
-                                                <span class="icon">expand_more</span>
-                                            </munetios-button>
-                                            <munetios-dropdown-menu id="dateFmtDropdownMenu"></munetios-dropdown-menu>
-                                        </div>
-                                        <label class="timefmt-label">${translations[currentLang].timeFormat || "Time Format"}</label>
-                                        <div>
-                                            <munetios-button id="timeFmtDropdownBtn" style="width:100%;justify-content:space-between;">
-                                                <span class="icon">schedule</span>
-                                                <span id="timeFmtDropdownText">12-hour</span>
-                                                <span class="icon">expand_more</span>
-                                            </munetios-button>
-                                            <munetios-dropdown-menu id="timeFmtDropdownMenu"></munetios-dropdown-menu>
-                                        </div>
-                                        <div style="display:flex;gap:10px;justify-content:space-between;">
-                                            <munetios-button id="backupDataBtn" title="Backup Data" aria-label="Backup Data">${translations[currentLang].backup}</munetios-button>
-                                            <munetios-button id="restoreDataBtn" title="Restore Data" aria-label="Restore Data">${translations[currentLang].restore}</munetios-button>
-                                            <munetios-button id="deleteAllDataBtn" title="Delete All Data" aria-label="Delete All Data" style=" white-space: nowrap; color:#fff;background:#d5000062;">${translations[currentLang].deleteAllData}</munetios-button>
-                                        </div>
-
-                                    </div>
-                                    <div class="modal__footer">
-                                        <munetios-button class="btn-primary" id="saveSettingsBtn">${translations[currentLang].save}</munetios-button>
-                                        <munetios-button id="cancelSettingsBtn">${translations[currentLang].cancel}</munetios-button>
-                                    </div>
-                                </div>
-                            `;
+              <div class="modal__content liquid-glass settings-modal-content">
+                <div class="modal__header settings-modal-header">
+                  <h2>${getSettingsLabel("settings")}</h2>
+                  <div class="icon" id="closeSettingsModal" title="${getSettingsLabel("close")}" aria-label="${getSettingsLabel("close")}">close</div>
+                </div>
+                <div class="modal__body settings-modal-body">
+                  <section class="settings-card">
+                    <h3>${getSettingsLabel("appearance")}</h3>
+                    <label class="theme-label">${getSettingsLabel("theme")}</label>
+                    ${settingsSelect("themeDropdownBtn", "palette", getSettingsLabel(currentTheme), currentTheme)}
+                    <label class="lang-label">${getSettingsLabel("language")}</label>
+                    ${settingsSelect("langDropdownBtn", "language", (translations[currentLang] && translations[currentLang].langName) || currentLang.toUpperCase(), currentLang)}
+                    <label class="datefmt-label">${getSettingsLabel("dateFormat")}</label>
+                    ${settingsSelect("dateFmtDropdownBtn", "calendar_today", "MM/DD/YY", localStorage.getItem("munetiosDateFormat") || "MM/DD/YY")}
+                    <label class="timefmt-label">${getSettingsLabel("timeFormat")}</label>
+                    ${settingsSelect("timeFmtDropdownBtn", "schedule", getSettingsLabel("hour12"), localStorage.getItem("munetiosTimeFormat") || "12h")}
+                  </section>
+                  <section class="settings-card">
+                    <h3>${getSettingsLabel("calendarBehavior")}</h3>
+                    <label class="weekstart-label">${getSettingsLabel("weekStarts")}</label>
+                    ${settingsSelect("weekStartDropdownBtn", "view_week", getWeekdayLabel(getWeekStartDay()), String(getWeekStartDay()))}
+                    <label class="country-label">${getSettingsLabel("country")}</label>
+                    ${settingsSelect("countryDropdownBtn", "public", getCountryLabel(localStorage.getItem("munetiosHolidayCountry") || "auto"), localStorage.getItem("munetiosHolidayCountry") || "auto")}
+                    <label class="density-label">${getSettingsLabel("calendarDensity")}</label>
+                    ${settingsSelect("densityDropdownBtn", "density_medium", getSettingsLabel(localStorage.getItem("munetiosCalendarDensity") || "comfortable"), localStorage.getItem("munetiosCalendarDensity") || "comfortable")}
+                    <label class="notiflead-label">${getSettingsLabel("notificationLeadTime")}</label>
+                    ${settingsSelect("notifyLeadDropdownBtn", "notifications_active", getSettingsLabel("atStart"), localStorage.getItem("munetiosNotificationLead") || "0")}
+                    <label class="settings-toggle-row">
+                      <input type="checkbox" id="notifCheckbox" ${notificationsEnabled ? "checked" : ""}>
+                      <span class="notif-label">${getSettingsLabel("instantEventNotifications")}</span>
+                    </label>
+                  </section>
+                  <section class="settings-card settings-card--wide">
+                    <h3>${getSettingsLabel("dataPrivacy")}</h3>
+                    <div class="settings-actions-row">
+                      <munetios-button id="backupDataBtn" title="Backup Data" aria-label="Backup Data"><span class="icon">download</span>${getSettingsLabel("backup")}</munetios-button>
+                      <munetios-button id="restoreDataBtn" title="Restore Data" aria-label="Restore Data"><span class="icon">upload</span>${getSettingsLabel("restore")}</munetios-button>
+                      <munetios-button id="testNotificationBtn" title="${getSettingsLabel("notificationTest")}" aria-label="${getSettingsLabel("notificationTest")}"><span class="icon">notifications</span>${getSettingsLabel("notificationTest")}</munetios-button>
+                      <munetios-button id="deleteAllDataBtn" title="Delete All Data" aria-label="Delete All Data" style="white-space:nowrap;color:#fff;background:#d5000062;"><span class="icon">delete</span>${getSettingsLabel("deleteAllData")}</munetios-button>
+                    </div>
+                  </section>
+                </div>
+                <div class="modal__footer settings-modal-footer">
+                  <munetios-button class="btn-primary" id="saveSettingsBtn">${getSettingsLabel("save")}</munetios-button>
+                  <munetios-button id="cancelSettingsBtn">${getSettingsLabel("cancel")}</munetios-button>
+                </div>
+              </div>
+            `;
             document.body.appendChild(settingsModal);
-            // Theme dropdown
             const themeBtn = settingsModal.querySelector("#themeDropdownBtn");
-            const themeMenu = settingsModal.querySelector("#themeDropdownMenu");
             themeBtn.onclick = function (e) {
               e.stopPropagation();
-              themeMenu.innerHTML = "";
-              ["system", "light", "dark"].forEach((val) => {
-                const item = document.createElement("div");
-                item.className = "dropdown-item";
-                item.textContent = translations[currentLang][val];
-                if (val === currentTheme) item.style.fontWeight = "bold";
-                item.onclick = () => {
-                  settingsModal.querySelector(
-                    "#themeDropdownText",
-                  ).textContent = translations[currentLang][val];
-                  themeMenu.style.display = "none";
-                  themeBtn.setAttribute("data-selected", val);
-                };
-                themeMenu.appendChild(item);
-              });
-              const rect = themeBtn.getBoundingClientRect();
-              themeMenu.style.top = rect.bottom + window.scrollY + "px";
-              themeMenu.style.left = rect.left + window.scrollX + "px";
-              themeMenu.style.display = "flex";
-              setTimeout(() => {
-                function hide(ev) {
-                  if (
-                    !themeMenu.contains(ev.target) &&
-                    ev.target !== themeBtn
-                  ) {
-                    themeMenu.style.display = "none";
-                    document.removeEventListener("mousedown", hide);
-                  }
-                }
-                document.addEventListener("mousedown", hide);
-              }, 0);
+              showBodyDropdown(
+                themeBtn,
+                themeMenu,
+                ["system", "light", "dark"].map((val) => ({
+                  value: val,
+                  label: getSettingsLabel(val),
+                })),
+                () => {},
+              );
             };
-            // Language dropdown
             const langBtn = settingsModal.querySelector("#langDropdownBtn");
-            const langMenu = settingsModal.querySelector("#langDropdownMenu");
             langBtn.onclick = function (e) {
               e.stopPropagation();
-              langMenu.innerHTML = "";
-              Object.keys(translations).forEach((lang) => {
-                const item = document.createElement("div");
-                item.className = "dropdown-item";
-                const langName =
-                  translations[lang].langName || lang.toUpperCase();
-                item.textContent = `${langName} (${lang.toUpperCase()})`;
-                if (lang === currentLang) item.style.fontWeight = "bold";
-                item.onclick = () => {
-                  settingsModal.querySelector("#langDropdownText").textContent =
-                    langName;
-                  langMenu.style.display = "none";
-                  langBtn.setAttribute("data-selected", lang);
-                };
-                langMenu.appendChild(item);
-              });
-              const rect = langBtn.getBoundingClientRect();
-              langMenu.style.top = rect.bottom + window.scrollY + "px";
-              langMenu.style.left = rect.left + window.scrollX + "px";
-              langMenu.style.display = "flex";
-              setTimeout(() => {
-                function hide(ev) {
-                  if (!langMenu.contains(ev.target) && ev.target !== langBtn) {
-                    langMenu.style.display = "none";
-                    document.removeEventListener("mousedown", hide);
-                  }
-                }
-                document.addEventListener("mousedown", hide);
-              }, 0);
+              showBodyDropdown(
+                langBtn,
+                langMenu,
+                Object.keys(translations).map((lang) => {
+                  const langName =
+                    translations[lang].langName || lang.toUpperCase();
+                  return {
+                    value: lang,
+                    label: `${langName} (${lang.toUpperCase()})`,
+                  };
+                }),
+                () => {},
+              );
             };
-            // Notification checkbox
             settingsModal.querySelector("#notifCheckbox").onchange =
               function () {
                 if (this.checked) {
@@ -4391,152 +5242,204 @@
                 } else {
                   notificationsEnabled = false;
                   localStorage.setItem("munetiosNotifications", "off");
+                  if (window._munetiosNotificationInterval) {
+                    clearInterval(window._munetiosNotificationInterval);
+                    window._munetiosNotificationInterval = null;
+                  }
+                  if (window._munetiosNotifs) {
+                    window._munetiosNotifs.forEach(clearTimeout);
+                    window._munetiosNotifs = [];
+                  }
                 }
               };
-            // Date format dropdown
             const dateFmtBtn = settingsModal.querySelector(
               "#dateFmtDropdownBtn",
             );
-            const dateFmtMenu = settingsModal.querySelector(
-              "#dateFmtDropdownMenu",
-            );
             dateFmtBtn.onclick = function (e) {
               e.stopPropagation();
-              dateFmtMenu.innerHTML = "";
-              const fmts = [
-                {
-                  val: "MM/DD/YY",
-                  label: translations[currentLang].dateFmtMDY || "MM/DD/YY",
-                },
-                {
-                  val: "DD/MM/YY",
-                  label: translations[currentLang].dateFmtDMY || "DD/MM/YY",
-                },
-                {
-                  val: "YYYY-MM-DD",
-                  label: translations[currentLang].dateFmtISO || "YYYY-MM-DD",
-                },
-              ];
-              const cur =
-                dateFmtBtn.getAttribute("data-selected") ||
-                localStorage.getItem("munetiosDateFormat") ||
-                "MM/DD/YY";
-              fmts.forEach(({ val, label }) => {
-                const item = document.createElement("div");
-                item.className = "dropdown-item";
-                item.textContent = label;
-                if (val === cur) item.style.fontWeight = "bold";
-                item.onclick = () => {
-                  settingsModal.querySelector(
-                    "#dateFmtDropdownText",
-                  ).textContent = label;
-                  dateFmtMenu.style.display = "none";
-                  dateFmtBtn.setAttribute("data-selected", val);
-                };
-                dateFmtMenu.appendChild(item);
-              });
-              const rect = dateFmtBtn.getBoundingClientRect();
-              dateFmtMenu.style.top = rect.bottom + window.scrollY + "px";
-              dateFmtMenu.style.left = rect.left + window.scrollX + "px";
-              dateFmtMenu.style.display = "flex";
-              setTimeout(() => {
-                function hide(ev) {
-                  if (
-                    !dateFmtMenu.contains(ev.target) &&
-                    ev.target !== dateFmtBtn
-                  ) {
-                    dateFmtMenu.style.display = "none";
-                    document.removeEventListener("mousedown", hide);
-                  }
-                }
-                document.addEventListener("mousedown", hide);
-              }, 0);
+              showBodyDropdown(
+                dateFmtBtn,
+                dateFmtMenu,
+                [
+                  { value: "MM/DD/YY", label: getSettingsLabel("dateFmtMDY") },
+                  { value: "DD/MM/YY", label: getSettingsLabel("dateFmtDMY") },
+                  {
+                    value: "YYYY-MM-DD",
+                    label: getSettingsLabel("dateFmtISO"),
+                  },
+                ],
+                () => {},
+              );
             };
-            // Time format dropdown
             const timeFmtBtn = settingsModal.querySelector(
               "#timeFmtDropdownBtn",
             );
-            const timeFmtMenu = settingsModal.querySelector(
-              "#timeFmtDropdownMenu",
-            );
             timeFmtBtn.onclick = function (e) {
               e.stopPropagation();
-              timeFmtMenu.innerHTML = "";
-              const fmts = [
-                {
-                  val: "12h",
-                  label: translations[currentLang].hour12 || "12-hour",
-                },
-                {
-                  val: "24h",
-                  label: translations[currentLang].hour24 || "24-hour",
-                },
-              ];
-              const cur =
-                timeFmtBtn.getAttribute("data-selected") ||
-                localStorage.getItem("munetiosTimeFormat") ||
-                "12h";
-              fmts.forEach(({ val, label }) => {
-                const item = document.createElement("div");
-                item.className = "dropdown-item";
-                item.textContent = label;
-                if (val === cur) item.style.fontWeight = "bold";
-                item.onclick = () => {
-                  settingsModal.querySelector(
-                    "#timeFmtDropdownText",
-                  ).textContent = label;
-                  timeFmtMenu.style.display = "none";
-                  timeFmtBtn.setAttribute("data-selected", val);
-                };
-                timeFmtMenu.appendChild(item);
-              });
-              const rect = timeFmtBtn.getBoundingClientRect();
-              timeFmtMenu.style.top = rect.bottom + window.scrollY + "px";
-              timeFmtMenu.style.left = rect.left + window.scrollX + "px";
-              timeFmtMenu.style.display = "flex";
-              setTimeout(() => {
-                function hide(ev) {
-                  if (
-                    !timeFmtMenu.contains(ev.target) &&
-                    ev.target !== timeFmtBtn
-                  ) {
-                    timeFmtMenu.style.display = "none";
-                    document.removeEventListener("mousedown", hide);
-                  }
-                }
-                document.addEventListener("mousedown", hide);
-              }, 0);
+              showBodyDropdown(
+                timeFmtBtn,
+                timeFmtMenu,
+                [
+                  { value: "12h", label: getSettingsLabel("hour12") },
+                  { value: "24h", label: getSettingsLabel("hour24") },
+                ],
+                () => {},
+              );
             };
-            // Save/cancel/close
+            const weekStartBtn = settingsModal.querySelector(
+              "#weekStartDropdownBtn",
+            );
+            weekStartBtn.onclick = function (e) {
+              e.stopPropagation();
+              showBodyDropdown(
+                weekStartBtn,
+                weekStartMenu,
+                [0, 1, 2, 3, 4, 5, 6].map((day) => ({
+                  value: String(day),
+                  label: getWeekdayLabel(day),
+                })),
+                () => {},
+              );
+            };
+            const countryBtn = settingsModal.querySelector(
+              "#countryDropdownBtn",
+            );
+            countryBtn.onclick = function (e) {
+              e.stopPropagation();
+              showBodyDropdown(
+                countryBtn,
+                countryMenu,
+                [
+                  { value: "auto", label: getCountryLabel("auto") },
+                  ...MUNETIOS_COUNTRIES.map((country) => ({
+                    value: country,
+                    label: getCountryLabel(country),
+                  })),
+                ],
+                () => {},
+              );
+            };
+            const densityBtn = settingsModal.querySelector(
+              "#densityDropdownBtn",
+            );
+            densityBtn.onclick = function (e) {
+              e.stopPropagation();
+              showBodyDropdown(
+                densityBtn,
+                densityMenu,
+                [
+                  {
+                    value: "comfortable",
+                    label: getSettingsLabel("comfortable"),
+                  },
+                  { value: "compact", label: getSettingsLabel("compact") },
+                ],
+                () => {},
+              );
+            };
+            const notifyLeadBtn = settingsModal.querySelector(
+              "#notifyLeadDropdownBtn",
+            );
+            notifyLeadBtn.onclick = function (e) {
+              e.stopPropagation();
+              showBodyDropdown(
+                notifyLeadBtn,
+                notifyLeadMenu,
+                [
+                  { value: "0", label: getSettingsLabel("atStart") },
+                  {
+                    value: "5",
+                    label: getSettingsLabel("fiveMinutesBefore"),
+                  },
+                  {
+                    value: "15",
+                    label: getSettingsLabel("fifteenMinutesBefore"),
+                  },
+                ],
+                () => {},
+              );
+            };
+            settingsModal.querySelector("#testNotificationBtn").onclick =
+              function () {
+                try {
+                  if (
+                    notificationsEnabled &&
+                    "Notification" in window &&
+                    Notification.permission === "granted"
+                  ) {
+                    new Notification("Munetios Calendar", {
+                      body: getSettingsLabel("notificationTest"),
+                      icon: "/android-chrome-512x512.png",
+                    });
+                  } else {
+                    requestNotifications();
+                  }
+                } catch (error) {
+                  showCatchToast("Unable to test notifications.", error);
+                }
+              };
             settingsModal.querySelector("#saveSettingsBtn").onclick =
               function () {
-                // Theme
-                let theme =
-                  themeBtn.getAttribute("data-selected") || currentTheme;
-                applyTheme(theme);
-                // Language
-                let lang = langBtn.getAttribute("data-selected") || currentLang;
-                currentLang = lang;
-                localStorage.setItem("munetiosLang", lang);
-                translateUI();
-                // Date format
-                const dfBtn = settingsModal.querySelector(
-                  "#dateFmtDropdownBtn",
-                );
-                if (dfBtn) {
-                  const df = dfBtn.getAttribute("data-selected") || "MM/DD/YY";
-                  localStorage.setItem("munetiosDateFormat", df);
+                try {
+                  const previousCalendarSettings = {
+                    week: localStorage.getItem("munetiosWeekStarts") || "0",
+                    country:
+                      localStorage.getItem("munetiosHolidayCountry") || "auto",
+                    density:
+                      localStorage.getItem("munetiosCalendarDensity") ||
+                      "comfortable",
+                  };
+                  let theme =
+                    themeBtn.getAttribute("data-selected") || currentTheme;
+                  applyTheme(theme);
+                  let lang =
+                    langBtn.getAttribute("data-selected") || currentLang;
+                  currentLang = lang;
+                  localStorage.setItem("munetiosLang", lang);
+                  translateUI();
+                  localStorage.setItem(
+                    "munetiosDateFormat",
+                    dateFmtBtn.getAttribute("data-selected") || "MM/DD/YY",
+                  );
+                  localStorage.setItem(
+                    "munetiosTimeFormat",
+                    timeFmtBtn.getAttribute("data-selected") || "12h",
+                  );
+                  localStorage.setItem(
+                    "munetiosWeekStarts",
+                    weekStartBtn.getAttribute("data-selected") || "0",
+                  );
+                  localStorage.setItem(
+                    "munetiosHolidayCountry",
+                    countryBtn.getAttribute("data-selected") || "auto",
+                  );
+                  localStorage.setItem(
+                    "munetiosCalendarDensity",
+                    densityBtn.getAttribute("data-selected") || "comfortable",
+                  );
+                  localStorage.setItem(
+                    "munetiosNotificationLead",
+                    notifyLeadBtn.getAttribute("data-selected") || "0",
+                  );
+                  applyCalendarDensity();
+                  scheduleNotifications();
+                  settingsModal.style.display = "none";
+                  const shouldReload =
+                    previousCalendarSettings.week !==
+                      (weekStartBtn.getAttribute("data-selected") || "0") ||
+                    previousCalendarSettings.country !==
+                      (countryBtn.getAttribute("data-selected") || "auto") ||
+                    previousCalendarSettings.density !==
+                      (densityBtn.getAttribute("data-selected") ||
+                        "comfortable");
+                  if (shouldReload) {
+                    window.location.reload();
+                  } else if (typeof rerender === "function") {
+                    rerender();
+                  }
+                } catch (error) {
+                  showCatchToast("Unable to save settings.", error);
                 }
-                // Time format
-                const tfBtn = settingsModal.querySelector(
-                  "#timeFmtDropdownBtn",
-                );
-                if (tfBtn) {
-                  const tf = tfBtn.getAttribute("data-selected") || "12h";
-                  localStorage.setItem("munetiosTimeFormat", tf);
-                }
-                // Notifications already handled
-                settingsModal.style.display = "none";
               };
             settingsModal.querySelector("#cancelSettingsBtn").onclick =
               function () {
@@ -4551,51 +5454,88 @@
                 settingsModal.style.display = "none";
             };
           }
-          // Set dropdowns to current values
-          settingsModal.querySelector("#themeDropdownText").textContent =
-            translations[currentLang][currentTheme];
-          settingsModal.querySelector("#langDropdownText").textContent =
+          const setSelectState = (id, value, label) => {
+            const btn = settingsModal.querySelector(id);
+            if (!btn) return;
+            btn.setAttribute("data-selected", value);
+            const text = btn.querySelector(".settings-dropdown-text");
+            if (text) text.textContent = label;
+          };
+          setSelectState(
+            "#themeDropdownBtn",
+            currentTheme,
+            getSettingsLabel(currentTheme),
+          );
+          setSelectState(
+            "#langDropdownBtn",
+            currentLang,
             (translations[currentLang] && translations[currentLang].langName) ||
-            currentLang.toUpperCase();
+              currentLang.toUpperCase(),
+          );
           settingsModal.querySelector("#notifCheckbox").checked =
             notificationsEnabled;
-          settingsModal
-            .querySelector("#themeDropdownBtn")
-            .setAttribute("data-selected", currentTheme);
-          settingsModal
-            .querySelector("#langDropdownBtn")
-            .setAttribute("data-selected", currentLang);
-          // Date format
           const curDateFmt =
             localStorage.getItem("munetiosDateFormat") || "MM/DD/YY";
           const dateFmtLabels = {
-            "MM/DD/YY": translations[currentLang].dateFmtMDY || "MM/DD/YY",
-            "DD/MM/YY": translations[currentLang].dateFmtDMY || "DD/MM/YY",
-            "YYYY-MM-DD": translations[currentLang].dateFmtISO || "YYYY-MM-DD",
+            "MM/DD/YY": getSettingsLabel("dateFmtMDY"),
+            "DD/MM/YY": getSettingsLabel("dateFmtDMY"),
+            "YYYY-MM-DD": getSettingsLabel("dateFmtISO"),
           };
-          settingsModal.querySelector("#dateFmtDropdownText").textContent =
-            dateFmtLabels[curDateFmt] || curDateFmt;
-          settingsModal
-            .querySelector("#dateFmtDropdownBtn")
-            .setAttribute("data-selected", curDateFmt);
-          // Time format
+          setSelectState(
+            "#dateFmtDropdownBtn",
+            curDateFmt,
+            dateFmtLabels[curDateFmt] || curDateFmt,
+          );
           const curTimeFmt =
             localStorage.getItem("munetiosTimeFormat") || "12h";
           const timeFmtLabels = {
-            "12h": translations[currentLang].hour12 || "12-hour",
-            "24h": translations[currentLang].hour24 || "24-hour",
+            "12h": getSettingsLabel("hour12"),
+            "24h": getSettingsLabel("hour24"),
           };
-          settingsModal.querySelector("#timeFmtDropdownText").textContent =
-            timeFmtLabels[curTimeFmt] || curTimeFmt;
-          settingsModal
-            .querySelector("#timeFmtDropdownBtn")
-            .setAttribute("data-selected", curTimeFmt);
+          setSelectState(
+            "#timeFmtDropdownBtn",
+            curTimeFmt,
+            timeFmtLabels[curTimeFmt] || curTimeFmt,
+          );
+          const curWeekStart = String(getWeekStartDay());
+          setSelectState(
+            "#weekStartDropdownBtn",
+            curWeekStart,
+            getWeekdayLabel(Number(curWeekStart)),
+          );
+          const curCountry =
+            localStorage.getItem("munetiosHolidayCountry") || "auto";
+          setSelectState(
+            "#countryDropdownBtn",
+            curCountry,
+            getCountryLabel(curCountry),
+          );
+          const curDensity =
+            localStorage.getItem("munetiosCalendarDensity") || "comfortable";
+          setSelectState(
+            "#densityDropdownBtn",
+            curDensity,
+            getSettingsLabel(curDensity),
+          );
+          const curNotifyLead =
+            localStorage.getItem("munetiosNotificationLead") || "0";
+          const notifyLeadLabels = {
+            0: getSettingsLabel("atStart"),
+            5: getSettingsLabel("fiveMinutesBefore"),
+            15: getSettingsLabel("fifteenMinutesBefore"),
+          };
+          setSelectState(
+            "#notifyLeadDropdownBtn",
+            curNotifyLead,
+            notifyLeadLabels[curNotifyLead] || getSettingsLabel("atStart"),
+          );
           settingsModal.style.display = "block";
           translateUI();
         }
         settingsBtn.onclick = showSettingsModal;
         // Apply theme/lang on load
         applyTheme(currentTheme);
+        applyCalendarDensity();
         translateUI();
 
         // --- Desktop Notifications: schedule notifications for events/birthdays ---
@@ -4744,6 +5684,193 @@
             };
           });
         }
+        function fireDesktopNotification(title, body) {
+          try {
+            if (
+              !notificationsEnabled ||
+              !("Notification" in window) ||
+              Notification.permission !== "granted"
+            )
+              return;
+            new Notification(title || "Munetios Calendar", {
+              body: body || "",
+              icon: "/android-chrome-512x512.png",
+            });
+          } catch (error) {
+            showCatchToast("Unable to show desktop notification.", error);
+          }
+        }
+
+        async function getNotificationItems() {
+          try {
+            const database = await openDB();
+            const readStore = (storeName) =>
+              new Promise((resolve) => {
+                const tx = database.transaction(storeName, "readonly");
+                const store = tx.objectStore(storeName);
+                const req = store.getAll();
+                req.onsuccess = () => resolve(req.result || []);
+                req.onerror = () => resolve([]);
+              });
+            const [rawEvents, rawBirthdays] = await Promise.all([
+              readStore("events"),
+              readStore("birthdays"),
+            ]);
+            const events = [];
+            for (const item of rawEvents) {
+              let ev = item;
+              if (item.encrypted) {
+                const dec = await decryptData(item.encrypted);
+                if (!dec) continue;
+                ev = { id: item.id, calendar: item.calendar, ...dec };
+              }
+              if (!ev.date) continue;
+              const start = new Date(
+                ev.date + (ev.time ? "T" + ev.time : "T09:00"),
+              );
+              if (isNaN(start)) continue;
+              events.push({
+                id: "event-" + ev.id,
+                title: ev.title || "Event",
+                body: ev.desc || "",
+                at: start,
+              });
+            }
+            const now = new Date();
+            const birthdays = [];
+            for (const item of rawBirthdays) {
+              let bd = item;
+              if (item.encrypted) {
+                const dec = await decryptData(item.encrypted);
+                if (!dec) continue;
+                bd = { id: item.id, calendar: item.calendar, ...dec };
+              }
+              if (!bd.date) continue;
+              const parts = bd.date.split("-");
+              if (parts.length < 3) continue;
+              const start = new Date(
+                now.getFullYear(),
+                Number(parts[1]) - 1,
+                Number(parts[2]),
+                9,
+                0,
+                0,
+              );
+              if (isNaN(start)) continue;
+              birthdays.push({
+                id: "birthday-" + bd.id + "-" + start.getFullYear(),
+                title: "Birthday: " + (bd.name || ""),
+                body: "Birthday today!",
+                at: start,
+              });
+            }
+            return events.concat(birthdays);
+          } catch (error) {
+            showCatchToast("Unable to load notification items.", error);
+            return [];
+          }
+        }
+
+        function getNotifiedKeys() {
+          try {
+            return JSON.parse(
+              localStorage.getItem("munetiosNotifiedEvents") || "{}",
+            );
+          } catch (e) {
+            return {};
+          }
+        }
+
+        function saveNotifiedKeys(keys) {
+          try {
+            const cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
+            Object.keys(keys).forEach((key) => {
+              if (keys[key] < cutoff) delete keys[key];
+            });
+            localStorage.setItem(
+              "munetiosNotifiedEvents",
+              JSON.stringify(keys),
+            );
+          } catch (error) {
+            showCatchToast("Unable to save notification history.", error);
+          }
+        }
+
+        async function scanDueNotifications() {
+          try {
+            if (
+              !notificationsEnabled ||
+              !("Notification" in window) ||
+              Notification.permission !== "granted"
+            )
+              return;
+            const now = new Date();
+            const leadMinutes = Number(
+              localStorage.getItem("munetiosNotificationLead") || "0",
+            );
+            const currentMinute = Math.floor(now.getTime() / 60000);
+            const notified = getNotifiedKeys();
+            const items = await getNotificationItems();
+            items.forEach((item) => {
+              const notifyAt = new Date(
+                item.at.getTime() - leadMinutes * 60 * 1000,
+              );
+              const notifyMinute = Math.floor(notifyAt.getTime() / 60000);
+              const minuteKey = item.id + "-" + notifyMinute;
+              if (notified[minuteKey] || notifyMinute !== currentMinute) return;
+              fireDesktopNotification(item.title, item.body);
+              notified[minuteKey] = Date.now();
+            });
+            saveNotifiedKeys(notified);
+          } catch (error) {
+            showCatchToast("Unable to scan notifications.", error);
+          }
+        }
+
+        scheduleNotifications = function () {
+          try {
+            if (
+              !notificationsEnabled ||
+              !("Notification" in window) ||
+              Notification.permission !== "granted"
+            )
+              return;
+            if (window._munetiosNotificationInterval) {
+              clearInterval(window._munetiosNotificationInterval);
+            }
+            scanDueNotifications();
+            window._munetiosNotificationInterval = setInterval(
+              scanDueNotifications,
+              30000,
+            );
+            if (window._munetiosNotifs)
+              window._munetiosNotifs.forEach(clearTimeout);
+            window._munetiosNotifs = [];
+            const now = new Date();
+            const leadMinutes = Number(
+              localStorage.getItem("munetiosNotificationLead") || "0",
+            );
+            getNotificationItems()
+              .then((items) => {
+                items.forEach((item) => {
+                  const notifyAt = new Date(
+                    item.at.getTime() - leadMinutes * 60 * 1000,
+                  );
+                  const ms = notifyAt - now;
+                  if (ms <= 0 || ms > 24 * 60 * 60 * 1000) return;
+                  window._munetiosNotifs.push(
+                    setTimeout(scanDueNotifications, ms),
+                  );
+                });
+              })
+              .catch((error) => {
+                showCatchToast("Unable to schedule notifications.", error);
+              });
+          } catch (error) {
+            showCatchToast("Unable to schedule notifications.", error);
+          }
+        };
+
         if (notificationsEnabled && Notification.permission === "granted") {
           scheduleNotifications();
         } else if (
@@ -4818,6 +5945,8 @@
                                 </ul>
                                 <h3>Changelog</h3>
                                 <ul>
+                                   <li><b>v2.0</b> - Munetios June 7 redesign.</li>
+                                   <li><b>v1.4</b> - Better languages and improvements of calendar</li>
                                     <li><b>v1.3</b> - Added End-To-End encryption for events.</li>
                                     <li><b>v1.2</b> - Improvements and added Archive Versions links.</li>
                                     <li><b>v1.0</b> – Initial release with multi-calendar, events, birthdays, holidays, and advanced sharing/printing.</li>
@@ -4908,7 +6037,7 @@
           if (tasksFrame) tasksFrame.style.display = "none";
           if (!mealsDiv) {
             mealsDiv = document.createElement("iframe");
-            mealsDiv.src = "meals/index.html";
+            mealsDiv.src = "meals.html";
             mealsDiv.style.width = "100%";
             mealsDiv.style.height = "calc(100vh - 260px)";
             mealsDiv.style.border = "none";
@@ -5399,17 +6528,212 @@
           { name: "Pearl Harbor Day", month: 11, day: 7 },
         ];
 
+        const countryHolidaySets = {
+          US: holidays,
+          CA: [
+            { name: "New Year's Day", month: 0, day: 1 },
+            { name: "Canada Day", month: 6, day: 1 },
+            {
+              name: "National Day for Truth and Reconciliation",
+              month: 8,
+              day: 30,
+            },
+            { name: "Remembrance Day", month: 10, day: 11 },
+            { name: "Christmas Day", month: 11, day: 25 },
+            { name: "Boxing Day", month: 11, day: 26 },
+          ],
+          GB: [
+            { name: "New Year's Day", month: 0, day: 1 },
+            {
+              name: "Good Friday",
+              month: (year) => getRelativeEasterDate(year, -2).getMonth(),
+              getDay: (year) => getRelativeEasterDate(year, -2).getDate(),
+            },
+            { name: "Christmas Day", month: 11, day: 25 },
+            { name: "Boxing Day", month: 11, day: 26 },
+          ],
+          AU: [
+            { name: "New Year's Day", month: 0, day: 1 },
+            { name: "Australia Day", month: 0, day: 26 },
+            { name: "Anzac Day", month: 3, day: 25 },
+            { name: "Christmas Day", month: 11, day: 25 },
+            { name: "Boxing Day", month: 11, day: 26 },
+          ],
+          DE: [
+            { name: "Neujahr", month: 0, day: 1 },
+            { name: "Tag der Arbeit", month: 4, day: 1 },
+            { name: "Tag der Deutschen Einheit", month: 9, day: 3 },
+            { name: "Weihnachtstag", month: 11, day: 25 },
+            { name: "Zweiter Weihnachtsfeiertag", month: 11, day: 26 },
+          ],
+          FR: [
+            { name: "Jour de l'an", month: 0, day: 1 },
+            { name: "Fête du Travail", month: 4, day: 1 },
+            { name: "Fête nationale", month: 6, day: 14 },
+            { name: "Assomption", month: 7, day: 15 },
+            { name: "Noël", month: 11, day: 25 },
+          ],
+          ES: [
+            { name: "Año Nuevo", month: 0, day: 1 },
+            { name: "Día del Trabajo", month: 4, day: 1 },
+            { name: "Fiesta Nacional de España", month: 9, day: 12 },
+            { name: "Navidad", month: 11, day: 25 },
+          ],
+          IT: [
+            { name: "Capodanno", month: 0, day: 1 },
+            { name: "Festa della Liberazione", month: 3, day: 25 },
+            { name: "Festa del Lavoro", month: 4, day: 1 },
+            { name: "Festa della Repubblica", month: 5, day: 2 },
+            { name: "Natale", month: 11, day: 25 },
+          ],
+          PT: [
+            { name: "Ano Novo", month: 0, day: 1 },
+            { name: "Dia da Liberdade", month: 3, day: 25 },
+            { name: "Dia do Trabalhador", month: 4, day: 1 },
+            { name: "Dia de Portugal", month: 5, day: 10 },
+            { name: "Natal", month: 11, day: 25 },
+          ],
+          NL: [
+            { name: "Nieuwjaarsdag", month: 0, day: 1 },
+            { name: "Koningsdag", month: 3, day: 27 },
+            { name: "Bevrijdingsdag", month: 4, day: 5 },
+            { name: "Eerste Kerstdag", month: 11, day: 25 },
+            { name: "Tweede Kerstdag", month: 11, day: 26 },
+          ],
+          PL: [
+            { name: "Nowy Rok", month: 0, day: 1 },
+            { name: "Święto Pracy", month: 4, day: 1 },
+            { name: "Święto Konstytucji 3 Maja", month: 4, day: 3 },
+            { name: "Święto Niepodległości", month: 10, day: 11 },
+            { name: "Boże Narodzenie", month: 11, day: 25 },
+          ],
+          SE: [
+            { name: "Nyårsdagen", month: 0, day: 1 },
+            { name: "Sveriges nationaldag", month: 5, day: 6 },
+            { name: "Juldagen", month: 11, day: 25 },
+            { name: "Annandag jul", month: 11, day: 26 },
+          ],
+          NO: [
+            { name: "Første nyttårsdag", month: 0, day: 1 },
+            { name: "Grunnlovsdag", month: 4, day: 17 },
+            { name: "Første juledag", month: 11, day: 25 },
+            { name: "Andre juledag", month: 11, day: 26 },
+          ],
+          DK: [
+            { name: "Nytårsdag", month: 0, day: 1 },
+            { name: "Grundlovsdag", month: 5, day: 5 },
+            { name: "Juledag", month: 11, day: 25 },
+            { name: "Anden juledag", month: 11, day: 26 },
+          ],
+          FI: [
+            { name: "Uudenvuodenpäivä", month: 0, day: 1 },
+            { name: "Itsenäisyyspäivä", month: 11, day: 6 },
+            { name: "Joulupäivä", month: 11, day: 25 },
+            { name: "Tapaninpäivä", month: 11, day: 26 },
+          ],
+          HU: [
+            { name: "Újév", month: 0, day: 1 },
+            { name: "Nemzeti ünnep", month: 2, day: 15 },
+            { name: "Államalapítás ünnepe", month: 7, day: 20 },
+            { name: "Karácsony", month: 11, day: 25 },
+          ],
+          CZ: [
+            { name: "Nový rok", month: 0, day: 1 },
+            { name: "Den vítězství", month: 4, day: 8 },
+            { name: "Den české státnosti", month: 8, day: 28 },
+            { name: "Štědrý den", month: 11, day: 24 },
+            { name: "1. svátek vánoční", month: 11, day: 25 },
+          ],
+          TR: [
+            { name: "Yılbaşı", month: 0, day: 1 },
+            { name: "Ulusal Egemenlik ve Çocuk Bayramı", month: 3, day: 23 },
+            { name: "Emek ve Dayanışma Günü", month: 4, day: 1 },
+            { name: "Cumhuriyet Bayramı", month: 9, day: 29 },
+          ],
+          JP: [
+            { name: "New Year's Day", month: 0, day: 1 },
+            { name: "Foundation Day", month: 1, day: 11 },
+            { name: "Constitution Memorial Day", month: 4, day: 3 },
+            { name: "Children's Day", month: 4, day: 5 },
+          ],
+          KR: [
+            { name: "New Year's Day", month: 0, day: 1 },
+            { name: "Independence Movement Day", month: 2, day: 1 },
+            { name: "Liberation Day", month: 7, day: 15 },
+            { name: "National Foundation Day", month: 9, day: 3 },
+            { name: "Christmas Day", month: 11, day: 25 },
+          ],
+          CN: [
+            { name: "New Year's Day", month: 0, day: 1 },
+            { name: "Labour Day", month: 4, day: 1 },
+            { name: "National Day", month: 9, day: 1 },
+          ],
+          IN: [
+            { name: "Republic Day", month: 0, day: 26 },
+            { name: "Independence Day", month: 7, day: 15 },
+            { name: "Gandhi Jayanti", month: 9, day: 2 },
+          ],
+          BD: [
+            { name: "Language Martyrs' Day", month: 1, day: 21 },
+            { name: "Independence Day", month: 2, day: 26 },
+            { name: "Victory Day", month: 11, day: 16 },
+          ],
+          RU: [
+            { name: "New Year Holiday", month: 0, day: 1 },
+            { name: "Defender of the Fatherland Day", month: 1, day: 23 },
+            { name: "Russia Day", month: 5, day: 12 },
+            { name: "Unity Day", month: 10, day: 4 },
+          ],
+          SA: [
+            { name: "Founding Day", month: 1, day: 22 },
+            { name: "Saudi National Day", month: 8, day: 23 },
+          ],
+        };
+
+        function getRelativeEasterDate(year, offsetDays) {
+          let f = Math.floor,
+            a = year % 19,
+            b = f(year / 100),
+            c = year % 100,
+            d = f(b / 4),
+            e = b % 4,
+            g = f((b + 8) / 25),
+            h = f((b - g + 1) / 3),
+            i = (c / 4) | 0,
+            k = c % 4,
+            l = (19 * a + b - d - h + 15) % 30,
+            m = (32 + 2 * e + 2 * i - k - l) % 7,
+            n = f((a + 11 * l + 22 * m) / 451),
+            easterMonth = f((l + m - 7 * n + 114) / 31) - 1,
+            easterDay = ((l + m - 7 * n + 114) % 31) + 1;
+          const date = new Date(year, easterMonth, easterDay);
+          date.setDate(date.getDate() + offsetDays);
+          return date;
+        }
+
         // Helper: get holidays for a given month/year
         function getHolidaysForMonth(month, year) {
-          return holidays
-            .map((h) => {
-              let day = h.day;
-              if (typeof h.getDay === "function") {
-                day = h.getDay(year);
-              }
-              return { name: h.name, month: h.month, day };
-            })
-            .filter((h) => h.month === month);
+          try {
+            const country =
+              typeof window.getMunetiosHolidayCountry === "function"
+                ? window.getMunetiosHolidayCountry()
+                : "US";
+            const activeHolidays = countryHolidaySets[country] || holidays;
+            return activeHolidays
+              .map((h) => {
+                let holidayMonth =
+                  typeof h.month === "function" ? h.month(year) : h.month;
+                let day = h.day;
+                if (typeof h.getDay === "function") {
+                  day = h.getDay(year);
+                }
+                return { name: h.name, month: holidayMonth, day };
+              })
+              .filter((h) => h.month === month);
+          } catch (error) {
+            showCatchToast("Unable to load holidays.", error);
+            return [];
+          }
         }
 
         // Calendar rendering logic
@@ -5471,8 +6795,7 @@
             selectedDate = new Date(anchorDate);
           }
           // Find the Sunday of the week containing anchorDate
-          let weekStart = new Date(anchorDate);
-          weekStart.setDate(anchorDate.getDate() - weekStart.getDay());
+          let weekStart = getStartOfWeek(anchorDate);
           let weekDays = [];
           for (let i = 0; i < 7; i++) {
             let d = new Date(weekStart);
@@ -5483,9 +6806,7 @@
           // If today is in this month, show week containing today
           let today = new Date();
           if (today.getMonth() === month && today.getFullYear() === year) {
-            let dayOfWeek = today.getDay();
-            let weekStartToday = new Date(today);
-            weekStartToday.setDate(today.getDate() - dayOfWeek);
+            let weekStartToday = getStartOfWeek(today);
             weekDays = [];
             for (let i = 0; i < 7; i++) {
               let d = new Date(weekStartToday);
@@ -5502,7 +6823,7 @@
           // Header row: blank for time, then days
           html += `<div style="background:transparent"></div>`;
           for (let i = 0; i < 7; i++) {
-            html += `<div style="font-weight:bold;color:#fff;text-align:center;padding:8px 0 8px 0;background:rgba(255,255,255,0.04);border-radius:10px;">${formatDate(weekDays[i], { weekday: "short", month: "short", day: "numeric" })}</div>`;
+            html += `<div style="font-weight:bold;color:#fff;text-align:center;padding:8px 0 8px 0;background:rgba(255,255,255,0.04);border-radius:18px;">${formatDate(weekDays[i], { weekday: "short", month: "short", day: "numeric" })}</div>`;
           }
 
           // 24 hour time slots (12AM to 11PM)
@@ -5515,7 +6836,7 @@
               let isToday =
                 weekDays[d].toDateString() === new Date().toDateString();
               let classes = "calendar__dates_button";
-              let style = "border-radius:8px;min-height:32px;";
+              let style = "border-radius:16px;min-height:32px;";
               if (isToday) {
                 classes += " calendar__dates__today";
                 style += "background:rgba(99,0,238,0.548);";
@@ -5551,14 +6872,14 @@
 
           let html = `<div class="calendar__dates__grid" style="display:grid;grid-template-columns:80px 1fr;height:auto;min-height:600px;">`;
           html += `<div style="background:transparent"></div>`;
-          html += `<div style="font-weight:bold;color:#fff;text-align:center;padding:8px 0 8px 0;background:rgba(255,255,255,0.04);border-radius:10px;">${formatDate(date, { weekday: "short", month: "short", day: "numeric" })}</div>`;
+          html += `<div style="font-weight:bold;color:#fff;text-align:center;padding:8px 0 8px 0;background:rgba(255,255,255,0.04);border-radius:18px;">${formatDate(date, { weekday: "short", month: "short", day: "numeric" })}</div>`;
           for (let hour = 0; hour < 24; hour++) {
             let ampm = hour < 12 ? "AM" : "PM";
             let displayHour = hour % 12 === 0 ? 12 : hour % 12;
             html += `<div style="text-align:right;padding:6px 8px 6px 0;color:#ffe066;font-size:13px;opacity:.7">${displayHour}:00 ${ampm}</div>`;
             let isToday = date.toDateString() === new Date().toDateString();
             let classes = "calendar__dates_button";
-            let style = "border-radius:8px;min-height:32px;";
+            let style = "border-radius:16px;min-height:32px;";
             if (isToday) {
               classes += " calendar__dates__today";
               style += "background:rgba(99,0,238,0.548);";
@@ -5582,8 +6903,8 @@
           const yrWeekdays = getLocalizedWeekdaysNarrow();
           for (let m = 0; m < 12; m++) {
             let daysInMonth = new Date(year, m + 1, 0).getDate();
-            let firstDay = new Date(year, m, 1).getDay();
-            html += `<div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:10px 6px 12px 6px;box-shadow:0 2px 8px 0 rgba(31,38,135,0.10);">
+            let firstDay = getWeekdayOffset(new Date(year, m, 1).getDay());
+            html += `<div style="background:rgba(255,255,255,0.04);border-radius:20px;padding:10px 6px 12px 6px;box-shadow:0 2px 8px 0 rgba(31,38,135,0.10);">
                             <div style="font-weight:bold;text-align:center;color:#fff;margin-bottom:6px;">${getLocalizedMonthName(m, year)}</div>
                             <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;">`;
             // Weekdays (localized)
@@ -5651,7 +6972,7 @@
               month === today.getMonth() &&
               year === today.getFullYear();
             let holiday = holidaysThisMonth.find((h) => h.day === d);
-            html += `<div style="display:flex;align-items:center;gap:16px;padding:10px 18px;border-radius:12px;${isToday ? "background:rgba(99,0,238,0.548);" : "background:rgba(255,255,255,0.04);"}">
+            html += `<div style="display:flex;align-items:center;gap:16px;padding:10px 18px;border-radius:20px;${isToday ? "background:rgba(99,0,238,0.548);" : "background:rgba(255,255,255,0.04);"}">
                             <div style="font-weight:bold;font-size:18px;width:60px;text-align:right;color:#fff;">${d}</div>
                             <div style="flex:1;">
                                 <div style="font-size:15px;color:#fff;">${formatDate(date, { weekday: "long", month: "long", day: "numeric" })}</div>
@@ -6438,8 +7759,7 @@
           }
         };
         calendarMainContent.addEventListener("click", function (e) {
-          // Only in month view, only .calendar__dates_button (not .calendar__dates__today)
-          if (currentView !== "month") return;
+          if (currentView !== "month" || selectingDates) return;
           let target = e.target;
           while (
             target &&
@@ -6454,62 +7774,12 @@
               !target.classList.contains("calendar__dates__today"))
           )
             return;
-          // Find day number
           let day = parseInt(target.textContent, 10);
           if (!day || isNaN(day)) return;
-          // Remove any existing dropdown
-          document
-            .querySelectorAll(".calendar-dropdown-menu")
-            .forEach((m) => m.remove());
-          // Build dropdown
-          const dropdown = document.createElement("munetios-dropdown-menu");
-          dropdown.className = "calendar-dropdown-menu";
-          dropdown.style.position = "fixed";
-          dropdown.style.display = "flex";
-          dropdown.style.flexDirection = "column";
-          dropdown.style.zIndex = 9999999;
-          dropdown.style.minWidth = "180px";
-          dropdown.innerHTML = `
-                        <div class="dropdown-item" data-action="new">New Event</div>
-                        <div class="dropdown-item" data-action="share">Share</div>
-                        <div class="dropdown-item" data-action="print">Print</div>
-                        <div class="dropdown-item" data-action="favorite">Favorite</div>
-                    `;
-          // Position dropdown near click
-          let rect = target.getBoundingClientRect();
-          dropdown.style.top = rect.bottom + window.scrollY + "px";
-          dropdown.style.left = rect.left + window.scrollX + "px";
-          document.body.appendChild(dropdown);
-
-          // Hide on click outside
-          setTimeout(() => {
-            function hide(ev) {
-              if (!dropdown.contains(ev.target)) {
-                dropdown.remove();
-                document.removeEventListener("mousedown", hide);
-              }
-            }
-            document.addEventListener("mousedown", hide);
-          }, 0);
-
-          // Dropdown actions
-          dropdown.querySelectorAll(".dropdown-item").forEach((item) => {
-            item.onclick = function () {
-              dropdown.remove();
-              if (this.dataset.action === "new") {
-                // Open create event modal, autofill date
-                showModal(createEventModal);
-                document.getElementById("eventDate").value =
-                  `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-              } else if (this.dataset.action === "share") {
-                showShareModal(currentYear, currentMonth, day);
-              } else if (this.dataset.action === "print") {
-                showPrintModal(currentYear, currentMonth, day);
-              } else if (this.dataset.action === "favorite") {
-                addFavoriteDate(currentYear, currentMonth, day);
-              }
-            };
-          });
+          showModal(createEventModal);
+          document.getElementById("eventDate").value =
+            `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+          document.getElementById("eventTitle").focus();
         });
 
         // --- Share Modal ---
@@ -6576,7 +7846,7 @@
                   // Create a new Google Docs document with the date as the title
                   let docTitle = encodeURIComponent(dateStr);
                   let docsUrl = `https://docs.google.com/document/create?title=${docTitle}`;
-                  window.open(docsUrl, "_blank");
+                  window.open(docsUrl, "_self");
                 },
               },
 
@@ -6662,8 +7932,8 @@
               idx++;
             });
           });
-          // All links open in new tab
-          shareModal.querySelectorAll("a").forEach((a) => (a.target = "_blank"));
+          // All links open in same tab
+          shareModal.querySelectorAll("a").forEach((a) => (a.target = ""));
           shareModal.style.display = "block";
         }
 
@@ -7722,6 +8992,9 @@
         // --- MODAL CALENDAR DROPDOWN LOGIC ---
         // Helper to show dropdown menu for calendar select
         function showCalendarDropdownMenu(btn, dropdown, onSelect) {
+          if (dropdown.parentElement !== document.body) {
+            document.body.appendChild(dropdown);
+          }
           dropdown.innerHTML = "";
           calendars.forEach((cal) => {
             const item = document.createElement("div");
@@ -7740,8 +9013,12 @@
           // Position dropdown under the button
           const rect = btn.getBoundingClientRect();
           dropdown.style.position = "fixed";
-          dropdown.style.top = rect.bottom + window.scrollY + "px";
-          dropdown.style.left = rect.left + window.scrollX + "px";
+          dropdown.style.top = rect.bottom + 6 + "px";
+          dropdown.style.left =
+            Math.min(rect.left, window.innerWidth - 260) + "px";
+          dropdown.style.minWidth = Math.max(rect.width, 220) + "px";
+          dropdown.style.maxHeight = "min(320px, calc(100vh - 24px))";
+          dropdown.style.overflowY = "auto";
           dropdown.style.display = "flex";
           // Hide on click outside
           setTimeout(() => {
@@ -7759,9 +9036,7 @@
         function updateModalCalendars() {
           // For event modal
           let eventBtn = createEventModal.querySelector("#eventCalendarBtn");
-          let eventDropdown = createEventModal.querySelector(
-            "#eventCalendarDropdown",
-          );
+          let eventDropdown = document.getElementById("eventCalendarDropdown");
           if (!eventBtn) {
             const label = document.createElement("label");
             label.textContent = "Calendar:";
@@ -7773,15 +9048,16 @@
             eventBtn.innerHTML = `<div class="icon">calendar_month</div><span class="calendar-btn-text">${currentCalendar}</span>`;
             eventBtn.setAttribute("data-selected", currentCalendar);
 
-            eventDropdown = document.createElement("munetios-dropdown-menu");
-            eventDropdown.id = "eventCalendarDropdown";
-            eventDropdown.style.marginBottom = "10px";
+            if (!eventDropdown) {
+              eventDropdown = document.createElement("munetios-dropdown-menu");
+              eventDropdown.id = "eventCalendarDropdown";
+            }
             eventDropdown.style.display = "none";
 
             const body = createEventModal.querySelector(".modal__body");
             body.insertBefore(label, body.firstChild);
             body.insertBefore(eventBtn, label.nextSibling);
-            body.insertBefore(eventDropdown, eventBtn.nextSibling);
+            document.body.appendChild(eventDropdown);
 
             eventBtn.onclick = function (e) {
               e.stopPropagation();
@@ -7792,15 +9068,13 @@
               currentCalendar;
             eventBtn.setAttribute("data-selected", currentCalendar);
           }
-          eventDropdown = createEventModal.querySelector(
-            "#eventCalendarDropdown",
-          );
+          eventDropdown = document.getElementById("eventCalendarDropdown");
           eventDropdown.style.display = "none";
 
           // For birthday modal
           let bdayBtn = addBirthdayModal.querySelector("#birthdayCalendarBtn");
-          let bdayDropdown = addBirthdayModal.querySelector(
-            "#birthdayCalendarDropdown",
+          let bdayDropdown = document.getElementById(
+            "birthdayCalendarDropdown",
           );
           if (!bdayBtn) {
             const label = document.createElement("label");
@@ -7813,15 +9087,16 @@
             bdayBtn.innerHTML = `<div class="icon">calendar_month</div><span class="calendar-btn-text">${currentCalendar}</span>`;
             bdayBtn.setAttribute("data-selected", currentCalendar);
 
-            bdayDropdown = document.createElement("munetios-dropdown-menu");
-            bdayDropdown.id = "birthdayCalendarDropdown";
-            bdayDropdown.style.marginBottom = "10px";
+            if (!bdayDropdown) {
+              bdayDropdown = document.createElement("munetios-dropdown-menu");
+              bdayDropdown.id = "birthdayCalendarDropdown";
+            }
             bdayDropdown.style.display = "none";
 
             const body = addBirthdayModal.querySelector(".modal__body");
             body.insertBefore(label, body.firstChild);
             body.insertBefore(bdayBtn, label.nextSibling);
-            body.insertBefore(bdayDropdown, bdayBtn.nextSibling);
+            document.body.appendChild(bdayDropdown);
 
             bdayBtn.onclick = function (e) {
               e.stopPropagation();
@@ -7832,9 +9107,7 @@
               currentCalendar;
             bdayBtn.setAttribute("data-selected", currentCalendar);
           }
-          bdayDropdown = addBirthdayModal.querySelector(
-            "#birthdayCalendarDropdown",
-          );
+          bdayDropdown = document.getElementById("birthdayCalendarDropdown");
           bdayDropdown.style.display = "none";
         }
 
@@ -7847,6 +9120,24 @@
           modal.style.display = "none";
         }
         createEvent.onclick = () => showModal(createEventModal);
+        const sidebarAddEventBtn =
+          document.getElementById("sidebarAddEventBtn");
+        if (sidebarAddEventBtn) {
+          sidebarAddEventBtn.onclick = () => showModal(createEventModal);
+        }
+        const sidebarAllEventsBtn = document.getElementById(
+          "sidebarAllEventsBtn",
+        );
+        if (sidebarAllEventsBtn) {
+          sidebarAllEventsBtn.onclick = () =>
+            document.getElementById("eventsBtn").click();
+        }
+        const sidebarSettingsBtn =
+          document.getElementById("sidebarSettingsBtn");
+        if (sidebarSettingsBtn) {
+          sidebarSettingsBtn.onclick = () =>
+            document.getElementById("settingsBtn").click();
+        }
         closeCreateEventModal.onclick = () => hideModal(createEventModal);
         cancelEventBtn.onclick = () => hideModal(createEventModal);
         closeAddBirthdayModal.onclick = () => hideModal(addBirthdayModal);
@@ -7915,7 +9206,9 @@
               month: "long",
               year: "numeric",
             });
-            const firstDay = new Date(year, month, 1).getDay();
+            const firstDay = getWeekdayOffset(
+              new Date(year, month, 1).getDay(),
+            );
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             const holidaysThisMonth = showHolidays
               ? getHolidaysForMonth(month, year)
@@ -7965,13 +9258,13 @@
               let content = `${d}`;
               if (holiday) {
                 classes += " liquid-glass";
-                content += `<div style="font-size:12px;color:#ffe066;margin-top:2px;">${holiday.name}</div>`;
+                content += `<div class="calendar-holiday-chip" style="color:#ffe066;">${holiday.name}</div>`;
               }
               dayEvents.forEach((ev) => {
-                content += `<div style="font-size:12px;margin-top:2px;color:${ev.color};"><span style="display:inline-block;width:10px;height:10px;background:${ev.color};border-radius:50%;margin-right:4px;vertical-align:middle;"></span>${ev.title}</div>`;
+                content += `<div class="calendar-event-chip" style="color:${ev.color};"><span style="display:inline-block;width:10px;height:10px;background:${ev.color};border-radius:50%;flex:0 0 auto;"></span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${ev.title}</span></div>`;
               });
               dayBirthdays.forEach((bd) => {
-                content += `<div style="font-size:12px;margin-top:2px;color:${bd.color};"><span style="display:inline-block;width:10px;height:10px;background:${bd.color};border-radius:50%;margin-right:4px;vertical-align:middle;"></span>🎂 ${bd.name}</div>`;
+                content += `<div class="calendar-birthday-chip" style="color:${bd.color};"><span style="display:inline-block;width:10px;height:10px;background:${bd.color};border-radius:50%;flex:0 0 auto;"></span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Birthday: ${bd.name}</span></div>`;
               });
               html += `<div class="${classes}">${content}</div>`;
             }
@@ -8008,8 +9301,7 @@
               selectedDate = new Date(anchorDate);
             }
             // Find the Sunday of the week containing anchorDate
-            let weekStart = new Date(anchorDate);
-            weekStart.setDate(anchorDate.getDate() - weekStart.getDay());
+            let weekStart = getStartOfWeek(anchorDate);
             let weekDays = [];
             for (let i = 0; i < 7; i++) {
               let d = new Date(weekStart);
@@ -8025,7 +9317,7 @@
             // Header row: blank for time, then days
             html += `<div style="background:transparent"></div>`;
             for (let i = 0; i < 7; i++) {
-              html += `<div style="font-weight:bold;color:#fff;text-align:center;padding:8px 0 8px 0;background:rgba(255,255,255,0.04);border-radius:10px;">${formatDate(weekDays[i], { weekday: "short", month: "short", day: "numeric" })}</div>`;
+              html += `<div style="font-weight:bold;color:#fff;text-align:center;padding:8px 0 8px 0;background:rgba(255,255,255,0.04);border-radius:18px;">${formatDate(weekDays[i], { weekday: "short", month: "short", day: "numeric" })}</div>`;
             }
 
             // 24 hour time slots (12AM to 11PM)
@@ -8038,7 +9330,7 @@
                 let isToday =
                   weekDays[d].toDateString() === new Date().toDateString();
                 let classes = "calendar__dates_button";
-                let style = "border-radius:8px;min-height:32px;";
+                let style = "border-radius:16px;min-height:32px;";
                 if (isToday) {
                   classes += " calendar__dates__today";
                   style += "background:rgba(99,0,238,0.548);";
@@ -8117,14 +9409,14 @@
 
             let html = `<div class="calendar__dates__grid" style="display:grid;grid-template-columns:80px 1fr;height:auto;min-height:600px;">`;
             html += `<div style="background:transparent"></div>`;
-            html += `<div style="font-weight:bold;color:#fff;text-align:center;padding:8px 0 8px 0;background:rgba(255,255,255,0.04);border-radius:10px;">${formatDate(date, { weekday: "short", month: "short", day: "numeric" })}</div>`;
+            html += `<div style="font-weight:bold;color:#fff;text-align:center;padding:8px 0 8px 0;background:rgba(255,255,255,0.04);border-radius:18px;">${formatDate(date, { weekday: "short", month: "short", day: "numeric" })}</div>`;
             for (let hour = 0; hour < 24; hour++) {
               let ampm = hour < 12 ? "AM" : "PM";
               let displayHour = hour % 12 === 0 ? 12 : hour % 12;
               html += `<div style="text-align:right;padding:6px 8px 6px 0;color:#ffe066;font-size:13px;opacity:.7">${displayHour}:00 ${ampm}</div>`;
               let isToday = date.toDateString() === new Date().toDateString();
               let classes = "calendar__dates_button";
-              let style = "border-radius:8px;min-height:32px;";
+              let style = "border-radius:16px;min-height:32px;";
               if (isToday) {
                 classes += " calendar__dates__today";
                 style += "background:rgba(99,0,238,0.548);";
@@ -8177,7 +9469,7 @@
           });
 
           // Days grid
-          const firstDay = new Date(year, month, 1).getDay();
+          const firstDay = getWeekdayOffset(new Date(year, month, 1).getDay());
           const daysInMonth = new Date(year, month + 1, 0).getDate();
           const holidaysThisMonth = showHolidays
             ? getHolidaysForMonth(month, year)
@@ -8369,7 +9661,7 @@
 
         function renderMiniCalendar(month, year) {
           // Get first day of month
-          const firstDay = new Date(year, month, 1).getDay();
+          const firstDay = getWeekdayOffset(new Date(year, month, 1).getDay());
           // Days in month
           const daysInMonth = new Date(year, month + 1, 0).getDate();
           // Days in prev month
@@ -8602,6 +9894,7 @@
         const prevBtn = popup.querySelector(".cdp-prev");
         const nextBtn = popup.querySelector(".cdp-next");
         const monthYearEl = popup.querySelector(".cdp-month-year-display");
+        const dayNamesEl = popup.querySelector(".cdp-day-names");
         const daysGrid = popup.querySelector(".cdp-days-grid");
         const MONTHS = [
           "January",
@@ -8685,10 +9978,53 @@
           popup.style.left = left + "px";
         }
         function renderGrid() {
-          monthYearEl.textContent = MONTHS[viewMonth] + " " + viewYear;
+          monthYearEl.innerHTML = `
+            <select class="cdp-month-select" aria-label="Month"></select>
+            <select class="cdp-year-select" aria-label="Year"></select>
+          `;
+          const monthSelect = monthYearEl.querySelector(".cdp-month-select");
+          const yearSelect = monthYearEl.querySelector(".cdp-year-select");
+          for (let i = 0; i < 12; i++) {
+            const opt = document.createElement("option");
+            opt.value = String(i);
+            opt.textContent = getLocalizedMonthName(i, viewYear);
+            opt.selected = i === viewMonth;
+            monthSelect.appendChild(opt);
+          }
+          const baseYear = selectedDate
+            ? selectedDate.getFullYear()
+            : new Date().getFullYear();
+          for (let y = baseYear - 100; y <= baseYear + 100; y++) {
+            const opt = document.createElement("option");
+            opt.value = String(y);
+            opt.textContent = String(y);
+            opt.selected = y === viewYear;
+            yearSelect.appendChild(opt);
+          }
+          monthSelect.onchange = () => {
+            viewMonth = Number(monthSelect.value);
+            renderGrid();
+          };
+          yearSelect.onchange = () => {
+            viewYear = Number(yearSelect.value);
+            renderGrid();
+          };
+          if (dayNamesEl) {
+            dayNamesEl.setAttribute("role", "row");
+            dayNamesEl.innerHTML = getLocalizedWeekdaysNarrow()
+              .map((name) => `<span role="columnheader">${name}</span>`)
+              .join("");
+          }
           daysGrid.innerHTML = "";
+          daysGrid.setAttribute("role", "grid");
+          daysGrid.setAttribute(
+            "aria-label",
+            `${getLocalizedMonthName(viewMonth, viewYear)} ${viewYear}`,
+          );
           const today = new Date();
-          const firstDow = new Date(viewYear, viewMonth, 1).getDay();
+          const firstDow = getWeekdayOffset(
+            new Date(viewYear, viewMonth, 1).getDay(),
+          );
           const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
           const prevDays = new Date(viewYear, viewMonth, 0).getDate();
           for (let i = firstDow - 1; i >= 0; i--) {
@@ -8696,6 +10032,8 @@
             b.type = "button";
             b.className = "cdp-day cdp-other-month";
             b.textContent = prevDays - i;
+            b.setAttribute("aria-hidden", "true");
+            b.tabIndex = -1;
             daysGrid.appendChild(b);
           }
           for (let d = 1; d <= daysInMonth; d++) {
@@ -8703,6 +10041,17 @@
             b.type = "button";
             b.className = "cdp-day";
             b.textContent = d;
+            const cellDate = new Date(viewYear, viewMonth, d);
+            b.setAttribute("role", "gridcell");
+            b.setAttribute(
+              "aria-label",
+              formatDate(cellDate, {
+                weekday: "long",
+                month: "long",
+                day: "numeric",
+                year: "numeric",
+              }),
+            );
             if (
               today.getFullYear() === viewYear &&
               today.getMonth() === viewMonth &&
@@ -8733,6 +10082,8 @@
             b.type = "button";
             b.className = "cdp-day cdp-other-month";
             b.textContent = d;
+            b.setAttribute("aria-hidden", "true");
+            b.tabIndex = -1;
             daysGrid.appendChild(b);
           }
         }
@@ -8743,6 +10094,8 @@
           });
           popup.hidden = !popup.hidden;
           if (!popup.hidden) {
+            popup.setAttribute("role", "dialog");
+            popup.setAttribute("aria-modal", "false");
             positionPopup();
             renderGrid();
           }
